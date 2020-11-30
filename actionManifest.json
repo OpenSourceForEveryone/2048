@@ -1,0 +1,55 @@
+{
+    "tag": "2048-teams-app",
+    "id": "com.microsoft.dev.2048app.abhinandan",
+    "name": "2048 Tournament",
+    "description": "Play the Game of a 2048",
+    "showLoadingIndicator": true,
+    "developer": {
+        "name": "Microsoft",
+        "websiteUrl": "https://www.microsoft.com/",
+        "privacyUrl": "https://www.microsoft.com/privacy",
+        "termsOfUseUrl": "https://www.microsoft.com/app-tos"
+    },
+    "icon": "images/appIcon.png",
+    "actionModel": "actionModel.json",
+    "version": "1.0.88",
+    "views": {
+        "CardView": {
+            "sourceLocation": "cardView.json"
+        },
+        "LaunchView": {
+            "sourceLocation": "CreateView.html",
+            "header": "Create new tournament"
+        },
+        "UpdateView": 
+        {
+            "sourceLocation": "UpdateView.html",
+            "header": "Play 2048"
+        },
+        "SummaryView": {
+			"sourceLocation": "SummaryView.html",
+			"header": "Summary View"
+		}
+    },
+    "localizationInfo": {
+        "defaultLocale": "en-us",
+        "localeFiles": {
+            "en-us": "strings/strings.json"
+        }
+    },
+    "msTeamsProps": {
+        "name": {
+            "short": "2048 Game",
+            "full": "2048 Game"
+        },
+        "description": {
+            "short": "Play the Game of a 2048",
+            "full": "Play the Game of a 2048 in a chat or channel.​ Find the app in '…' under the message compose box​. Launch the game and you're good to go."
+        },
+        "icons": {
+            "color": "images/appIcon.png",
+            "outline": "images/outline.png"
+        },
+        "accentColor": "#4464ee"
+    }
+}

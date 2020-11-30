@@ -1,0 +1,76 @@
+@import "./../../scss/common.scss";
+
+.blockStyle {
+    height: 80;
+    width: 80;
+    background: rgb(137, 81, 81);
+    margin: 3;
+    display: flex;
+    justify-content: center;
+    align-items: cente;
+    font-size: 45;
+    font-weight: 800;
+    color: white;
+    border-radius: 10
+}
+
+.newGameButton {
+    position: absolute;
+    padding: 10;
+    background: #846F5B;
+    color: #F8F5F0;
+    width: 95;
+    border-radius: 7;
+    font-weight: 900;
+    margin-left: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+}
+
+.tryAgainButton {
+    position: absolute;
+    padding: 10;
+    background: #846F5B;
+    color: #F8F5F0;
+    width: 80;
+    border-radius: 7;
+    font-weight: 900;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 20;
+}
+
+.gameOverOverlay {
+    position: absolute;
+    height: 100;
+    width: 100;
+    left: 0;
+    top: 0;
+    border-radius: 5;
+    background: rgba(238,228,218,.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.gameScore {
+    text-align: center;
+    font-size: larger;
+    padding: 10;
+    font-weight: 900;
+    margin: auto;
+    color: #6264A7;
+}
+.body-container{
+    height: 90%;
+    width: 90%;
+    padding: 5%;
+}
+
+.gameColor {
+    
+    color:#645B52
+}
+
+.checklist-checkbox {
+    column-gap: unset !important;
+}
