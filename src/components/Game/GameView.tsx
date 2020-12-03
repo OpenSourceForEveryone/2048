@@ -6,21 +6,8 @@ import { observer } from "mobx-react";
 import getStore, { ViewType } from "../../store/SummaryStore";
 import "./game.scss";
 import {
-    Flex, Dialog, Loader, Text, Avatar, ButtonProps, BanIcon, TrashCanIcon, CalendarIcon, MoreIcon, SplitButton, Divider, Table, Card, AcceptIcon
+    Flex 
 } from "@fluentui/react-northstar";
-import * as html2canvas from "html2canvas";
-import { Utils } from "../../utils/Utils";
-import { Localizer } from "../../utils/Localizer";
-import * as actionSDK from "@microsoft/m365-action-sdk";
-import { ProgressState } from "../../utils/SharedEnum";
-import { ShimmerContainer } from "../ShimmerLoader";
-import { IBarChartItem, BarChartComponent } from "../BarChartComponent";
-import { ErrorView } from "../ErrorView";
-import { UxUtils } from "../../utils/UxUtils";
-import { AdaptiveMenuItem, AdaptiveMenuRenderStyle, AdaptiveMenu } from "../Menu";
-import { Constants } from "../../utils/Constants";
-import { DateTimePickerView } from "../DateTime";
-import { slice, concat } from 'lodash';
 import { useEvent, getColors } from "./Util"
 import cloneDeep from "lodash.clonedeep";
 import Swipe from "react-easy-swipe";
@@ -98,7 +85,6 @@ export const GameApp = () => {
             if (gridFull) {
                 break;
             }
-
             let rand1 = Math.floor(Math.random() * 4);
             let rand2 = Math.floor(Math.random() * 4);
             attempts++;

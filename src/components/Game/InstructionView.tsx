@@ -2,13 +2,10 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { Avatar, Card, Flex, Text, Divider, Checkbox, FlexItem, Button } from '@fluentui/react-northstar';
 import "./game.scss";
-import { goToPage } from "./../../actions/UpdateAction";
 import getStore from "./../../store/UpdationStore";
-import CongratulationView from "./CongrtulationView";
-import GameView from "./GameView";
-import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 import {UxUtils} from "../../utils/UxUtils"
 import { Localizer } from "../../utils/Localizer";
+import Game from "./2048/Game";
 
 @observer
 export default class InstructionView extends React.Component<any, any> {
@@ -24,12 +21,12 @@ export default class InstructionView extends React.Component<any, any> {
             startGame: true
         })
     }
-
+    
     render() {
         return (
             this.state.startGame ?
-                <GameView /> :
-                <Flex className="body-container" column gap="gap.medium">
+                <Game /> :
+                <Flex className="body-container instruction" column gap="gap.medium">
                     {this.renderInstruction()}
                     {this.renderFooterSection()}
                 </Flex>

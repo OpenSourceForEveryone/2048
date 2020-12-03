@@ -1,4 +1,6 @@
+
 @import "./../../scss/common.scss";
+@import "./../../components/Creation/CustomSettings.scss";
 
 .blockStyle {
     height: 80;
@@ -58,7 +60,6 @@
     padding: 10;
     font-weight: 900;
     margin: auto;
-    color: #6264A7;
 }
 .body-container{
     height: 90%;
@@ -74,3 +75,54 @@
 .checklist-checkbox {
     column-gap: unset !important;
 }
+
+.instruction .eu {
+    padding-left: 0px;
+}
+
+.instruction .ui-card {
+    padding: 8px;
+}
+.instruction .ui-card span {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--app-input-color);
+}
+.instruction .ui-card span+span {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--app-input-color);
+}
+
+.wining-outer {
+    width: 100%;
+    text-align: center;
+    display: table;
+}
+
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+    height: 80vh;
+}
+
+.App {
+    transform: translate3d(-50%, -50%, 0);
+    width: calc(356px);
+    height: calc(356px);
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+@media screen and (max-width: 576px) {
+    .App {
+        transform: translate3d(-50%, -50%, 0);
+        width: calc(320px);
+        height: calc(320px);
+        top: 50%;
+        left: 50%;
+    }
+}
+

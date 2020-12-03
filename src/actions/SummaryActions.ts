@@ -46,6 +46,8 @@ export enum GameSummaryAction {
     updateActionInstanceSummary = "updateActionInstanceSummary",
     fetchScore = "fetchScore",
     fetchLeaderBoard = "fetchScore",
+    setGameStatus = "setGameStatus",
+    setLeaderboardFlag = "setGameStatus",
 }
 
 export let initialize = action(GameSummaryAction.initialize);
@@ -54,9 +56,13 @@ export let fetchUserDetails = action(GameSummaryAction.fetchUserDetails, (userId
     userIds: userIds
 }));
 
+export let setGameStatus = action(GameSummaryAction.setGameStatus);
+
+export let setLeaderboardFlag = action(GameSummaryAction.setLeaderboardFlag);
+
 export let fetchScore = action(GameSummaryAction.fetchScore)
 
-export let fetchLeaderBoard = action(GameSummaryAction.fetchLeaderBoard)
+export let fetchLeaderBoard = action(GameSummaryAction.fetchScore)
 
 export let fetchLocalization = action(GameSummaryAction.fetchLocalization);
 

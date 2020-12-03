@@ -20,8 +20,8 @@ mutator(setContext, (msg) => {
         const lastSessionData = store.context.lastSessionData;
         const actionInstance: actionSDK.Action = lastSessionData.action;
         getStore().title = actionInstance.dataTables[0].dataColumns[0].displayName;
-        getStore().settings.resultVisibility = (actionInstance.dataTables[0].rowsVisibility === actionSDK.Visibility.All) ?
-            true : false;
+        getStore().settings.resultVisibility =  (actionInstance.dataTables[0].rowsVisibility === actionSDK.Visibility.Sender) ?
+        false : true;
         getStore().settings.isMultiResponseAllowed = actionInstance.dataTables[0].canUserAddMultipleRows;
         getStore().settings.dueDate = actionInstance.expiryTime;
     }

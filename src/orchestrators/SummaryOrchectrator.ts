@@ -9,7 +9,7 @@ import {
     initialize, setProgressStatus, setContext, fetchLocalization, fetchUserDetails, fetchActionInstance, fetchActionInstanceSummary,
     fetchMyResponse, fetchMemberCount, setIsActionDeleted, updateMyRow, updateActionInstance, fetchActionInstanceRows, updateMemberCount,
     updateActionInstanceSummary, addActionInstanceRows, updateContinuationToken, updateNonResponders, fetchNonReponders,
-    updateDueDate, updateUserProfileInfo, setGameTitle, fetchScore, fetchLeaderBoard
+    updateDueDate, updateUserProfileInfo, fetchScore, fetchLeaderBoard, setGameTitle, setGameStatus, setLeaderboardFlag
 } from "../actions/SummaryActions";
 import { orchestrator } from "satcheljs";
 import { ProgressState } from "../utils/SharedEnum";
@@ -36,6 +36,7 @@ orchestrator(initialize, async () => {
     let currentContext = getStore().progressStatus.currentContext;
     if (currentContext == ProgressState.NotStarted || currentContext == ProgressState.Failed) {
         setProgressStatus({ currentContext: ProgressState.InProgress });
+
         let actionContext = await ActionSdkHelper.getActionContext();
         if (actionContext.success) {
             let context = actionContext.context as actionSDK.ActionSdkContext;
@@ -46,10 +47,12 @@ orchestrator(initialize, async () => {
             fetchActionInstanceSummary(true);
             fetchMyResponse();
             fetchMemberCount();
-            setProgressStatus({ currentContext: ProgressState.Completed });
             fetchActionInstanceRows(true);
             fetchScore();
             fetchLeaderBoard();
+            setGameStatus();
+            setLeaderboardFlag();
+            setProgressStatus({ currentContext: ProgressState.Completed });
         } else {
             handleError(actionContext.error, "currentContext");
         }
@@ -70,9 +73,7 @@ orchestrator(fetchMyResponse, async () => {
     let myActionInstanceRow = getStore().progressStatus.myActionInstanceRow;
     if (myActionInstanceRow == ProgressState.NotStarted || myActionInstanceRow == ProgressState.Failed) {
         setProgressStatus({ myActionInstanceRow: ProgressState.InProgress });
-
         let response = await ActionSdkHelper.getActionDataRows(getStore().context.actionId, "self", null, 1);
-
         if (response.success) {
             let row: actionSDK.ActionDataRow = response.dataRows[0];
             updateMyRow(row);
@@ -107,10 +108,13 @@ orchestrator(fetchActionInstance, async (msg) => {
         let response = await ActionSdkHelper.getAction(getStore().context.actionId);
         if (response.success) {
             updateActionInstance(response.action);
-            fetchActionInstanceRows(false);
-            setGameTitle(response.action.displayName);
             fetchScore();
             fetchLeaderBoard();
+            setGameTitle(response.action.displayName);
+            setGameStatus();
+            setLeaderboardFlag();
+            fetchActionInstanceRows(false);
+            fetchLocalization();
             if (msg.updateProgressState) {
                 setProgressStatus({ actionInstance: ProgressState.Completed });
             }
@@ -131,6 +135,11 @@ orchestrator(fetchActionInstanceSummary, async (msg) => {
         let response = await ActionSdkHelper.getActionDataRowsSummary(getStore().context.actionId, true);
         if (response.success) {
             updateActionInstanceSummary(response.summary);
+            fetchScore();
+            fetchLeaderBoard();
+            setLeaderboardFlag();
+            setGameStatus();
+            fetchLocalization();
             if (msg.updateProgressState) {
                 setProgressStatus({ actionInstanceSummary: ProgressState.Completed });
             }
@@ -207,6 +216,11 @@ orchestrator(fetchActionInstanceRows, async (msg) => {
                 }
 
                 addActionInstanceRows(rows);
+                fetchScore();
+                fetchLeaderBoard();
+                setGameStatus();
+                setLeaderboardFlag();
+                fetchLocalization();
                 if (msg.shouldFetchUserDetails) {
                     fetchUserDetails(userIds);
                 }
@@ -217,8 +231,6 @@ orchestrator(fetchActionInstanceRows, async (msg) => {
                 } else {
                     setProgressStatus({ actionInstanceRow: ProgressState.Completed });
                 }
-                fetchScore();
-                fetchLeaderBoard();
             } else {
                 handleError(response.error, "actionInstanceRow");
             }

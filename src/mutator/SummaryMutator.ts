@@ -6,9 +6,10 @@ import getStore, { LeaderBoard, ViewType } from "./../store/SummaryStore";
 import {
     setProgressStatus, setContext, updateMyRow, pollCloseAlertOpen, pollExpiryChangeAlertOpen, pollDeleteAlertOpen, setDueDate, setGameTitle,
     showMoreOptions, setCurrentView, addActionInstanceRows, updateContinuationToken, updateMemberCount, goBack, updateNonResponders,
-    setIsActionDeleted, updateActionInstance, updateActionInstanceSummary, updateUserProfileInfo, fetchScore, fetchLeaderBoard
+    setIsActionDeleted, updateActionInstance, updateActionInstanceSummary, updateUserProfileInfo, fetchScore, fetchLeaderBoard, setGameStatus, setLeaderboardFlag
 } from "./../actions/SummaryActions";
 import { Utils } from "../utils/Utils";
+import * as actionSDK from "@microsoft/m365-action-sdk";
 
 /**
  * Summary view mutators to modify store data on which summmary view relies
@@ -52,9 +53,34 @@ mutator(setDueDate, (msg) => {
     store.dueDate = msg.date;
 });
 
-mutator(setGameTitle, () => {
+mutator(setGameTitle, (msg) => {
     const store = getStore();
     store.title = store.actionInstance.dataTables[0].dataColumns[0].displayName;
+});
+
+mutator(setGameStatus, () => {
+    const store = getStore();
+
+    if (store.actionInstance && store.actionInstance.status === actionSDK.ActionStatus.Active) {
+        store.isGameExpired = false;
+    } else {
+        store.isGameExpired = true;
+    }
+});
+
+mutator(setLeaderboardFlag, () => {
+    const store = getStore();
+    if (store.context && store.actionInstance) {
+        const creatorId = store.actionInstance.creatorId;
+        const currentUserId = store.context.userId;
+        const datarowVisibility = store.actionInstance.dataTables[0].rowsVisibility;
+        if (creatorId === currentUserId || datarowVisibility === actionSDK.Visibility.All) 
+        {
+            getStore().shouldShowLeaderBoard = true;
+        } else {
+            getStore().shouldShowLeaderBoard = false;
+        }
+    }
 });
 
 mutator(fetchScore, () => {
@@ -70,7 +96,7 @@ mutator(fetchScore, () => {
                     {
                         score: element.columnValues["2"],
                         timeStamp: `${new Date(Number(element.columnValues["0"])).toDateString()}
-                     ${new Date(Number(element.columnValues["0"])).getHours()}:${minutes.length == 1 ? `0${minutes}` : minutes}`
+                        ${new Date(Number(element.columnValues["0"])).getHours()}:${minutes.length == 1 ? `0${minutes}` : minutes}`
                     }
                 )
             }
@@ -99,8 +125,9 @@ mutator(fetchLeaderBoard, () => {
                 )
             }
         });
+        
         getStore().leaderBoard.sort(function (a, b) {
-            return Number(a.score) - Number(b.score);
+            return Number(b.score) - Number(a.score);
         });
     }
 })

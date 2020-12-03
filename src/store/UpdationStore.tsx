@@ -11,12 +11,14 @@ interface IGameUpdateStore {
     actionInstance: actionSDK.Action;
     actionInstanceRows: actionSDK.ActionDataRow[];
     shouldValidate: boolean;
-    shouldShowInstruction: boolean,
+    shouldShowInstruction: boolean;
     progressState: ProgressState;
-    score: string
+    score: actionSDK.ActionDataRow;
     isActionDeleted: boolean;
     page: GameView;
     continuationToken: string;
+    shouldUserPlay: boolean;
+    playerPrevScore: string;
 };
 
 const store: IGameUpdateStore = {
@@ -24,10 +26,12 @@ const store: IGameUpdateStore = {
     shouldValidate: false,
     actionInstance: null,
     actionInstanceRows: null,
-    progressState: ProgressState.NotStarted,
+    progressState: ProgressState.Completed,
     isActionDeleted: false,
     score: null,
     page: GameView.InstructionView,
+    shouldUserPlay: true,
+    playerPrevScore: null,
     shouldShowInstruction: true,
     continuationToken: null
 }

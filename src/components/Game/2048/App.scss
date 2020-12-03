@@ -1,0 +1,22 @@
+
+
+.container {
+  transform: translate3d(-50%, -50%, 0);
+  width: calc(356px);
+  height: calc(356px);
+  background-color: transparent;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+@media screen and (max-width: 576px) {
+  .container {
+      transform: translate3d(-50%, -50%, 0);
+      width: calc(320px);
+      height: calc(320px);
+      top: 50%;
+      left: 50%;
+  }
+}
+

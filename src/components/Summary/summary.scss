@@ -1,4 +1,6 @@
 @import "./../../scss/common.scss";
+@import "./../../components/Creation/CustomSettings.scss";
+
 .primary-text {
     font-weight: bold;
 }
@@ -184,6 +186,31 @@
         margin-bottom: 0px !important;
     }
 }
+.summaryview .summary-header {
+    margin-bottom: 16px !important;
+    height: auto !important;
+}
+
+.summaryview .settings-item-title {
+    padding-bottom: 8px !important;
+}
+
+.summaryview .summary-header span+span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--app-gray-sub-text);
+    margin-top: 8px;
+}
+
+.summaryview .summary-header span {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--app-input-color);
+}
+
+.summaryview .summary-header .ui-card {
+    padding: 8px;
+}
 
 .table-container {
     background-color: #FAF9F8
@@ -313,6 +340,10 @@
 
 .pull-right {
     float: right;
+}
+
+.timeline .pull-right {
+    color: var(--app-gray-sub-text);
 }
 
 .ui-list li:not(:last-child) {

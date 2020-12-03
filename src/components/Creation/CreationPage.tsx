@@ -4,24 +4,21 @@
 import * as React from "react";
 import { callActionInstanceCreationAPI, updateSettings, goToPage } from "./../../actions/CreationActions";
 import "./creation.scss";
+import "./CustomSettings.scss";
+import "./Settings.scss";
 import getStore, { Page } from "./../../store/CreationStore";
 import { observer } from "mobx-react";
-import { Flex, FlexItem, Button, Loader } from "@fluentui/react-northstar";
-import * as actionSDK from "@microsoft/m365-action-sdk";
+import { Flex, FlexItem, Button, Loader, Text } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
-import { Utils } from "../../utils/Utils";
 import { ProgressState } from "./../../utils/SharedEnum";
 import { ErrorView } from "../ErrorView";
 import { UxUtils } from "./../../utils/UxUtils";
 import { Settings, ISettingsComponentProps, ISettingsComponentStrings } from "./Settings";
-import { InputBox } from "../InputBox";
-import { INavBarComponentProps, NavBarComponent } from "../NavBarComponent";
 import { Constants } from "./../../utils/Constants";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
-import { CheckBoxItems, ICheckBoxComponentProps } from "../CheckBox/CheckBox";
 
 /**
- * <CreationPage> component for create view of poll app
+ * <CreationPage> component for create view of game app
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
 @observer
@@ -29,10 +26,21 @@ export default class CreationPage extends React.Component<any, any> {
 
     private settingsFooterComponentRef: HTMLElement;
     private validationErrorQuestionRef: HTMLElement;
+    constructor(props) {
+        super(props);
+        this.state = {
+            showError: false
+        };
+    }
 
+    isValidGameTitle() {
+        const title = getStore().title;
+        if (title.length < 1) {
+            return false;
+        }
+        return true;
+    }
     render() {
-        console.log("localization string")
-        console.log(ActionSdkHelper.getLocalizedStrings())
         let progressState = getStore().progressState;
         if (progressState === ProgressState.NotStarted || progressState == ProgressState.InProgress) {
             return <Loader />;
@@ -47,30 +55,17 @@ export default class CreationPage extends React.Component<any, any> {
         } else {
             // Render View
             ActionSdkHelper.hideLoadingIndicator();
-            if (UxUtils.renderingForMobile()) {
-                // this will load the setting view where user can change due date and result visibility
-                return (
-                    <Flex className="no-mobile-footer">
+            return (
+                <>
+                    <Flex gap="gap.medium" column>
                         {this.renderSettingsForGame()}
-                        <div className="settings-summary-mobile-container">
-                            {this.renderFooterSection(true)}
-                        </div>
                     </Flex>
-                );
-            } else {
-                return (
-                    <>
-                        <Flex gap="gap.medium" column>
-                            {this.renderSettingsForGame()}
-                        </Flex>
-                        {this.renderFooterSection()}
-                    </>
-                );
-            }
+                    {this.renderFooterSection()}
+                </>
+            );
         }
     }
-
-
+    
     renderSettingsForGame() {
         let settingsProps: ISettingsComponentProps = {
             ...this.getCommonSettingsProps(),
@@ -92,9 +87,18 @@ export default class CreationPage extends React.Component<any, any> {
                         primary
                         loading={getStore().sendingAction}
                         disabled={getStore().sendingAction}
-                        content= {Localizer.getString("SendGameRequest")}
+                        content={Localizer.getString("SendGameRequest")}
                         onClick={() => {
-                            callActionInstanceCreationAPI();
+                            if (this.isValidGameTitle()) {
+                                this.setState({
+                                    showError: false
+                                });
+                                callActionInstanceCreationAPI();
+                            } else {
+                                this.setState({
+                                    showError: true
+                                });
+                            }
                         }}>
                     </Button>
                 </FlexItem>
@@ -129,6 +133,7 @@ export default class CreationPage extends React.Component<any, any> {
             renderForMobile: UxUtils.renderingForMobile(),
             strings: this.getStringsForSettings(),
             isMultiResponseAllowed: getStore().settings.isMultiResponseAllowed,
+            shouldShowGametitleAlert: this.state.showError,
             onChange: (props: ISettingsComponentProps) => {
                 updateSettings(props);
             },

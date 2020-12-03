@@ -4,10 +4,10 @@ import getStore, { MyGameScore } from "../../store/SummaryStore";
 import { Localizer } from "../../utils/Localizer";
 import "./summary.scss";
 
-
 @observer
 export class MyScoreBoard extends React.PureComponent<any, any> {
     private scores: MyGameScore[];
+    private bodyContainer: React.RefObject<HTMLDivElement>;
     constructor(props) {
         super(props);
         this.scores = getStore().scoreBoard;
@@ -41,12 +41,17 @@ export class MyScoreBoard extends React.PureComponent<any, any> {
                             ))
                         }
                     </div>
-                    <span className="link" onClick={this.showMore}>+ Load more...</span>
+                    {
+                        this.scores.length > 3 ? 
+                        <span className="link my-score-link" onClick={this.showMore}>+ Load more...</span>
+                        :
+                        <div></div>
+                    }
                 </>
                 :
                 <div className="content">
                     <label>
-                        You have not played this game
+                    {this.props.YouHaveNotResponded}
                 </label>
                 </div>
         )

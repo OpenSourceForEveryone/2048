@@ -1,7 +1,6 @@
 import { observer } from "mobx-react";
 import * as React from "react";
 import getStore, { LeaderBoard, MyGameScore } from "../../store/SummaryStore";
-import { Localizer } from "../../utils/Localizer";
 import "./summary.scss";
 import {
     List
@@ -56,11 +55,16 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
                             aria-label="Static headless table"
                             className="table-container"
                             styles={{ backgroundColor: '#FAF9F8' }} />
-                        <span className="link" onClick={this.showMore}>+ Load more...</span>
+                        {
+                            this.scores.length > 3 ? 
+                            <span className="link leaderboard-link" onClick={this.showMore}>+ Load more...</span>
+                            :
+                            <div> </div>
+                        }
                     </> :
                     <div className="content">
                         <label>
-                            No one has responded to the game.
+                            {this.props.NoOneHasResponded}
                         </label>
                     </div>
                 }

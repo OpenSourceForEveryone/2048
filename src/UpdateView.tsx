@@ -4,7 +4,7 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
 import GamePage from "./components/Game/GamePage";
-import { initialize } from "./actions/SummaryActions";
+import { initialize } from "./actions/UpdateAction";
 import { ActionRootView } from "./components/ActionRootView";
 
 initialize();

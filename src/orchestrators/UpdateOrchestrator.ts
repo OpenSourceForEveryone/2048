@@ -13,15 +13,10 @@ import { ProgressState } from "../utils/SharedEnum";
 import getStore from "../store/UpdationStore";
 
 orchestrator(initialize, async () => {
-    setProgressState(ProgressState.InProgress);
     let actionContext = await ActionSdkHelper.getActionContext();
-    if (actionContext.success) {
-        setContext(actionContext.context);
-        let response = await Localizer.initialize();
-        setProgressState(response ? ProgressState.Completed : ProgressState.Failed);
-    }
+    setContext(actionContext.context);
 });
 
 orchestrator(addScore, async (msg) => {
-    await ActionSdkHelper.addScore(msg.score)
+    await ActionSdkHelper.addDataRow(msg.actionDataRow)
 });

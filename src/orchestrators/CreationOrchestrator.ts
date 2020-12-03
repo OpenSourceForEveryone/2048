@@ -80,8 +80,8 @@ orchestrator(callActionInstanceCreationAPI, async () => {
     actionInstance.dataTables[0].dataColumns.push(gamePlayer);
     // Set responses visibility
     console.log("entering API")
-    actionInstance.dataTables[0].rowsVisibility = actionSDK.Visibility.All; 
-    // ? actionSDK.Visibility.Sender : actionSDK.Visibility.All;
+    actionInstance.dataTables[0].rowsVisibility = getStore().settings.resultVisibility ?
+    actionSDK.Visibility.Sender : actionSDK.Visibility.All;
 
     actionInstance.dataTables[0].canUserAddMultipleRows = getStore().settings.isMultiResponseAllowed;
 

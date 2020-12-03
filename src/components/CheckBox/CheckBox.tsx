@@ -20,7 +20,6 @@ export interface ICheckBoxComponentProps {
   onMount?: () => void;
 }
 
-
 /**
  * <Settings> Settings component of creation view of game
  */

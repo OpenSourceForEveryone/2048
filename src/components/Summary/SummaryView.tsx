@@ -3,32 +3,15 @@
 
 import * as React from "react";
 import { observer } from "mobx-react";
-import getStore, { MyGameScore, ViewType } from "./../../store/SummaryStore";
+import getStore, { ViewType } from "./../../store/SummaryStore";
 import "./summary.scss";
-import {
-    closePoll, pollCloseAlertOpen, updateDueDate, pollExpiryChangeAlertOpen, setDueDate, pollDeleteAlertOpen, deletePoll,
-    setCurrentView, downloadCSV, setProgressStatus
-} from "./../../actions/SummaryActions";
-import {
-    Flex, Dialog, Loader, Text, Avatar, ButtonProps, BanIcon, TrashCanIcon, CalendarIcon, MoreIcon, SplitButton, Divider, Table, Card, AcceptIcon, List
-} from "@fluentui/react-northstar";
-import * as html2canvas from "html2canvas";
-import { Utils } from "../../utils/Utils";
+import { Flex, Text,  Card } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
-import * as actionSDK from "@microsoft/m365-action-sdk";
-import { ProgressState } from "./../../utils/SharedEnum";
-import { ShimmerContainer } from "../ShimmerLoader";
-import { IBarChartItem, BarChartComponent } from "../BarChartComponent";
-import { ErrorView } from "../ErrorView";
-import { UxUtils } from "./../../utils/UxUtils";
-import { AdaptiveMenuItem, AdaptiveMenuRenderStyle, AdaptiveMenu } from "../Menu";
-import { Constants } from "./../../utils/Constants";
 import { MyScoreBoard } from "./MyScoreBoard";
 import { LeaderBoardView } from "./LeaderBoard";
-import { display } from "html2canvas/dist/types/css/property-descriptors/display";
 
 /**
- * <SummaryView> component that will render the main page with participation details
+ * <SummaryView> component that will render the main page with score details
  */
 
 @observer
@@ -36,14 +19,14 @@ export default class SummaryView extends React.Component<any, any> {
     private bodyContainer: React.RefObject<HTMLDivElement>;
     constructor(props) {
         super(props);
-        this.bodyContainer = React.createRef();
+        this.bodyContainer = React.createRef(); 
     }
     render() {
         return (
             <>
                 <Flex
                     column
-                    className="body-container no-mobile-footer no-top-padding"
+                    className="body-container no-mobile-footer no-top-padding summaryview"
                     ref={this.bodyContainer}
                     id="bodyContainer"
                 >
@@ -58,16 +41,17 @@ export default class SummaryView extends React.Component<any, any> {
         return (
             <>
                 <label className="settings-item-title" style={{ paddingBottom: '16px', display:'block' }}>{Localizer.getString("YourScoreInSummaryView")}</label>
-                <MyScoreBoard />
+                <MyScoreBoard YouHaveNotResponded = {Localizer.getString("YouHaveNotResponded")}/>
             </>
         );
     }
     private getLeaderBoard(): JSX.Element {
         return (
+            getStore().shouldShowLeaderBoard ? 
             <Flex className="settings-item-margin" role="group" aria-label="Leaderboard" column gap="gap.smaller">
-                <label className="settings-item-title" style={{ paddingTop: '16px', display:'block' }}>{Localizer.getString("LeaderboardInSummaryView")}</label>
-                <LeaderBoardView />
-            </Flex>
+                <label className="settings-item-title" style={{ paddingTop: '16px', display:'block', paddingBottom:'0px !important' }}>{Localizer.getString("LeaderboardInSummaryView")}</label>
+                <LeaderBoardView NoOneHasResponded = {Localizer.getString("NoOneHasResponded")} />
+            </Flex>: <div></div>
         );
     }
     private getTitleContainer(): JSX.Element {
@@ -80,7 +64,7 @@ export default class SummaryView extends React.Component<any, any> {
                 <Card aria-roledescription="card avatar" fluid style={{backgroundColor:'rgb(250, 249, 248)'}}>
                     <Card.Header fitted>
                         <Text content={this.getGameTitle()} weight="bold" />
-                        <Text content={"The Game is active till " + this.gameDueDate()} size="medium" />
+                        {this.gameDueDateString()}
                     </Card.Header>
                 </Card>
             </Flex>
@@ -96,10 +80,19 @@ export default class SummaryView extends React.Component<any, any> {
         }
     }
     
-    private gameDueDate() {
-        let dateNumber: number = getStore().dueDate;
+    private gameDueDateString():  JSX.Element {
+        const dateNumber: number = getStore().dueDate;
         const minutes = new Date(dateNumber).getMinutes().toString();
-        return `${new Date(dateNumber).toDateString()}
-        ${new Date(dateNumber).getHours()} : ${minutes.length == 1 ? `0${minutes}` : minutes}`
+        const dueDate = `${new Date(dateNumber).toDateString()} ${new Date(dateNumber).getHours()}:${minutes.length == 1 ? `0${minutes}`:minutes}` 
+        if(!getStore().isGameExpired){
+            return (
+                <Text content={"The Game is active till " + dueDate} size="medium" />
+            );
+        }else
+        {
+            return (
+                <Text content={"Game Expired..."} size="medium" style={{color:"#C4314B"}} />
+            );
+        }
     }
 }

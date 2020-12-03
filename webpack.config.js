@@ -57,7 +57,7 @@ module.exports = (env) => {
             }
         },
         resolve: {
-            extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"]
+            extensions: [".ts", ".tsx", ".js", ".jsx", ".scss", ".css"]
         },
         module: {
             rules: [{
@@ -69,6 +69,16 @@ module.exports = (env) => {
                 loader: [
                     require.resolve('style-loader'), require.resolve('css-loader'), require.resolve('sass-loader')
                 ]
+            },
+            {
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
             }]
         }
     };

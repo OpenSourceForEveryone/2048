@@ -12,7 +12,7 @@
     },
     "icon": "images/appIcon.png",
     "actionModel": "actionModel.json",
-    "version": "1.0.88",
+    "version": "1.0.135",
     "views": {
         "CardView": {
             "sourceLocation": "cardView.json"
@@ -39,8 +39,8 @@
     },
     "msTeamsProps": {
         "name": {
-            "short": "2048 Game",
-            "full": "2048 Game"
+            "short": "2048 Tournament(Desktop)",
+            "full": "2048 Tournament(Desktop)"
         },
         "description": {
             "short": "Play the Game of a 2048",

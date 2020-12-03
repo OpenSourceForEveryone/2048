@@ -47,6 +47,8 @@ interface IGameSummaryStore {
     title: string;
     scoreBoard: MyGameScore[],
     leaderBoard: LeaderBoard[],
+    shouldShowLeaderBoard: boolean,
+    isGameExpired: boolean,
     currentView: ViewType;
     continuationToken: string;
     actionInstanceRows: actionSDK.ActionDataRow[];
@@ -75,6 +77,8 @@ const store: IGameSummaryStore = {
     actionInstanceRows: [],
     continuationToken: null,
     showMoreOptionsList: false,
+    shouldShowLeaderBoard: true,
+    isGameExpired: false,
     isPollCloseAlertOpen: false,
     isChangeExpiryAlertOpen: false,
     isDeletePollAlertOpen: false,
