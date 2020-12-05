@@ -10,6 +10,7 @@ import {
 } from "./../actions/SummaryActions";
 import { Utils } from "../utils/Utils";
 import * as actionSDK from "@microsoft/m365-action-sdk";
+import { UxUtils } from "../utils/UxUtils";
 
 /**
  * Summary view mutators to modify store data on which summmary view relies
@@ -87,16 +88,22 @@ mutator(fetchScore, () => {
     const store = getStore();
     let rows: actionSDK.ActionDataRow[] = store.actionInstanceRows;
     let context: actionSDK.ActionSdkContext = store.context;
-
+    const options: Intl.DateTimeFormatOptions = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    };
     if (rows && rows.length > 0) {
         rows.forEach(element => {
             if (context.userId === element.creatorId) {
-                const minutes = new Date(Number(element.columnValues["0"])).getMinutes().toString();
                 getStore().scoreBoard.push(
                     {
                         score: element.columnValues["2"],
-                        timeStamp: `${new Date(Number(element.columnValues["0"])).toDateString()}
-                        ${new Date(Number(element.columnValues["0"])).getHours()}:${minutes.length == 1 ? `0${minutes}` : minutes}`
+                        timeStamp: UxUtils.formatDate(new Date(element.createTime), 
+                        getStore().actionInstance.customProperties[0].value,
+                        options)
                     }
                 )
             }

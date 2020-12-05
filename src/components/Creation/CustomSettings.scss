@@ -211,6 +211,10 @@
     left: 50%;
 }
 
+.leaderboard-link {
+    font-weight: var(--font-weight-600);
+}
+
 @media screen and (max-width: 576px) {
     .App {
         transform: translate3d(-50%, -50%, 0);
@@ -218,5 +222,16 @@
         height: calc(320px);
         top: 50%;
         left: 50%;
+    }
+}
+
+@media screen and (min-width: 576px) {
+    .date-input-view {
+        width: 50%;
+        cursor: pointer;
+    }
+    .time-input-view {
+        width: 50%;
+        cursor: pointer;
     }
 }

@@ -56,7 +56,7 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
                             className="table-container"
                             styles={{ backgroundColor: '#FAF9F8' }} />
                         {
-                            this.scores.length > 3 ? 
+                            this.scores.length > 3 && this.scores.length > this.state.visible ? 
                             <span className="link leaderboard-link" onClick={this.showMore}>+ Load more...</span>
                             :
                             <div> </div>

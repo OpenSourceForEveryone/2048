@@ -42,7 +42,7 @@ export class MyScoreBoard extends React.PureComponent<any, any> {
                         }
                     </div>
                     {
-                        this.scores.length > 3 ? 
+                        this.scores.length > 3 && this.scores.length > this.state.visible ? 
                         <span className="link my-score-link" onClick={this.showMore}>+ Load more...</span>
                         :
                         <div></div>

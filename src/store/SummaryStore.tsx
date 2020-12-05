@@ -62,6 +62,7 @@ interface IGameSummaryStore {
     isDeletePollAlertOpen: boolean;
     progressStatus: SummaryProgressStatus;
     isActionDeleted: boolean;
+    local: string;
 }
 
 const store: IGameSummaryStore = {
@@ -99,7 +100,8 @@ const store: IGameSummaryStore = {
         updateActionInstance: ProgressState.NotStarted,
         currentContext: ProgressState.NotStarted,
     },
-    isActionDeleted: false
+    isActionDeleted: false,
+    local: "en-us"
 };
 
 export default createStore<IGameSummaryStore>("summaryStore", store);

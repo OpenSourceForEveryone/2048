@@ -33,7 +33,7 @@ const store: IGameUpdateStore = {
     shouldUserPlay: true,
     playerPrevScore: null,
     shouldShowInstruction: true,
-    continuationToken: null
+    continuationToken: null,
 }
 
 export default createStore<IGameUpdateStore>("updationStore", store);

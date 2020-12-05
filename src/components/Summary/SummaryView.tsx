@@ -9,6 +9,7 @@ import { Flex, Text,  Card } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
 import { MyScoreBoard } from "./MyScoreBoard";
 import { LeaderBoardView } from "./LeaderBoard";
+import { UxUtils } from "../../utils/UxUtils";
 
 /**
  * <SummaryView> component that will render the main page with score details
@@ -81,14 +82,21 @@ export default class SummaryView extends React.Component<any, any> {
     }
     
     private gameDueDateString():  JSX.Element {
-        const dateNumber: number = getStore().dueDate;
-        const minutes = new Date(dateNumber).getMinutes().toString();
-        const dueDate = `${new Date(dateNumber).toDateString()} ${new Date(dateNumber).getHours()}:${minutes.length == 1 ? `0${minutes}`:minutes}` 
+        const date = new Date(getStore().dueDate);
+        const options: Intl.DateTimeFormatOptions = {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+        };
+        const local = getStore().local;
         if(!getStore().isGameExpired){
             return (
-                <Text content={"The Game is active till " + dueDate} size="medium" />
+                <Text content={"The Game is active till " + UxUtils.formatDate(date, local, options)} size="medium" />
             );
-        }else
+        }
+        else
         {
             return (
                 <Text content={"Game Expired..."} size="medium" style={{color:"#C4314B"}} />

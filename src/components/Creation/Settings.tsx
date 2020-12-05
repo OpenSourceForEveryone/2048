@@ -86,7 +86,7 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
      */
     private renderSettings() {
         return (
-            <Flex column>
+            <Flex column className = "game-creation-settings">
                 {this.renderGameTitleSection()}
                 {this.renderDueBySection()}
                 {this.renderAdditionalSettingsSection()}
@@ -203,6 +203,7 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         return (
             <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
+                className= "checklist-checkbox"
                     onChange={
                         () => {
                                 this.settingProps.resultVisibility = !this.settingProps.resultVisibility;
