@@ -9,6 +9,7 @@ import getNewPosition from './utils/getNewPosition';
 import isExist from './utils/isExist';
 import CongratulationView from "../CongrtulationView";
 import { Flex } from "@fluentui/react-northstar";
+import Header from "./components/Header";
 
 export const Game = () => {
   const UP = 38;
@@ -415,7 +416,7 @@ export const Game = () => {
       } else {
         // swiped right
         myScore = swipeRight();
-      }  
+      }
     } else {
       // sliding vertically
       if (diffY > 0) {
@@ -424,7 +425,7 @@ export const Game = () => {
       } else {
         // swiped down
         myScore = Number(swipeDown());
-      }  
+      }
     }
     if (myScore != 0) {
       setScore(score + myScore);
@@ -459,12 +460,14 @@ export const Game = () => {
     >
       {gameOver ?
         <CongratulationView gameScore={score} shouldShowAlert="false" /> :
-        <div className='container'>
-          <Board
-            data={data}
-            score={score}
-          />
-        </div>
+        <>
+          <Header score={score} />
+          <div className='container'>
+            <Board
+              data={data}
+            />
+          </div>
+        </>
       }
     </Flex>
   );

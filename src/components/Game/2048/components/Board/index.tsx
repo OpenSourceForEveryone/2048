@@ -3,13 +3,9 @@ import Header from '../Header';
 import Tile from '../Tile';
 import './Board.scss';
 
-export default function Board({ data, score }) {
+export default function Board({ data }) {
   return (
     <>
-    <div className='gameScore'>
-      <Header score={score}  />
-    </div>
-    
      <div className='board__body'>
      {data.map((row, rowIndex) => {
        return (

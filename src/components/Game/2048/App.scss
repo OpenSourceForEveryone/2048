@@ -1,22 +1,30 @@
 @import "./../game.scss";
-
 .container {
-  transform: translate3d(-50%, -50%, 0);
-  width: calc(356px);
-  height: calc(356px);
-  background-color: transparent;
-  position: absolute;
-  top: 50%;
-  left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    width: calc(432px);
+    height: calc(432px);
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 @media screen and (max-width: 576px) {
-  .container {
-      transform: translate3d(-50%, -50%, 0);
-      width: calc(320px);
-      height: calc(320px);
-      top: 50%;
-      left: 50%;
-  }
+    .container {
+        transform: translate3d(-50%, -50%, 0);
+        width: calc(306px);
+        height: calc(306px);
+        top: 50%;
+        left: 50%;
+    }
 }
 
+// @media screen and (max-width: 374px) {
+//     .container {
+//         transform: translate3d(-50%, -50%, 0);
+//         width: calc(342px);
+//         height: calc(342px);
+//         top: 50%;
+//         left: 50%;
+//     }
+// }
