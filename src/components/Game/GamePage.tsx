@@ -71,16 +71,17 @@ export default class GamePage extends React.Component<any, any> {
     /**
      * Method to return the view based on the game settings
     **/
-
+   
     private getGamePage(): JSX.Element {
-        return <Game />;
+        return <Game />
     }
     private getInstructionPage(): JSX.Element {
-        return (<InstructionView 
-            DontShowTheGameInstruction = {Localizer.getString("DontShowTheGameInstruction")}
-            InstructionContent = {this.getInstructionContent()}
-            HowToPlay = {Localizer.getString("HowToPlay")}
-            />);
+        return (<InstructionView
+            DontShowTheGameInstruction={Localizer.getString("DontShowTheGameInstruction")}
+            InstructionContent={this.getInstructionContent()}
+            HowToPlay={Localizer.getString("HowToPlay")}
+            Play = {Localizer.getString("PlayButton")}
+        />);
     }
 
     private getCongratulationPage(): JSX.Element {
@@ -95,20 +96,16 @@ export default class GamePage extends React.Component<any, any> {
         );
     }
 
-    getInstructionContent(): string 
-    {
-        if(UxUtils.renderingForMobile())
-        {
+    getInstructionContent(): string {
+        if (UxUtils.renderingForMobile()) {
             return Localizer.getString("HowToPlayForMobile");
         }
-        else
-        {
+        else {
             return Localizer.getString("HowToPlayForDesktop");
         }
     }
-
     
     delay(ms: number) {
-        return new Promise( resolve => setTimeout(resolve, ms) );
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 }

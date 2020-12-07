@@ -2,7 +2,7 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { Avatar, Card, Flex, Text, Checkbox, FlexItem, Button } from '@fluentui/react-northstar';
 import "./game.scss";
-import {UxUtils} from "../../utils/UxUtils"
+import { UxUtils } from "../../utils/UxUtils"
 import Game from "./2048/Game";
 import { Constants } from "../../utils/Constants";
 
@@ -12,15 +12,21 @@ export default class InstructionView extends React.Component<any, any> {
         super(props);
         this.state = {
             startGame: false,
+            dontShowFlagSet: false
         };
-        this.onButtonClick = this.onButtonClick.bind(this);
+        this.startGame = this.startGame.bind(this);
     }
-    onButtonClick() {
+    startGame() {
         this.setState({
             startGame: true
         })
     }
-    
+    setLocalStorageFlag() {
+        this.setState(prev => {
+            return { dontShowFlagSet: !prev.dontShowFlagSet };
+        });
+    }
+
     render() {
         return (
             this.state.startGame ?
@@ -35,7 +41,7 @@ export default class InstructionView extends React.Component<any, any> {
     renderInstruction(isMobileView?: boolean): JSX.Element {
         return (
             <div>
-                <Card aria-roledescription="card avatar" fluid style={{backgroundColor:'rgb(250, 249, 248)'}}>
+                <Card aria-roledescription="card avatar" fluid style={{ backgroundColor: 'rgb(250, 249, 248)' }}>
                     <Card.Header fitted>
                         <Flex gap="gap.small">
                             <Flex column>
@@ -48,12 +54,15 @@ export default class InstructionView extends React.Component<any, any> {
                         </Flex>
                     </Card.Header>
                 </Card>
-                <Checkbox className="checklist-checkbox" label={this.props.DontShowTheGameInstruction} styles={{ padding: "16px" }} 
-                onChange = {
-                    () => {
-                        UxUtils.setLocaStorge()
-                    }
-                }/>
+                <Checkbox className="checklist-checkbox"
+                    label={this.props.DontShowTheGameInstruction}
+                    styles={{ padding: "16px" }}
+                    checked={this.state.dontShowFlagSet}
+                    onChange={
+                        () => {
+                            this.setLocalStorageFlag();
+                        }
+                    } />
             </div>
         );
     }
@@ -64,9 +73,10 @@ export default class InstructionView extends React.Component<any, any> {
                 <FlexItem push>
                     <Button
                         primary
-                        content="Next"
+                        content={this.props.Play}
                         onClick={() => {
-                           this.onButtonClick();
+                            this.startGame();
+                            UxUtils.setLocaStorge(this.state.dontShowFlagSet)
                         }}>
                     </Button>
                 </FlexItem>

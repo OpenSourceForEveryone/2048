@@ -49,11 +49,16 @@ mutator(fetchActionInstanceRowsForCurrentUser, (msg) => {
     {
         store.shouldPlayerPlay = true;
     }
+    delay(5000);
 });
 
 mutator(shouldValidateUI, (msg) => {
     const store = getStore();
     store.shouldValidate = msg.shouldValidate;
 });
+
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 

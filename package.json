@@ -27,6 +27,7 @@
         "react-dom": "16.8.0",
         "react-easy-swipe": "0.0.21",
         "react-meta-tags": "^1.0.0",
+        "react-native-swipe-gestures": "^1.0.5",
         "recyclerlistview": "3.0.0",
         "satcheljs": "4.0.1",
         "style-loader": "0.21.0",

@@ -133,20 +133,28 @@ export class UxUtils {
         const key = this.getKey();
         let localStorage = window.localStorage;
         if (localStorage.getItem(key) === key) {
-            console.log("Shouldn't show" + "Key -" + localStorage.getItem(key));
             return false;
         }
-        else 
-        {
-            console.log("Should show");
+        else {
             return true;
         }
     }
 
-    public static setLocaStorge() {
+    public static setLocaStorge(shouldCreate: boolean) {
+        if (shouldCreate) {
+            let localStorage = window.localStorage;
+            const key = this.getKey();
+            localStorage.setItem(key, key);
+        } else {
+            this.removeLocaStorge()
+        }
+    }
+
+    public static removeLocaStorge() {
         let localStorage = window.localStorage;
         const key = this.getKey();
-        localStorage.setItem(key, key);
-        console.log("Local storage is set -" + key);
+        localStorage.removeItem(key);
+        console.log(localStorage.removeItem(key));
+        console.log("removing ");
     }
 }

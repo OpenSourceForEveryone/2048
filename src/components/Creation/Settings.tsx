@@ -182,11 +182,12 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
 
     private renderAllowMultiplePlaySettingSection() {
         return (
-            <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
+            <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox checkbox-gap">
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
                  className="checklist-checkbox"
+                 aria-describedby = {Localizer.getString("AllowMultipleTimePlay")}
                     onChange={
-                        () => {
+                        (props) => {
                             this.settingProps.isMultiResponseAllowed = !this.settingProps.isMultiResponseAllowed,
                                 this.props.onChange(this.settingProps);
                                 updateSettings(this.settingProps)
@@ -203,9 +204,10 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
 
     private renderLeaderBoardVisibilitySettingSection() {
         return (
-            <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
+            <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox checkbox-gap">
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
                     className="checklist-checkbox"
+                    aria-describedby = {Localizer.getString("LeaderBoardSetting")}
                     onChange={
                         () => {
                             this.settingProps.resultVisibility = !this.settingProps.resultVisibility;

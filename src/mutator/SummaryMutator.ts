@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { mutator } from "satcheljs";
-import getStore from "./../store/SummaryStore";
+import getStore, { LeaderBoard } from "./../store/SummaryStore";
 import {
     setProgressStatus, setContext, setDueDate, setGameTitle,
     showMoreOptions,
@@ -94,16 +94,17 @@ mutator(fetchMyScore, (msg) => {
 
 mutator(fetchLeaderBoard, (msg) => {
     let rows: actionSDK.ActionDataRow[] = msg.scores;
+    let newRows: LeaderBoard[] = []
     if (rows && rows.length > 0) {
         rows.forEach(element => {
-            const player = getStore().leaderBoard.find(p => p.playerId === element.creatorId);
+            const player = newRows.find(p => p.playerId === element.creatorId);
             if (player) {
                 if (Number(element.columnValues["2"]) > Number(player.score)) {
-                    getStore().leaderBoard.find(p => p.playerId === element.creatorId).score = element.columnValues["2"]
+                    newRows.find(p => p.playerId === element.creatorId).score = element.columnValues["2"]
                 }
             }
             else {
-                getStore().leaderBoard.push(
+                newRows.push(
                     {
                         playerId: element.creatorId,
                         playerName: element.columnValues["1"],
@@ -112,7 +113,8 @@ mutator(fetchLeaderBoard, (msg) => {
                 )
             }
         });
-        getStore().leaderBoard.sort(function (a, b) {
+        
+        getStore().leaderBoard = newRows.sort(function (a, b) {
             return Number(b.score) - Number(a.score);
         });
     }

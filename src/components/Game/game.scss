@@ -134,6 +134,10 @@
     @include resolve-dir(padding-right, 5px);
 }
 
+.checklist-checkbox .ge {
+    background-repeat: unset !important;
+}
+
 .checklist-input-completed-item {
     border-bottom-color: transparent !important;
 }

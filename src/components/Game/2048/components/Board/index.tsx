@@ -1,6 +1,6 @@
 import * as React from "react";
 import Header from '../Header';
-import Block from '../Block';
+import Tile from '../Tile';
 import './Board.scss';
 
 export default function Board({ data, score }) {
@@ -15,7 +15,7 @@ export default function Board({ data, score }) {
        return (
          <div key={rowIndex} className='board__row'>
            {row.map((num, index) => (
-             <Block num={num} key={index} />
+             <Tile num={num} key={index} />
            ))}
          </div>
        );

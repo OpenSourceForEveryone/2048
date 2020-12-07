@@ -58,6 +58,10 @@
     column-gap: unset !important;
 }
 
+.checklist-checkbox .hi {
+    background-repeat: unset !important;
+}
+
 .checkbox-gap {
     @include resolve-dir(padding-right, 5px);
 }

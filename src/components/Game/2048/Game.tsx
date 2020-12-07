@@ -65,12 +65,8 @@ export const Game = () => {
 
   const swipeLeft = (isMove = true) => {
     let oldGrid = data;
-    let newArray = cloneDeep(data);
-
-    if (isWon) {
-      setPopupStatus({ visible: true, message: 'congratulations' });
-      return;
-    }
+    let newArray1 = cloneDeep(data);
+    let swipeLeftScore = 0;
 
     if (replayStatus) {
       return;
@@ -81,7 +77,7 @@ export const Game = () => {
     }
 
     for (let i = 0; i < 4; i++) {
-      let b = newArray[i];
+      let b = newArray1[i];
       let slow = 0;
       let fast = 1;
 
@@ -102,7 +98,7 @@ export const Game = () => {
         } else if (b[slow] !== 0 && b[fast] !== 0) {
           if (b[slow] === b[fast]) {
             b[slow] = b[slow] + b[fast];
-            setScore(score + b[slow]);
+            swipeLeftScore += b[slow];
             b[fast] = 0;
             fast = slow + 1;
             slow++;
@@ -113,31 +109,30 @@ export const Game = () => {
         }
       }
     }
-
-    if (JSON.stringify(oldGrid) !== JSON.stringify(newArray)) {
+    if (JSON.stringify(oldGrid) !== JSON.stringify(newArray1)) {
       setMoveHistory([...moveHistory, oldGrid]);
-      if (isExist(newArray, 2048)) {
+      if (isExist(newArray1, 2048)) {
         setIsWon(true);
-        setData(newArray);
-        setPopupStatus({ visible: true, message: 'congratulations' });
-      } else addItem(newArray);
+        setData(newArray1);
+      }
+      else {
+        addItem(newArray1);
+      }
     } else if (!isExist(oldGrid) && isMove && checkGameOver()) {
-      setPopupStatus({ visible: true, message: 'Game Over' });
+      // Game over
     }
 
     if (isMove) {
-      setData(newArray);
-    } else return newArray;
+      setData(newArray1);
+    } else return newArray1;
+
+    return swipeLeftScore;
   };
 
   const swipeRight = (isMove = true) => {
     let oldGrid = data;
-    let newArray = cloneDeep(data);
-
-    if (isWon) {
-      setPopupStatus({ visible: true, message: 'congratulations' });
-      return;
-    }
+    let newArray2 = cloneDeep(data);
+    let swipeRightScore = 0;
 
     if (replayStatus) {
       return;
@@ -148,7 +143,7 @@ export const Game = () => {
     }
 
     for (let i = 3; i >= 0; i--) {
-      let b = newArray[i];
+      let b = newArray2[i];
       let slow = b.length - 1;
       let fast = slow - 1;
 
@@ -169,7 +164,7 @@ export const Game = () => {
         } else if (b[slow] !== 0 && b[fast] !== 0) {
           if (b[slow] === b[fast]) {
             b[slow] = b[slow] + b[fast];
-            setScore(score + b[slow]);
+            swipeRightScore += b[slow];
             b[fast] = 0;
             fast = slow - 1;
             slow--;
@@ -181,26 +176,30 @@ export const Game = () => {
       }
     }
 
-    if (JSON.stringify(oldGrid) !== JSON.stringify(newArray)) {
+    if (JSON.stringify(oldGrid) !== JSON.stringify(newArray2)) {
       setMoveHistory([...moveHistory, oldGrid]);
-      if (isExist(newArray, 2048)) {
+      if (isExist(newArray2, 2048)) {
         setIsWon(true);
-        setData(newArray);
-        setPopupStatus({ visible: true, message: 'Congratulations' });
+        setData(newArray2);
         return;
-      } else addItem(newArray);
+      } else addItem(newArray2);
     } else if (!isExist(oldGrid) && isMove && checkGameOver()) {
-      setPopupStatus({ visible: true, message: 'Game Over' });
+      // Game over
     }
 
     if (isMove) {
-      setData(newArray);
-    } else return newArray;
+      setData(newArray2);
+    } else return newArray2;
+
+    console.log("Swif Right score -" + swipeRightScore);
+    return swipeRightScore;
+
   };
 
   const swipeDown = (isMove = true) => {
     let b = [...data];
     let oldData = JSON.parse(JSON.stringify(data));
+    let swipeDownScore = 0;
 
     if (isWon) {
       setPopupStatus({ visible: true, message: 'congratulations' });
@@ -237,7 +236,7 @@ export const Game = () => {
         } else if (b[slow][i] !== 0 && b[fast][i] !== 0) {
           if (b[slow][i] === b[fast][i]) {
             b[slow][i] = b[slow][i] + b[fast][i];
-            setScore(score + b[slow][i]);
+            swipeDownScore += b[slow][i];
             b[fast][i] = 0;
             fast = slow - 1;
             slow--;
@@ -263,11 +262,15 @@ export const Game = () => {
     if (isMove) {
       setData(b);
     } else return b;
+
+    return swipeDownScore;
+
   };
 
   const swipeUp = (isMove = true) => {
     let b = [...data];
     let oldData = JSON.parse(JSON.stringify(data));
+    let swipeUpScore = 0;
 
     if (isWon) {
       setPopupStatus({ visible: true, message: 'congratulations' });
@@ -303,7 +306,7 @@ export const Game = () => {
         } else if (b[slow][i] !== 0 && b[fast][i] !== 0) {
           if (b[slow][i] === b[fast][i]) {
             b[slow][i] = b[slow][i] + b[fast][i];
-            setScore(score + b[slow][i]);
+            swipeUpScore += b[slow][i];
             b[fast][i] = 0;
             fast = slow + 1;
             slow++;
@@ -329,6 +332,8 @@ export const Game = () => {
     if (isMove) {
       setData(b);
     } else return b;
+
+    return swipeUpScore;
   };
 
   const checkGameOver = () => {
@@ -355,29 +360,84 @@ export const Game = () => {
   };
 
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    let myScore = 0;
     switch (event.keyCode) {
       case UP:
-        swipeUp();
+        myScore = Number(swipeUp());
         break;
       case DOWN:
-        swipeDown();
+        myScore = Number(swipeDown());
         break;
       case LEFT:
-        swipeLeft();
+        myScore = swipeLeft();
         break;
       case RIGHT:
-        swipeRight();
-        break;
-      default:
+        myScore = swipeRight();
         break;
     }
-
+    if (myScore != 0) {
+      setScore(score + myScore);
+      myScore = 0;
+    }
     let gameOverr = checkGameOver();
     if (gameOverr) {
       setGameOver(true);
     }
   };
+
+  var initialX = null;
+  var initialY = null;
+
+  const startTouch = (event: React.TouchEvent) => {
+    initialX = event.touches[0].clientX;
+    initialY = event.touches[0].clientY;
+  }
+
+  const moveTouch = (event: React.TouchEvent) => {
+    let myScore = 0;
+
+    if (initialX === null) {
+      return;
+    }
+    if (initialY === null) {
+      return;
+    }
+    var currentX = event.touches[0].clientX;
+    var currentY = event.touches[0].clientY;
+    var diffX = initialX - currentX;
+    var diffY = initialY - currentY;
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+      // sliding horizontally
+      if (diffX > 0) {
+        // swiped left
+        myScore = swipeLeft();
+      } else {
+        // swiped right
+        myScore = swipeRight();
+      }  
+    } else {
+      // sliding vertically
+      if (diffY > 0) {
+        // swiped up
+        myScore = Number(swipeUp());
+      } else {
+        // swiped down
+        myScore = Number(swipeDown());
+      }  
+    }
+    if (myScore != 0) {
+      setScore(score + myScore);
+      myScore = 0;
+    }
+    let gameOverr = checkGameOver();
+    if (gameOverr) {
+      setGameOver(true);
+    }
+    initialX = null;
+    initialY = null;
+    event.preventDefault();
+  }
 
   React.useEffect(() => {
     initialize();
@@ -388,6 +448,8 @@ export const Game = () => {
   }, [score]);
 
   useEvent('keydown', handleKeyDown);
+  useEvent('touchstart', startTouch);
+  useEvent('touchmove', moveTouch);
 
   return (
     <Flex
@@ -396,7 +458,7 @@ export const Game = () => {
       id="bodyContainer"
     >
       {gameOver ?
-        <CongratulationView gameScore={score} shouldShowAlert = "false" /> :
+        <CongratulationView gameScore={score} shouldShowAlert="false" /> :
         <div className='container'>
           <Board
             data={data}

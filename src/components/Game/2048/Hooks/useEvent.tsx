@@ -5,7 +5,7 @@ const useEvent = (event, handler, passive = false) => {
     window.addEventListener(event, handler, passive);
 
     return () => {
-      window.removeEventListener(event, handler, passive);
+      window.removeEventListener(event, handler);
     };
   });
 };
