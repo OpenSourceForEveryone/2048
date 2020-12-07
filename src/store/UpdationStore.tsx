@@ -1,39 +1,36 @@
-import { ProgressState } from "./../utils/SharedEnum";
 import { createStore } from "satcheljs";
-export enum GameView {
-    InstructionView,
-    Game,
-    CongratuationView
-}
+import "../mutator/UpdateMutator";
+import "../orchestrators/UpdateOrchestrator";
+import * as actionSDK from "@microsoft/m365-action-sdk";
+import { ProgressState } from "../utils/SharedEnum";
 
-interface IGameUpdateStore {
+/**
+ * Updation store containing all data required when user play the game.
+ */
+
+interface IGameUpdationStore {
     context: actionSDK.ActionSdkContext;
     actionInstance: actionSDK.Action;
-    actionInstanceRows: actionSDK.ActionDataRow[];
+    actionInstanceRowsForCurrentUser: actionSDK.ActionDataRow[];
     shouldValidate: boolean;
-    shouldShowInstruction: boolean;
     progressState: ProgressState;
-    score: actionSDK.ActionDataRow;
     isActionDeleted: boolean;
-    page: GameView;
-    continuationToken: string;
-    shouldUserPlay: boolean;
+    shouldPlayerPlay: boolean;
     playerPrevScore: string;
-};
+    PlayerCurrentScore: string;
+}
 
-const store: IGameUpdateStore = {
+const store: IGameUpdationStore = {
     context: null,
     shouldValidate: false,
     actionInstance: null,
-    actionInstanceRows: null,
-    progressState: ProgressState.Completed,
+    actionInstanceRowsForCurrentUser: null,
+    progressState: ProgressState.NotStarted,
     isActionDeleted: false,
-    score: null,
-    page: GameView.InstructionView,
-    shouldUserPlay: true,
+    shouldPlayerPlay: true,
     playerPrevScore: null,
-    shouldShowInstruction: true,
-    continuationToken: null,
-}
+    PlayerCurrentScore: null
 
-export default createStore<IGameUpdateStore>("updationStore", store);
+};
+
+export default createStore<IGameUpdationStore>("updationStore", store);

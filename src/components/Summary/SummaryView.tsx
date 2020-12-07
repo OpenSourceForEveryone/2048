@@ -48,7 +48,7 @@ export default class SummaryView extends React.Component<any, any> {
     }
     private getLeaderBoard(): JSX.Element {
         return (
-            getStore().shouldShowLeaderBoard ? 
+            getStore().isLeaderBoardVisible ? 
             <Flex className="settings-item-margin" role="group" aria-label="Leaderboard" column gap="gap.smaller">
                 <label className="settings-item-title" style={{ paddingTop: '16px', display:'block', paddingBottom:'0px !important' }}>{Localizer.getString("LeaderboardInSummaryView")}</label>
                 <LeaderBoardView NoOneHasResponded = {Localizer.getString("NoOneHasResponded")} />

@@ -1,22 +1,41 @@
 import { orchestrator } from "satcheljs";
-import * as actionSDK from "@microsoft/m365-action-sdk";
-import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 import {
     initialize,
+    setContext,
+    setActionInstance,
+    fetchActionInstanceRowsForCurrentUser,
     setProgressState,
-    addScore,
-    setContext
-
 } from "../actions/UpdateAction";
 import { Localizer } from "../utils/Localizer";
 import { ProgressState } from "../utils/SharedEnum";
-import getStore from "../store/UpdationStore";
+import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 
 orchestrator(initialize, async () => {
     let actionContext = await ActionSdkHelper.getActionContext();
-    setContext(actionContext.context);
+    if (actionContext.success) {
+        setContext(actionContext.context);
+        let actionInstance = await ActionSdkHelper.getAction(actionContext.context.actionId)
+        let localizer = await Localizer.initialize();
+        if (localizer && actionInstance.success) {
+            setActionInstance(actionInstance.action);
+            setProgressState(ProgressState.InProgress);
+            const dataRow = await ActionSdkHelper.getActionDataRows(actionContext.context.actionId, actionContext.context.userId);
+            if(dataRow.success){
+                fetchActionInstanceRowsForCurrentUser(dataRow.dataRows);
+                setProgressState(ProgressState.Completed);
+            }
+        } 
+        else 
+        {
+            setProgressState(ProgressState.Failed);
+        }
+    } 
+    else 
+    {
+        setProgressState(ProgressState.Failed);
+    }
 });
 
-orchestrator(addScore, async (msg) => {
-    await ActionSdkHelper.addDataRow(msg.actionDataRow)
-});
+
+
+

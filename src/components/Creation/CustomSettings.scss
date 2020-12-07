@@ -104,6 +104,7 @@
 
 .summaryview .settings-item-title {
     padding-bottom: 8px !important;
+    margin-bottom: 0px !important;
 }
 
 .summaryview .summary-header span+span {
@@ -215,6 +216,51 @@
     font-weight: var(--font-weight-600);
 }
 
+.game-creation-settings .date-input-view {
+    width: 50%;
+    padding-right: 4px;
+}
+
+.game-creation-settings .time-input-view {
+    width: 50%;
+    padding-left: 4px;
+}
+
+.game-creation-settings .dg> :not(:last-child) {
+    margin-right: 0rem;
+}
+
+.ui-button.hv {
+    min-width: auto;
+}
+
+
+/* Media queries - Responsive timeline on screens less than 600px wide */
+
+@media screen and (max-width: 580px) {
+    .game-creation-settings .settings-item-title {
+        margin-top: 16px;
+        margin-bottom: 8px !important;
+        display: block;
+    }
+    body[dir="ltr"].footer-layout,
+    body[dir="ltr"] .footer-layout {
+        padding-right: 16px !important;
+    }
+    body[dir="ltr"].footer-layout,
+    body[dir="ltr"] .footer-layout {
+        padding-left: 16px !important;
+    }
+    body[dir="ltr"].footer-layout::before,
+    body[dir="ltr"] .footer-layout::before {
+        right: 0px !important;
+    }
+    body[dir="ltr"].footer-layout::before,
+    body[dir="ltr"] .footer-layout::before {
+        left: 0px !important;
+    }
+}
+
 @media screen and (max-width: 576px) {
     .App {
         transform: translate3d(-50%, -50%, 0);
@@ -222,16 +268,5 @@
         height: calc(320px);
         top: 50%;
         left: 50%;
-    }
-}
-
-@media screen and (min-width: 576px) {
-    .date-input-view {
-        width: 50%;
-        cursor: pointer;
-    }
-    .time-input-view {
-        width: 50%;
-        cursor: pointer;
     }
 }

@@ -3,7 +3,7 @@
 
 import { mutator } from "satcheljs";
 import {
-    setContext, setSendingFlag, goToPage, updateTitle, updateSettings, shouldValidateUI, setProgressState, showBlankTitleError
+    setContext, setSendingFlag, goToPage, updateTitle, updateSettings, shouldValidateUI, setProgressState
 } from "./../actions/CreationActions";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { Utils } from "../utils/Utils";
@@ -44,7 +44,6 @@ mutator(shouldValidateUI, (msg) => {
 
 mutator(updateTitle, (msg) => {
     const store = getStore();
-    store.showBlankTitleError = false;
     store.title = msg.title;
 });
 
@@ -56,10 +55,4 @@ mutator(updateSettings, (msg) => {
 mutator(setProgressState, (msg) => {
     const store = getStore();
     store.progressState = msg.state;
-});
-
-
-mutator(showBlankTitleError, (msg) => {
-    const store = getStore();
-    store.showBlankTitleError =msg.blankTitleError;
 });

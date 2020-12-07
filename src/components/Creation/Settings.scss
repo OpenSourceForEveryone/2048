@@ -54,7 +54,14 @@
     }
   }
 
-  .checklist-checkbox {
+.checklist-checkbox {
     column-gap: unset !important;
-    padding: "2px 12px 0px 0px"
+}
+
+.checkbox-gap {
+    @include resolve-dir(padding-right, 5px);
+}
+
+.checklist-input-completed-item {
+    border-bottom-color: transparent !important;
 }

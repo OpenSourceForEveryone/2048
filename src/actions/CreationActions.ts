@@ -12,8 +12,6 @@ export enum GameCreationAction {
     setContext = "setContext",
     updateTitle = "updateTitle",
     updateSettings = "updateSettings",
-    updateAllowMultiplePlaySetting = "updateAllowMultipleSetting",
-    updateLeaderBoardVisibilitySettings = "updateLeaderBoardVisibilitySettings",
     shouldValidateUI = "shouldValidateUI",
     setSendingFlag = "setSendingFlag",
     setProgressState = "setProgressState",
@@ -52,6 +50,3 @@ export let shouldValidateUI = action(GameCreationAction.shouldValidateUI, (shoul
     shouldValidate: shouldValidate
 }));
 
-export let showBlankTitleError = action( GameCreationAction.showBlankTitleError, (blankTitleError: boolean) => ({
-     blankTitleError: blankTitleError 
-}));

@@ -126,3 +126,16 @@
     }
 }
 
+.checklist-checkbox {
+    column-gap: unset !important;
+}
+
+.checkbox-gap {
+    @include resolve-dir(padding-right, 5px);
+}
+
+.checklist-input-completed-item {
+    border-bottom-color: transparent !important;
+}
+
+

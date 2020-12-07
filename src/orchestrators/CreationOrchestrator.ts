@@ -74,7 +74,7 @@ orchestrator(callActionInstanceCreationAPI, async () => {
         valueType: actionSDK.ActionDataColumnValueType.Text,
         displayName: "gamePlayer",
     };
-
+    
     actionInstance.dataTables[0].dataColumns.push(gameSetting);
     actionInstance.dataTables[0].dataColumns.push(gameScore);
     actionInstance.dataTables[0].dataColumns.push(gamePlayer);

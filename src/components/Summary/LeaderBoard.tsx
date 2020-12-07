@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import * as React from "react";
-import getStore, { LeaderBoard, MyGameScore } from "../../store/SummaryStore";
+import getStore, { LeaderBoard } from "../../store/SummaryStore";
 import "./summary.scss";
 import {
     List

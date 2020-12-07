@@ -51,6 +51,8 @@
    "_GameActiveString.comment": "{0} indicates expiry date of the game",
    "YourScoreInSummaryView":"Your score",
    "_YourScoreInSummaryView.comment":"label indicates your score timeline heading in summary view",
+   "YourScoreOnCongratulationPage" : "Your score: ",
+   "_YourScoreOnCongratulationPage.comment" : "label to indicate the string identifier on Congratulation Page",
    "LeaderboardInSummaryView":"Leaderboard",
    "_LeaderboardInSummaryView.comment":"label indicates your leaderboard heading in summary view",
    "LoadMore": "Load more score",

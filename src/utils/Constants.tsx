@@ -14,6 +14,9 @@ export class Constants {
     public static readonly ACTION_RESULT_FILE_NAME_MAX_LENGTH: number = 50;
     public static readonly GAME_TITLE_MAX_LENGTH: number = 240;
 
+    public static readonly GAME_LOGO_PATH: String = "https://www.webcraft.co.in/teams-ic/2048/AppIcon.png"
+    public static readonly GAME_CONGRATULATION_IMAGE_PATH = "https://www.webcraft.co.in/teams-ic/2048/trophy.png"
+
     public static readonly FOCUSABLE_ITEMS = {
         All: ["a[href]", "area[href]", "input:not([disabled])", "select:not([disabled])", "textarea:not([disabled])", "button:not([disabled])", '[tabindex="0"]'],
         LINK: "a[href]",

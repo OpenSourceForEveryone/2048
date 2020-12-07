@@ -1,11 +1,10 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { Avatar, Card, Flex, Text, Divider, Checkbox, FlexItem, Button } from '@fluentui/react-northstar';
+import { Avatar, Card, Flex, Text, Checkbox, FlexItem, Button } from '@fluentui/react-northstar';
 import "./game.scss";
-import getStore from "./../../store/UpdationStore";
 import {UxUtils} from "../../utils/UxUtils"
-import { Localizer } from "../../utils/Localizer";
 import Game from "./2048/Game";
+import { Constants } from "../../utils/Constants";
 
 @observer
 export default class InstructionView extends React.Component<any, any> {
@@ -40,16 +39,16 @@ export default class InstructionView extends React.Component<any, any> {
                     <Card.Header fitted>
                         <Flex gap="gap.small">
                             <Flex column>
-                                <Avatar image="https://www.webcraft.co.in/teams-ic/2048/AppIcon.png" label="2048" name="Evie yundt" size="larger" />
+                                <Avatar image={Constants.GAME_LOGO_PATH} label="2048" name="Evie yundt" size="larger" />
                             </Flex>
                             <Flex column>
-                                <Text content="How To Play" weight="bold" size="large" />
-                                <Text content="Use arrow key to move the tiles. Attaching two tiles with the same number will merge them into one!" styles={{ paddingTop: "4px" }} />
+                                <Text content={this.props.HowToPlay} weight="bold" size="large" />
+                                <Text content={this.props.InstructionContent} styles={{ paddingTop: "4px" }} />
                             </Flex>
                         </Flex>
                     </Card.Header>
                 </Card>
-                <Checkbox label="Don't show me the game instruction again." className="checklist-checkbox" styles={{ padding: "16px" }} 
+                <Checkbox className="checklist-checkbox" label={this.props.DontShowTheGameInstruction} styles={{ padding: "16px" }} 
                 onChange = {
                     () => {
                         UxUtils.setLocaStorge()
@@ -58,7 +57,6 @@ export default class InstructionView extends React.Component<any, any> {
             </div>
         );
     }
-
     renderFooterSection(isMobileView?: boolean): JSX.Element {
         let className = isMobileView ? "" : "footer-layout";
         return (
@@ -74,17 +72,5 @@ export default class InstructionView extends React.Component<any, any> {
                 </FlexItem>
             </Flex>
         );
-    }
-
-    getInstructionContent(): string 
-    {
-        if(UxUtils.renderingForMobile())
-        {
-            return Localizer.getString("HowToPlayForMobile");
-        }
-        else
-        {
-            return Localizer.getString("HowToPlayForDesktop");
-        }
     }
 }

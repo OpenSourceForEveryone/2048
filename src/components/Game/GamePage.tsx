@@ -11,8 +11,9 @@ import { ProgressState } from "./../../utils/SharedEnum";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 import InstructionView from "./InstructionView";
 import { UxUtils } from "../../utils/UxUtils";
-import { Loader } from "@fluentui/react-northstar";
+import { Flex, Loader } from "@fluentui/react-northstar";
 import Game from "./2048/Game"
+import CongratulationView from "./CongrtulationView";
 /**
  * 
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
@@ -21,8 +22,6 @@ import Game from "./2048/Game"
 export default class GamePage extends React.Component<any, any> {
     render() {
         let hostContext: actionSDK.ActionSdkContext = getStore().context;
-        console.log("Host context --" + hostContext);
-        
         if (hostContext) {
             ActionSdkHelper.hideLoadingIndicator();
         } else {
@@ -57,20 +56,59 @@ export default class GamePage extends React.Component<any, any> {
             ActionSdkHelper.hideLoadingIndicator();
         }
 
-        if (UxUtils.shouldShowInstructionPage()) {
-            return this.getInstructionPage();
+        if (getStore().shouldPlayerPlay) {
+            if (UxUtils.shouldShowInstructionPage()) {
+                return this.getInstructionPage();
+            }
+            else {
+                return this.getGamePage();
+            }
         }
         else {
-            return this.getGamePage();
+            return this.getCongratulationPage();
         }
     }
     /**
-     * Method to return the view based on the user selection
-     */
+     * Method to return the view based on the game settings
+    **/
+
     private getGamePage(): JSX.Element {
         return <Game />;
     }
     private getInstructionPage(): JSX.Element {
-        return <InstructionView />
+        return (<InstructionView 
+            DontShowTheGameInstruction = {Localizer.getString("DontShowTheGameInstruction")}
+            InstructionContent = {this.getInstructionContent()}
+            HowToPlay = {Localizer.getString("HowToPlay")}
+            />);
+    }
+
+    private getCongratulationPage(): JSX.Element {
+        return (
+            <Flex
+                column
+                className="body-container"
+                id="bodyContainer"
+            >
+                <CongratulationView gameScore={getStore().playerPrevScore} shouldShowAlert="true" />
+            </Flex>
+        );
+    }
+
+    getInstructionContent(): string 
+    {
+        if(UxUtils.renderingForMobile())
+        {
+            return Localizer.getString("HowToPlayForMobile");
+        }
+        else
+        {
+            return Localizer.getString("HowToPlayForDesktop");
+        }
+    }
+
+    
+    delay(ms: number) {
+        return new Promise( resolve => setTimeout(resolve, ms) );
     }
 }

@@ -396,7 +396,7 @@ export const Game = () => {
       id="bodyContainer"
     >
       {gameOver ?
-        <CongratulationView gameScore={score} /> :
+        <CongratulationView gameScore={score} shouldShowAlert = "false" /> :
         <div className='container'>
           <Board
             data={data}

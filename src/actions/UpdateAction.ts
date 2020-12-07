@@ -5,17 +5,16 @@ import { ProgressState } from "../utils/SharedEnum";
 export enum GameUpdationAction {
     initialize = "initialize",
     setContext = "setContext",
-    updateActionInstance = "updateActionInstance",
+    setActionInstance = "setActionInstance",
     fetchActionInstance = "fetchActionInstance",
-    fetchActionInstanceRows = "fetchActionInstanceRows",
+    fetchActionInstanceRowsForCurrentUser = "fetchActionInstanceRowsForCurrentUser",
     shouldValidateUI = "shouldValidateUI",
-    fetchActionInstanceRowsUserDetails = "fetchActionInstanceRowsUserDetails",
     setSendingFlag = "setSendingFlag",
     setProgressState = "setProgressState",
     setIsActionDeleted = "setIsActionDeleted",
-    setIsUserAllowedForMultipleTimePlay = "setIsUserAllowedForMultipleTimePlay",
+    setPreviousScore = "setPreviousScore",
     addScore = "addScore",
-    setPlayerPrevScore = "setPlayerPrevScore",
+    setShouldPlayerPlay = "setShouldPlayerPlay"
 }
 
 export let initialize = action(GameUpdationAction.initialize);
@@ -25,34 +24,23 @@ export let setContext = action(
     (context: actionSDK.ActionSdkContext) => ({ context: context })
 );
 
-export let fetchActionInstance = action(
-    GameUpdationAction.fetchActionInstance
-);
+export let setActionInstance = action(
+    GameUpdationAction.setActionInstance, (actionInstance: actionSDK.Action) => ({
+        actionInstance: actionInstance
+    }));
 
-export let addScore = action(
-    GameUpdationAction.addScore, (actionDataRow: actionSDK.ActionDataRow) => ({
-    actionDataRow: actionDataRow
-}))
+export let setShouldPlayerPlay = action(GameUpdationAction.setShouldPlayerPlay);
+export let setPreviousScore = action(GameUpdationAction.setPreviousScore);
 
-export let setPlayerPrevScore = action(GameUpdationAction.setPlayerPrevScore, (prevScore: string) => ({
-    prevScore: prevScore
-}))
+export let fetchActionInstanceRowsForCurrentUser = action(
+    GameUpdationAction.fetchActionInstanceRowsForCurrentUser, (actionInstanceRow: actionSDK.ActionDataRow[]) => ({
+        actionInstanceRow: actionInstanceRow
+    }));
 
-export let setIsUserAllowedForMultipleTimePlay = action(
-    GameUpdationAction.setIsUserAllowedForMultipleTimePlay
-);
 
-export let fetchActionInstanceRows = action(
-    GameUpdationAction.fetchActionInstanceRows
-);
-
-export let updateActionInstance = action(
-    GameUpdationAction.updateActionInstance
-);
-
-export let fetchActionInstanceRowsUserDetails = action(
-    GameUpdationAction.fetchActionInstanceRowsUserDetails,
-    (userIds: string[]) => ({ userIds: userIds })
+export let shouldValidateUI = action(
+    GameUpdationAction.shouldValidateUI,
+    (shouldValidate: boolean) => ({ shouldValidate: shouldValidate })
 );
 
 export let setSendingFlag = action(
@@ -67,9 +55,4 @@ export let setProgressState = action(GameUpdationAction.setProgressState, (state
 export let setIsActionDeleted = action(
     GameUpdationAction.setIsActionDeleted,
     (value: boolean) => ({ value: value })
-);
-
-export let shouldValidateUI = action(
-    GameUpdationAction.shouldValidateUI,
-    (shouldValidate: boolean) => ({ shouldValidate: shouldValidate })
 );

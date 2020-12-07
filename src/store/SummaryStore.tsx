@@ -47,7 +47,6 @@ interface IGameSummaryStore {
     title: string;
     scoreBoard: MyGameScore[],
     leaderBoard: LeaderBoard[],
-    shouldShowLeaderBoard: boolean,
     isGameExpired: boolean,
     currentView: ViewType;
     continuationToken: string;
@@ -63,6 +62,8 @@ interface IGameSummaryStore {
     progressStatus: SummaryProgressStatus;
     isActionDeleted: boolean;
     local: string;
+    isLeaderBoardVisible: boolean;
+
 }
 
 const store: IGameSummaryStore = {
@@ -78,7 +79,6 @@ const store: IGameSummaryStore = {
     actionInstanceRows: [],
     continuationToken: null,
     showMoreOptionsList: false,
-    shouldShowLeaderBoard: true,
     isGameExpired: false,
     isPollCloseAlertOpen: false,
     isChangeExpiryAlertOpen: false,
@@ -101,7 +101,8 @@ const store: IGameSummaryStore = {
         currentContext: ProgressState.NotStarted,
     },
     isActionDeleted: false,
-    local: "en-us"
+    local: "en-us",
+    isLeaderBoardVisible: false
 };
 
 export default createStore<IGameSummaryStore>("summaryStore", store);

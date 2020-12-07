@@ -10,7 +10,7 @@ import { InputBox } from "../InputBox";
 import getStore, { Page } from "./../../store/CreationStore";
 import { Constants } from "../../utils/Constants";
 import {
-    updateTitle, shouldValidateUI
+    updateTitle, shouldValidateUI, updateSettings
 } from "./../../actions/CreationActions";
 import "./Settings.scss";
 import "./CustomSettings.scss";
@@ -41,7 +41,7 @@ export interface ISettingsComponentStrings {
  * <Settings> Settings component of creation view of game
  */
 
- @observer
+@observer
 export class Settings extends React.PureComponent<ISettingsComponentProps> {
     private settingProps: ISettingsComponentProps;
     private checklistTitleRef: HTMLElement;
@@ -73,7 +73,7 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
             resultVisibility: this.props.resultVisibility,
             shouldShowGametitleAlert: this.props.shouldShowGametitleAlert
         };
-        
+
         return (
             <Flex className="body-container" column gap="gap.medium">
                 {this.renderSettings()}
@@ -86,7 +86,7 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
      */
     private renderSettings() {
         return (
-            <Flex column className = "game-creation-settings">
+            <Flex column className="game-creation-settings">
                 {this.renderGameTitleSection()}
                 {this.renderDueBySection()}
                 {this.renderAdditionalSettingsSection()}
@@ -107,7 +107,7 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
                     }}
                     placeholder={Localizer.getString("TitlePlaceHoler")}
                     aria-placeholder={Localizer.getString("TitlePlaceHoler")}
-                    value = {getStore().title}
+                    value={getStore().title}
                     onChange={(e) => {
                         updateTitle((e.target as HTMLInputElement).value);
                         shouldValidateUI(false); // setting this flag to false to not validate input everytime value changes
@@ -145,9 +145,9 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
             return (
                 <Flex column>
                     <Flex className="settings-item-margin"
-                     role="group" 
-                     aria-label="additionlsettings"
-                     column gap="gap.smaller" style={{ padding: "32px 0px 0px 0px" }}>
+                        role="group"
+                        aria-label="additionlsettings"
+                        column gap="gap.smaller" style={{ padding: "32px 0px 0px 0px" }}>
                         <Text content={Localizer.getString("GameTitleErrorAlert")} className="alert-danger" />
                     </Flex>
                 </Flex>
@@ -184,15 +184,17 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         return (
             <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
+                 className="checklist-checkbox"
                     onChange={
                         () => {
                             this.settingProps.isMultiResponseAllowed = !this.settingProps.isMultiResponseAllowed,
                                 this.props.onChange(this.settingProps);
+                                updateSettings(this.settingProps)
                         }
                     }
-                    checked={this.props.isMultiResponseAllowed} />
+                    checked={getStore().settings.isMultiResponseAllowed} />
                 <Flex column>
-                    <Text content={Localizer.getString("AllowMultipleTimePlay")}  className="setting-header" />
+                    <Text content={Localizer.getString("AllowMultipleTimePlay")} className="setting-header" />
                     <Text content={Localizer.getString("AllowMultipleTimePlaySubstring")} className="setting-sub-text" />
                 </Flex>
             </Flex>
@@ -203,14 +205,15 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         return (
             <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
-                className= "checklist-checkbox"
+                    className="checklist-checkbox"
                     onChange={
                         () => {
-                                this.settingProps.resultVisibility = !this.settingProps.resultVisibility;
-                                this.props.onChange(this.settingProps); 
+                            this.settingProps.resultVisibility = !this.settingProps.resultVisibility;
+                            this.props.onChange(this.settingProps);
+                            updateSettings(this.settingProps)
                         }
                     }
-                    checked={this.props.resultVisibility}
+                    checked={getStore().settings.resultVisibility}
                 />
                 <Flex column>
                     <Text content={Localizer.getString("LeaderBoardSetting")} className="setting-header" />
