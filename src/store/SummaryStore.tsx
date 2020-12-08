@@ -26,17 +26,11 @@ export interface LeaderBoard {
 
 export interface SummaryProgressStatus {
     actionInstance: ProgressState;
-    actionInstanceSummary: ProgressState;
-    memberCount: ProgressState;
-    nonResponder: ProgressState;
-    localizationState: ProgressState;
-    actionInstanceRow: ProgressState;
-    myActionInstanceRow: ProgressState;
-    downloadData: ProgressState;
-    closeActionInstance: ProgressState;
-    deleteActionInstance: ProgressState;
-    updateActionInstance: ProgressState;
     currentContext: ProgressState;
+    settingInstance: ProgressState;
+    leaderboardDatAInstance: ProgressState;
+    myScoreDataInstance: ProgressState;
+    localizationInstance: ProgressState;
 }
 
 interface IGameSummaryStore {
@@ -88,17 +82,11 @@ const store: IGameSummaryStore = {
     memberCount: null,
     progressStatus: {
         actionInstance: ProgressState.NotStarted,
-        actionInstanceSummary: ProgressState.NotStarted,
-        memberCount: ProgressState.NotStarted,
-        nonResponder: ProgressState.NotStarted,
-        localizationState: ProgressState.NotStarted,
-        actionInstanceRow: ProgressState.NotStarted,
-        myActionInstanceRow: ProgressState.NotStarted,
-        downloadData: ProgressState.NotStarted,
-        closeActionInstance: ProgressState.NotStarted,
-        deleteActionInstance: ProgressState.NotStarted,
-        updateActionInstance: ProgressState.NotStarted,
         currentContext: ProgressState.NotStarted,
+        settingInstance: ProgressState.NotStarted,
+        leaderboardDatAInstance: ProgressState.NotStarted,
+        myScoreDataInstance: ProgressState.NotStarted,
+        localizationInstance: ProgressState.NotStarted 
     },
     isActionDeleted: false,
     local: "en-us",

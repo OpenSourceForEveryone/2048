@@ -99,7 +99,6 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         return (
             <Flex className="settings-item-margin" role="group" aria-label="additionlsettings" column gap="gap.smaller">
                 <InputBox
-                    required
                     fluid
                     maxLength={Constants.GAME_TITLE_MAX_LENGTH}
                     input={{
@@ -125,7 +124,7 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         return (
             <Flex role="group" aria-label={this.getString("dueBy")} column gap="gap.smaller">
                 <label className="settings-item-title">{Localizer.getString("EndDate")}</label>
-                <DateTimePickerView
+                <DateTimePickerView showTimePicker
                     minDate={new Date()}
                     locale={this.props.locale}
                     value={new Date(this.props.dueDate)}
@@ -186,14 +185,15 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
                  className="checklist-checkbox"
                  aria-describedby = {Localizer.getString("AllowMultipleTimePlay")}
-                    onChange={
-                        (props) => {
-                            this.settingProps.isMultiResponseAllowed = !this.settingProps.isMultiResponseAllowed,
-                                this.props.onChange(this.settingProps);
-                                updateSettings(this.settingProps)
+                 checked={getStore().settings.isMultiResponseAllowed}
+                 onClick={
+                        () => {
+                            this.settingProps.isMultiResponseAllowed = !this.settingProps.isMultiResponseAllowed;
+                                //this.props.onChange(this.settingProps);
+                                updateSettings(this.settingProps);
                         }
                     }
-                    checked={getStore().settings.isMultiResponseAllowed} />
+                     />
                 <Flex column>
                     <Text content={Localizer.getString("AllowMultipleTimePlay")} className="setting-header" />
                     <Text content={Localizer.getString("AllowMultipleTimePlaySubstring")} className="setting-sub-text" />
@@ -208,14 +208,15 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
                 <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
                     className="checklist-checkbox"
                     aria-describedby = {Localizer.getString("LeaderBoardSetting")}
-                    onChange={
+                    checked={getStore().settings.resultVisibility}
+                    onClick={
                         () => {
                             this.settingProps.resultVisibility = !this.settingProps.resultVisibility;
-                            this.props.onChange(this.settingProps);
-                            updateSettings(this.settingProps)
+                            //this.props.onChange(this.settingProps);
+                            updateSettings(this.settingProps);
                         }
                     }
-                    checked={getStore().settings.resultVisibility}
+                    
                 />
                 <Flex column>
                     <Text content={Localizer.getString("LeaderBoardSetting")} className="setting-header" />

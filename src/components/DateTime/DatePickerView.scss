@@ -1,18 +1,21 @@
 @import "./../../scss/mixin.scss";
 
-.date-input-view {
+.date-input-view > input {
     width: 150px;
     cursor: pointer;
     .date-time-equal & {
         width: 100%;
     }
 }
+.calendar-icon {
+    cursor: pointer;
+}
 
-.date-input-view-mob {
+.date-input-view-mob > input {
     font-size: 16px;
 }
 
-.date-time-input {
+.date-input {
     width: 100%;
 }
 
@@ -65,12 +68,33 @@
     }
 }
 
+.dayIsDisabled {
+    background: #fff;
+    color: #c8c6c4;
+    .theme-dark & {
+        color: #605e5c;
+        background: #2d2c2c;
+    }
+    .theme-contrast & {
+        background: #000;
+        color: #fff;
+    }
+}
+
 .ms-DatePicker-day--disabled {
     .theme-dark & {
         color: #605e5c;
     }
 }
-
+.divider {
+    border-color: #edebe9 !important;
+    .theme-dark & {
+        border-color: #3b3a3a !important;
+    }
+    .theme-contrast & {
+        border-color: #000 !important;
+    }
+}
 .ms-DatePicker-day .ms-DatePicker-day--today,
 .ms-DatePicker-day .ms-DatePicker-day--today:active,
 .ms-DatePicker-day .ms-DatePicker-day--today:hover,

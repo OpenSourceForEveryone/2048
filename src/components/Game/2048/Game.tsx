@@ -43,8 +43,10 @@ export const Game = () => {
     message: '',
   });
 
-  // Inititalize
+  //let bodyContainer: React.RefObject<HTMLDivElement>;
+
   const initialize = () => {
+    //bodyContainer =React.createRef(); 
     let newGrid = cloneDeep(INITIAL_DATA);
     addItem(newGrid);
     addItem(newGrid);
@@ -457,6 +459,7 @@ export const Game = () => {
       column
       className="body-container"
       id="bodyContainer"
+      gap="gap.medium"
     >
       {gameOver ?
         <CongratulationView gameScore={score} shouldShowAlert="false" /> :

@@ -31,7 +31,7 @@ export default class InstructionView extends React.Component<any, any> {
         return (
             this.state.startGame ?
                 <Game /> :
-                <Flex className="body-container instruction" column gap="gap.medium">
+                <Flex className="body-container" column gap="gap.medium">
                     {this.renderInstruction()}
                     {this.renderFooterSection()}
                 </Flex>

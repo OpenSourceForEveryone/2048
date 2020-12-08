@@ -29,7 +29,7 @@ export class CheckBoxItems extends React.PureComponent<ICheckBoxComponentProps> 
   constructor(props: ICheckBoxComponentProps) {
     super(props);
   }
-
+  
   render() {
     this.checkBoxProps = {
       locale: this.props.locale,
@@ -38,39 +38,18 @@ export class CheckBoxItems extends React.PureComponent<ICheckBoxComponentProps> 
       heading: this.props.heading,
       subHeading: this.props.subHeading,
     };
-
-    if (this.props.renderForMobile) {
-      return
-      (<Flex styles={{ padding: '8px 16px 0px 0px' }}>
+    return (
+      <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
         <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }} 
         onClick = {
           () => {
-            this.props.onChange(this.checkBoxProps)
           }
-        }
-        />
+        }/>
         <Flex column>
           <Text content={this.props.heading} weight="semibold" size="medium" />
-          <Text content={this.props.subHeading} size="small" disabled />
+          <Text content={this.props.subHeading} size="medium" disabled />
         </Flex>
-      </Flex>);
-    }
-    else {
-      return (
-        <Flex styles={{ padding: '8px 16px 0px 0px' }} className="adjust-checkbox">
-          <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }} 
-          onClick = {
-            () => {
-
-            
-            }
-          }/>
-          <Flex column>
-            <Text content={this.props.heading} weight="semibold" size="medium" />
-            <Text content={this.props.subHeading} size="medium" disabled />
-          </Flex>
-        </Flex>
-      );
-    }
+      </Flex>
+    );
   }
 }

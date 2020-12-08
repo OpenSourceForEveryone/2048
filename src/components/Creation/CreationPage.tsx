@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import * as React from "react";
-import { callActionInstanceCreationAPI, updateSettings, goToPage } from "./../../actions/CreationActions";
+import { callActionInstanceCreationAPI, updateSettings } from "./../../actions/CreationActions";
 import "./creation.scss";
 import "./CustomSettings.scss";
 import "./Settings.scss";
 import getStore, { Page } from "./../../store/CreationStore";
 import { observer } from "mobx-react";
-import { Flex, FlexItem, Button, Loader, Text } from "@fluentui/react-northstar";
+import { Flex, FlexItem, Button, Loader } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
 import { ProgressState } from "./../../utils/SharedEnum";
 import { ErrorView } from "../ErrorView";
@@ -23,9 +23,6 @@ import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
  */
 @observer
 export default class CreationPage extends React.Component<any, any> {
-
-    private settingsFooterComponentRef: HTMLElement;
-    private validationErrorQuestionRef: HTMLElement;
     constructor(props) {
         super(props);
         this.state = {
@@ -40,9 +37,10 @@ export default class CreationPage extends React.Component<any, any> {
         }
         return true;
     }
+
     render() {
         let progressState = getStore().progressState;
-        if (progressState === ProgressState.NotStarted || progressState == ProgressState.InProgress) {
+        if (progressState === ProgressState.NotStarted || progressState === ProgressState.InProgress) {
             return <Loader />;
         } else if (progressState === ProgressState.Failed) {
             ActionSdkHelper.hideLoadingIndicator();
@@ -72,7 +70,6 @@ export default class CreationPage extends React.Component<any, any> {
         };
         return <Settings {...settingsProps} />;
     }
-
 
     /**
      * Helper function to provide footer for main page
@@ -105,7 +102,6 @@ export default class CreationPage extends React.Component<any, any> {
             </Flex>
         );
     }
-
 
     /**
      * Helper method to provide strings for settings view

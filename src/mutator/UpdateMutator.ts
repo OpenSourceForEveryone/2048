@@ -17,8 +17,12 @@ import * as actionSDK from "@microsoft/m365-action-sdk";
 
 mutator(setProgressState, (msg) => {
     const store = getStore();
-    store.progressState = msg.state;
+    store.progressState = {
+        ...getStore().progressState,
+        ...msg.status,
+    };
 });
+
 
 mutator(setContext, (msg) => {
     const store = getStore();
@@ -49,7 +53,6 @@ mutator(fetchActionInstanceRowsForCurrentUser, (msg) => {
     {
         store.shouldPlayerPlay = true;
     }
-    delay(5000);
 });
 
 mutator(shouldValidateUI, (msg) => {

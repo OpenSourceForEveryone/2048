@@ -1,6 +1,7 @@
 import { action } from "satcheljs";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ProgressState } from "../utils/SharedEnum";
+import { ResponseProgressStatus } from "../store/UpdationStore";
 
 export enum GameUpdationAction {
     initialize = "initialize",
@@ -48,8 +49,8 @@ export let setSendingFlag = action(
     (value: boolean) => ({ value: value })
 );
 
-export let setProgressState = action(GameUpdationAction.setProgressState, (state: ProgressState) => ({
-    state: state
+export let setProgressState = action(GameUpdationAction.setProgressState, (status: Partial<ResponseProgressStatus>) => ({
+    status: status
 }));
 
 export let setIsActionDeleted = action(

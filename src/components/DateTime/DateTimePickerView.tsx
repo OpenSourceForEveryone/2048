@@ -12,6 +12,7 @@ export interface IDateTimePickerViewProps {
     value?: Date;
     minDate?: Date;
     disabled?: boolean;
+    showTimePicker?: boolean;
     renderForMobile?: boolean;
     isPreview?: boolean;
     locale?: string;
@@ -23,9 +24,6 @@ export interface IDateTimePickerViewState {
     selectedTime: number;
 }
 
-/**
- * <DateTimePickerView> component to provide datetime input
- */
 export class DateTimePickerView extends React.Component<IDateTimePickerViewProps, IDateTimePickerViewState> {
 
     constructor(props: IDateTimePickerViewProps) {
@@ -75,35 +73,42 @@ export class DateTimePickerView extends React.Component<IDateTimePickerViewProps
         return (
             <Flex gap={this.props.renderForMobile ? null : "gap.small"} space={this.props.renderForMobile ? "between" : null}>
                 <DatePickerView {...props} />
-                <TimePickerView {...timePickerProps} />
+                {this.props.showTimePicker ? <TimePickerView {...timePickerProps} /> : null}
             </Flex>
         );
     }
 
     dateSelectCallback(newDate: Date) {
         let updatedDate = newDate;
-        if (this.getMinTimeInMinutes(newDate) <= this.state.selectedTime) {
-            updatedDate.setHours(Math.floor(this.state.selectedTime / 60));
-            updatedDate.setMinutes(this.state.selectedTime % 60);
+        if (this.props.showTimePicker) {
+            if (this.getMinTimeInMinutes(newDate) <= this.state.selectedTime) {
+                updatedDate.setHours(Math.floor(this.state.selectedTime / 60));
+                updatedDate.setMinutes(this.state.selectedTime % 60);
+                this.setState({
+                    selectedDate: updatedDate
+                });
+            } else {
+                let updatedHours = Math.floor(this.getMinTimeInMinutes(newDate) / 60);
+                let updatedMinutes = this.getMinTimeInMinutes(newDate) % 60;
+                if (updatedMinutes > 0 && updatedMinutes <= 30) {
+                    updatedMinutes = 30;
+                } else if (updatedMinutes > 31) {
+                    updatedHours += 1;
+                    updatedMinutes = 0;
+                }
+                updatedDate.setHours(updatedHours);
+                updatedDate.setMinutes(updatedMinutes);
+                this.setState({
+                    selectedDate: updatedDate,
+                    selectedTime: updatedHours * 60 + updatedMinutes
+                });
+            }
+        } else {
             this.setState({
                 selectedDate: updatedDate
             });
-        } else {
-            let updatedHours = Math.floor(this.getMinTimeInMinutes(newDate) / 60);
-            let updatedMinutes = this.getMinTimeInMinutes(newDate) % 60;
-            if (updatedMinutes > 0 && updatedMinutes <= 30) {
-                updatedMinutes = 30;
-            } else if (updatedMinutes > 31) {
-                updatedHours += 1;
-                updatedMinutes = 0;
-            }
-            updatedDate.setHours(updatedHours);
-            updatedDate.setMinutes(updatedMinutes);
-            this.setState({
-                selectedDate: updatedDate,
-                selectedTime: updatedHours * 60 + updatedMinutes
-            });
         }
+
         this.props.onSelect(updatedDate);
     }
 
@@ -121,8 +126,10 @@ export class DateTimePickerView extends React.Component<IDateTimePickerViewProps
         let isSelectedDateToday: boolean = false;
         let today = new Date();
         if (givenDate) {
-            isSelectedDateToday = givenDate.getDate() == today.getDate() && givenDate.getMonth() == today.getMonth()
-                && givenDate.getFullYear() == today.getFullYear();
+            isSelectedDateToday =
+                givenDate.getDate() == today.getDate() &&
+                givenDate.getMonth() == today.getMonth() &&
+                givenDate.getFullYear() == today.getFullYear();
         }
 
         let minTime: number = 0;

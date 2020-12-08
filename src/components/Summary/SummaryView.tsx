@@ -30,6 +30,7 @@ export default class SummaryView extends React.Component<any, any> {
                     className="body-container no-mobile-footer no-top-padding summaryview"
                     ref={this.bodyContainer}
                     id="bodyContainer"
+                    tabIndex={0}
                 >
                     {this.getTitleContainer()}
                     {this.getMyScores()}

@@ -23,16 +23,6 @@ export interface ITimePickerViewState {
     prevMinTimeInMinutes: number;
 }
 
-export interface TimePickerItem {
-    hours: number;
-    minutes: number;
-    value: string;
-    asString: string;
-}
-
-/**
- * <TimePickerView> Component to provide time input
- */
 export class TimePickerView extends React.Component<ITimePickerViewProps, ITimePickerViewState> {
     private timeInputRef: HTMLElement;
 
@@ -58,8 +48,7 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
         }
         let timePickerList: TimePickerItem[] = TimePickerView.getTimePickerList(props.minTimeInMinutes, props.locale);
         return {
-            selectedTimePickerItem: TimePickerView.listContainsItem(timePickerList, state.selectedTimePickerItem)
-                ? state.selectedTimePickerItem : timePickerList[0],
+            selectedTimePickerItem: TimePickerView.listContainsItem(timePickerList, state.selectedTimePickerItem) ? state.selectedTimePickerItem : timePickerList[0],
             timePickerItemsList: timePickerList,
             prevMinTimeInMinutes: props.minTimeInMinutes
         };
@@ -69,10 +58,10 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
         let timePickerList: TimePickerItem[] = [];
         for (let i = 0; i < 24; i++) {
             if (!minTimeInMinutes || i * 60 > minTimeInMinutes) {
-                timePickerList.push(TimePickerView.getTimePickerItem(i, 0, locale));
+                timePickerList.push(new TimePickerItem(i, 0, locale));
             }
             if (!minTimeInMinutes || i * 60 + 30 > minTimeInMinutes) {
-                timePickerList.push(TimePickerView.getTimePickerItem(i, 30, locale));
+                timePickerList.push(new TimePickerItem(i, 30, locale));
             }
         }
         return timePickerList;
@@ -92,7 +81,10 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
 
     render() {
         return (
-            this.props.renderForMobile ? this.renderTimePickerForMobile() : this.renderTimePickerForWebOrDesktop()
+            this.props.renderForMobile ?
+                this.renderTimePickerForMobile()
+                :
+                this.renderTimePickerForWebOrDesktop()
         );
     }
 
@@ -113,8 +105,7 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
                         if (!this.isTimeValid(valueInMinutes)) {
                             return;
                         }
-                        let selectedTime: TimePickerItem =
-                            TimePickerView.getTimePickerItem(Math.floor(valueInMinutes / 60), valueInMinutes % 60, this.props.locale);
+                        let selectedTime: TimePickerItem = new TimePickerItem(Math.floor(valueInMinutes / 60), valueInMinutes % 60, this.props.locale);
                         this.setState({
                             selectedTimePickerItem: selectedTime
                         });
@@ -146,6 +137,23 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
                 align="start"
                 position="below"
                 open={this.state.showPicker}
+                onOpenChange={(e, data) => {
+                    /*
+                    The following isTrusted check is added to prevent any non-user generated events from
+                    closing the Popup.
+                    When the TimePicker is used within a RadioGroup, like in the case of Notification Settings,
+                    when the Enter key is pressed to open the popup, it actually trigers two events: one from
+                    the Input element and the other from the underlying radio item. While the first event
+                    opens the popup, the second event closes it immediately as it is treated as a click outside the popup.
+                    Since the second event is not user generated, the isTrusted flag will be false and we will
+                    ignore it here.
+                     */
+                    if (e.isTrusted) {
+                        this.setState({
+                            showPicker: data.open
+                        });
+                    }
+                }}
                 trigger={this.renderTimePickerPreviewView()}
                 content={
                     timePickerItems.length > 0 &&
@@ -192,8 +200,7 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
 
         let inputWrapperProps = {
             tabIndex: -1,
-            "aria-label": (this.props.renderForMobile && this.state.selectedTimePickerItem)
-                ? this.state.selectedTimePickerItem.asString + ". " + this.props.placeholder : null,
+            "aria-label": (this.props.renderForMobile && this.state.selectedTimePickerItem) ? this.state.selectedTimePickerItem.asString + ". " + this.props.placeholder : null,
             onClick: () => {
                 this.onTimePickerPreviewTap();
             },
@@ -209,17 +216,25 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
             value: this.state.selectedTimePickerItem.asString,
             readOnly: true,
             "aria-readonly": false,
-            className: "date-time-input"
+            className: "time-input"
         };
 
         return (
             <Input
                 input={{ ...inputProps }}
                 wrapper={{ ...inputWrapperProps }}
-                icon={<ChevronDownIcon outline onClick={() => { this.onTimePickerPreviewTap(); }} />}
-                className={wrapperClassName}
+                icon={this.timePickerChevronIcon()}
             />
         );
+    }
+
+    timePickerChevronIcon() {
+        return <ChevronDownIcon
+            outline
+            onClick={() => {
+                this.onTimePickerPreviewTap();
+            }}
+        />;
     }
 
     onTimePickerPreviewTap() {
@@ -234,7 +249,9 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
     }
 
     isTimeValid(minutes: number): boolean {
-        if (isNaN(minutes) || (this.props.minTimeInMinutes && minutes < this.props.minTimeInMinutes)) {
+        if (isNaN(minutes)) {
+            return false;
+        } else if (this.props.minTimeInMinutes && minutes < this.props.minTimeInMinutes) {
             return false;
         }
         return true;
@@ -259,18 +276,21 @@ export class TimePickerView extends React.Component<ITimePickerViewProps, ITimeP
         }
         return false;
     }
+}
 
-    static getTimePickerItem(hours: number, minutes: number, locale: string = navigator.language): TimePickerItem {
-        let timePickerItem: TimePickerItem = {
-            hours: hours,
-            minutes: minutes,
-            value: hours + ":" + minutes,
-            asString: null
-        };
+class TimePickerItem {
+    hours: number;
+    minutes: number;
+    value: string;
+    asString: string;
+    constructor(hours: number, minutes: number, locale: string = navigator.language) {
+        this.hours = hours;
+        this.minutes = minutes;
+
+        this.value = this.hours + ":" + this.minutes;
         let date = new Date();
-        date.setHours(hours);
-        date.setMinutes(minutes);
-        timePickerItem.asString = date.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit", hour12: true });
-        return timePickerItem;
+        date.setHours(this.hours);
+        date.setMinutes(this.minutes);
+        this.asString = date.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit", hour12: true });
     }
 }

@@ -21,7 +21,7 @@ mutator(setContext, (msg) => {
         const actionInstance: actionSDK.Action = lastSessionData.action;
         getStore().title = actionInstance.dataTables[0].dataColumns[0].displayName;
         getStore().settings.resultVisibility =  (actionInstance.dataTables[0].rowsVisibility === actionSDK.Visibility.Sender) ?
-        false : true;
+        true : false;
         getStore().settings.isMultiResponseAllowed = actionInstance.dataTables[0].canUserAddMultipleRows;
         getStore().settings.dueDate = actionInstance.expiryTime;
     }
@@ -56,3 +56,4 @@ mutator(setProgressState, (msg) => {
     const store = getStore();
     store.progressState = msg.state;
 });
+

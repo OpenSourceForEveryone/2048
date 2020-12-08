@@ -11,9 +11,10 @@ import { ProgressState } from "./../../utils/SharedEnum";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 import InstructionView from "./InstructionView";
 import { UxUtils } from "../../utils/UxUtils";
-import { Flex, Loader } from "@fluentui/react-northstar";
+import { Flex } from "@fluentui/react-northstar";
 import Game from "./2048/Game"
 import CongratulationView from "./CongrtulationView";
+
 /**
  * 
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
@@ -21,28 +22,21 @@ import CongratulationView from "./CongrtulationView";
 @observer
 export default class GamePage extends React.Component<any, any> {
     render() {
-        let hostContext: actionSDK.ActionSdkContext = getStore().context;
-        if (hostContext) {
-            ActionSdkHelper.hideLoadingIndicator();
-        } else {
-            if (getStore().progressState == ProgressState.NotStarted || getStore().progressState == ProgressState.InProgress) {
-                return <Loader />;
-            }
-        }
 
-        if (getStore().isActionDeleted) {
-            ActionSdkHelper.hideLoadingIndicator();
-            return (
-                <ErrorView
-                    title={Localizer.getString("GameDeletedError")}
-                    subtitle={Localizer.getString("ChecklistDeletedErrorDescription")}
-                    buttonTitle={Localizer.getString("Close")}
-                    image={"./images/actionDeletedError.png"}
-                />
-            );
+        let progressStatus = getStore().progressState;
+        
+        if (progressStatus.actionInstance == ProgressState.InProgress ||
+            progressStatus.currentContext == ProgressState.InProgress || 
+            progressStatus.currentUserDataInstance == ProgressState.InProgress ||
+            progressStatus.localizationInstance == ProgressState.InProgress ||
+            progressStatus.settingInstance == ProgressState.InProgress) {
+            return <div />;
         }
-
-        if (getStore().progressState == ProgressState.Failed) {
+        else if (progressStatus.actionInstance == ProgressState.Failed || 
+            progressStatus.currentContext == ProgressState.Failed || 
+            progressStatus.currentUserDataInstance == ProgressState.Failed ||
+            progressStatus.localizationInstance == ProgressState.Failed ||
+            progressStatus.settingInstance == ProgressState.Failed) {
             ActionSdkHelper.hideLoadingIndicator();
             return (
                 <ErrorView
@@ -51,21 +45,20 @@ export default class GamePage extends React.Component<any, any> {
                 />
             );
         }
-
-        if (getStore().progressState == ProgressState.Completed) {
+        else
+        {
             ActionSdkHelper.hideLoadingIndicator();
-        }
-
-        if (getStore().shouldPlayerPlay) {
-            if (UxUtils.shouldShowInstructionPage()) {
-                return this.getInstructionPage();
+            if (getStore().shouldPlayerPlay) {
+                if (UxUtils.shouldShowInstructionPage()) {
+                    return this.getInstructionPage();
+                }
+                else {
+                    return this.getGamePage();
+                }
             }
             else {
-                return this.getGamePage();
+                return this.getCongratulationPage();
             }
-        }
-        else {
-            return this.getCongratulationPage();
         }
     }
     /**

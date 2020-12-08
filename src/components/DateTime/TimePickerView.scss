@@ -1,6 +1,6 @@
 @import "./../../scss/common.scss";
 
-.time-input-view {
+.time-input-view > input {
     width: 150px;
     cursor: pointer;
     .date-time-equal & {
@@ -8,11 +8,11 @@
     }
 }
 
-.time-input-view-mob {
+.time-input-view-mob > input {
     font-size: 16px;
 }
 
-.date-time-input {
+.time-input {
     width: 100%;
 }
 
@@ -25,10 +25,13 @@
     height: 1px;
     position: absolute;
 }
+.chevron {
+    cursor: pointer;
+}
 
 .time-picker-items-list-container {
     height: 200px;
-    width: 122px;
+    width: 128px;
     overflow: hidden;
     &:hover {
         overflow: auto;

@@ -8,12 +8,21 @@ import { ProgressState } from "../utils/SharedEnum";
  * Updation store containing all data required when user play the game.
  */
 
+export interface ResponseProgressStatus {
+    actionInstance: ProgressState;
+    currentContext: ProgressState;
+    settingInstance: ProgressState;
+    currentUserDataInstance: ProgressState;
+    localizationInstance: ProgressState;
+}
+
+
 interface IGameUpdationStore {
     context: actionSDK.ActionSdkContext;
     actionInstance: actionSDK.Action;
     actionInstanceRowsForCurrentUser: actionSDK.ActionDataRow[];
     shouldValidate: boolean;
-    progressState: ProgressState;
+    progressState: ResponseProgressStatus;
     isActionDeleted: boolean;
     shouldPlayerPlay: boolean;
     playerPrevScore: string;
@@ -25,7 +34,13 @@ const store: IGameUpdationStore = {
     shouldValidate: false,
     actionInstance: null,
     actionInstanceRowsForCurrentUser: null,
-    progressState: ProgressState.NotStarted,
+    progressState: {
+        actionInstance: ProgressState.NotStarted,
+        currentContext: ProgressState.NotStarted,
+        settingInstance: ProgressState.NotStarted,
+        currentUserDataInstance: ProgressState.NotStarted,
+        localizationInstance: ProgressState.NotStarted,
+    },
     isActionDeleted: false,
     shouldPlayerPlay: true,
     playerPrevScore: null,

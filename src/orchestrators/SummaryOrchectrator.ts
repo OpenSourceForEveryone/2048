@@ -39,28 +39,52 @@ orchestrator(initialize, async () => {
         if (actionContext.success) {
             let context = actionContext.context as actionSDK.ActionSdkContext;
             setContext(context);
+            setProgressStatus({ currentContext: ProgressState.Completed });
+
+            setProgressStatus({ actionInstance: ProgressState.InProgress });
             let actionInstance =  await ActionSdkHelper.getAction(context.actionId);
+            setProgressStatus({ localizationInstance: ProgressState.InProgress });
             let response = await Localizer.initialize();
+
             if(actionInstance.success && response){
+                setProgressStatus({ localizationInstance: ProgressState.Completed });
                 setActionInstance(actionInstance.action);
+                setProgressStatus({ actionInstance: ProgressState.Completed });
+
+                setProgressStatus({ settingInstance: ProgressState.InProgress });
                 setGameTitle(actionInstance.action.dataTables[0].dataColumns[0].displayName);
                 setDueDate(actionInstance.action.expiryTime);
                 setGameStatus(actionInstance.action.status);
                 fetchUserDetails([context.userId]);
+                setProgressStatus({ settingInstance: ProgressState.Completed });
+
+                setProgressStatus({ myScoreDataInstance: ProgressState.InProgress });
                 let myDataRows = await ActionSdkHelper.getActionDataRows(actionContext.context.actionId, actionContext.context.userId);
                 if(myDataRows.success){
                     fetchMyScore(myDataRows.dataRows);
+                    setProgressStatus({ myScoreDataInstance: ProgressState.Completed });
                 }
+                else
+                {
+                    setProgressStatus({ myScoreDataInstance: ProgressState.Failed });
+                }
+
+                setProgressStatus({ leaderboardDatAInstance: ProgressState.InProgress });
                 let leaderBoardDataRows = await ActionSdkHelper.getActionDataRows(actionContext.context.actionId);
                 if(leaderBoardDataRows.success){
                     fetchLeaderBoard(leaderBoardDataRows.dataRows);
+                    setProgressStatus({ leaderboardDatAInstance: ProgressState.Completed });
+                }else
+                {
+                    setProgressStatus({ leaderboardDatAInstance: ProgressState.Failed });
                 }
                 setLeaderboardVisibilityFlag();
                 setProgressStatus({ currentContext: ProgressState.Completed });
             }
             else
             {
-                setProgressStatus({ currentContext: ProgressState.Failed });
+                setProgressStatus({ actionInstance: ProgressState.Failed });
+                setProgressStatus({ localizationInstance: ProgressState.Failed });
             }
         } else {
             setProgressStatus({ currentContext: ProgressState.Failed });

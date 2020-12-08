@@ -5,7 +5,7 @@ import * as React from "react";
 import { Calendar, DayOfWeek } from "office-ui-fabric-react/lib/Calendar";
 import "./DatePickerView.scss";
 import { registerIcons } from "@uifabric/styling";
-import { Input, Popup, FocusTrapZone, CalendarIcon, ChevronStartIcon, ChevronEndIcon } from "@fluentui/react-northstar";
+import { Input, Popup, ChevronStartIcon, ChevronEndIcon, FocusTrapZone, CalendarIcon } from "@fluentui/react-northstar";
 import { Constants } from "./../../utils/Constants";
 import { UxUtils } from "./../../utils/UxUtils";
 
@@ -42,9 +42,6 @@ export interface IDatePickerViewProps {
     onDismiss?: () => void;
 }
 
-/**
- * <DatePickerView> Component to provide date input supported by all browsers
- */
 export class DatePickerView extends React.Component<IDatePickerViewProps, IDatePickerViewState> {
     private dateInputRef: HTMLElement;
 
@@ -164,13 +161,11 @@ export class DatePickerView extends React.Component<IDatePickerViewProps, IDateP
 
         let inputWrapperProps = {
             tabIndex: -1,
-            "aria-label": (this.props.renderForMobile && this.state.selectedDate)
-                ? this.state.selectedDate.toLocaleDateString(this.props.locale, {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric"
-                }) + ". " + this.props.placeholder
-                : null,
+            "aria-label": (this.props.renderForMobile && this.state.selectedDate) ? this.state.selectedDate.toLocaleDateString(this.props.locale, {
+                month: "short",
+                day: "numeric",
+                year: "numeric"
+            }) + ". " + this.props.placeholder : null,
             onClick: () => {
                 this.onDatePickerPreviewTap();
             },
@@ -187,7 +182,7 @@ export class DatePickerView extends React.Component<IDatePickerViewProps, IDateP
             value: this.state.selectedDate ? UxUtils.formatDate(this.state.selectedDate, this.props.locale, dateOptions) : null,
             readOnly: true,
             "aria-readonly": false,
-            className: "date-time-input"
+            className: "date-input"
         };
 
         return (
@@ -195,9 +190,19 @@ export class DatePickerView extends React.Component<IDatePickerViewProps, IDateP
                 input={{ ...inputProps }}
                 wrapper={{ ...inputWrapperProps }}
                 icon={<CalendarIcon outline />}
-                className={wrapperClassName}
             />
         );
+    }
+
+    calendarIconProp() {
+        return {
+            name: "calendar",
+            outline: true,
+            className: this.props.disabled ? "cursor-default" : "calendar-icon",
+            onClick: () => {
+                this.onDatePickerPreviewTap();
+            }
+        };
     }
 
     onDatePickerPreviewTap() {
@@ -217,7 +222,6 @@ export class DatePickerView extends React.Component<IDatePickerViewProps, IDateP
         if (!this.isValidDate(date)) {
             return;
         }
-
         if (this.props.onSelectDate) {
             this.props.onSelectDate(date);
         }
@@ -270,5 +274,4 @@ export class DatePickerView extends React.Component<IDatePickerViewProps, IDateP
         }
         return DayOfWeek.Sunday;
     }
-
 }

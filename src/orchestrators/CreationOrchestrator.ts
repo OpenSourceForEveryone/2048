@@ -79,7 +79,6 @@ orchestrator(callActionInstanceCreationAPI, async () => {
     actionInstance.dataTables[0].dataColumns.push(gameScore);
     actionInstance.dataTables[0].dataColumns.push(gamePlayer);
     // Set responses visibility
-    console.log("entering API")
     actionInstance.dataTables[0].rowsVisibility = getStore().settings.resultVisibility ?
     actionSDK.Visibility.Sender : actionSDK.Visibility.All;
 
@@ -107,6 +106,7 @@ function prepareActionInstance(actionInstance: actionSDK.Action, actionContext: 
     actionInstance.version = actionInstance.version || 1;
     actionInstance.dataTables[0].canUserAddMultipleRows = actionInstance.dataTables[0].canUserAddMultipleRows || false;
     actionInstance.dataTables[0].rowsVisibility = actionInstance.dataTables[0].rowsVisibility || actionSDK.Visibility.All;
+
     let isPropertyExists: boolean = false;
     if (actionInstance.customProperties && actionInstance.customProperties.length > 0) {
         for (let property of actionInstance.customProperties) {

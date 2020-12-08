@@ -18,22 +18,19 @@ import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 @observer
 export default class SummaryPage extends React.Component<any, any> {
     render() {
-        if (getStore().isActionDeleted) {
-            ActionSdkHelper.hideLoadingIndicator();
-            return (
-                <ErrorView
-                    title={Localizer.getString("GameDeletedError")}
-                    subtitle={Localizer.getString("GameDeletedErrorDescription")}
-                    buttonTitle={Localizer.getString("Close")}
-                    image={"./images/actionDeletedError.png"}
-                />
-            );
-        }
-
         let progressStatus = getStore().progressStatus;
-        if (progressStatus.actionInstance == ProgressState.Failed || progressStatus.actionInstanceSummary == ProgressState.Failed ||
-            progressStatus.localizationState == ProgressState.Failed || progressStatus.memberCount == ProgressState.Failed || 
-            progressStatus.actionInstanceRow == ProgressState.Failed) {
+
+        if (progressStatus.actionInstance == ProgressState.InProgress ||
+            progressStatus.currentContext == ProgressState.InProgress ||
+            progressStatus.localizationInstance == ProgressState.InProgress || 
+            progressStatus.myScoreDataInstance == ProgressState.InProgress || 
+            progressStatus.leaderboardDatAInstance == ProgressState.InProgress ||
+            progressStatus.settingInstance == ProgressState.InProgress) {
+            return  <div />
+        }
+        else if (progressStatus.actionInstance == ProgressState.Failed || progressStatus.currentContext == ProgressState.Failed ||
+            progressStatus.localizationInstance == ProgressState.Failed || progressStatus.myScoreDataInstance == ProgressState.Failed || 
+            progressStatus.leaderboardDatAInstance == ProgressState.Failed || progressStatus.settingInstance == ProgressState.Failed) {
             ActionSdkHelper.hideLoadingIndicator();
             return (
                 <ErrorView
@@ -42,9 +39,11 @@ export default class SummaryPage extends React.Component<any, any> {
                 />
             );
         }
-
-        ActionSdkHelper.hideLoadingIndicator();
-        return this.getView();
+        else
+        {
+            ActionSdkHelper.hideLoadingIndicator();
+            return this.getView();
+        } 
     }
     /**
      * Method to return the view based on the user selection
