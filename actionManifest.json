@@ -2,7 +2,7 @@
     "tag": "2048-teams-app",
     "id": "<packageId>",
     "name": "2048 Tournament",
-    "description": "Play the Game of a 2048",
+    "description": "Host a tournament of 2048 game",
     "showLoadingIndicator": true,
     "developer": {
         "name": "<name>",
@@ -43,8 +43,8 @@
             "full": "2048 Tournament"
         },
         "description": {
-            "short": "Play the Game of a 2048",
-            "full": "Play the Game of a 2048 in a chat or channel.​ Find the app in '…' under the message compose box​. Launch the game and you're good to go."
+            "short": "Host a tournament of 2048 game",
+            "full": "'Host a tournament of 2048 in a chat or channel. Find the app in '…' under the message compose box. Provide title to your tournament and post it in your chat or channel. Have fun with your team!"
         },
         "icons": {
             "color": "images/appIcon.png",
