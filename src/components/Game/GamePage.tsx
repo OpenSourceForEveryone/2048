@@ -66,7 +66,7 @@ export default class GamePage extends React.Component<any, any> {
     **/
    
     private getGamePage(): JSX.Element {
-        return <Game />
+        return <Game  tabIndex = {0}/>
     }
     private getInstructionPage(): JSX.Element {
         return (<InstructionView

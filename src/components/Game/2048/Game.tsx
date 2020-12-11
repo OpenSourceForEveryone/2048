@@ -10,8 +10,10 @@ import isExist from './utils/isExist';
 import CongratulationView from "../CongrtulationView";
 import { Flex } from "@fluentui/react-northstar";
 import Header from "./components/Header";
+import { UxUtils } from "../../../utils/UxUtils";
+import { Constants } from "../../../utils/Constants";
 
-export const Game = () => {
+export const Game = (props) => {
   const UP = 38;
   const DOWN = 40;
   const LEFT = 37;
@@ -38,15 +40,9 @@ export const Game = () => {
     'replayStatus',
     false
   );
-  const [popupStatus, setPopupStatus] = React.useState({
-    visible: false,
-    message: '',
-  });
-
-  //let bodyContainer: React.RefObject<HTMLDivElement>;
 
   const initialize = () => {
-    //bodyContainer =React.createRef(); 
+    UxUtils.setFocus(document.body, Constants.FOCUSABLE_ITEMS.All)
     let newGrid = cloneDeep(INITIAL_DATA);
     addItem(newGrid);
     addItem(newGrid);
@@ -194,9 +190,7 @@ export const Game = () => {
       setData(newArray2);
     } else return newArray2;
 
-    console.log("Swif Right score -" + swipeRightScore);
     return swipeRightScore;
-
   };
 
   const swipeDown = (isMove = true) => {
@@ -205,7 +199,6 @@ export const Game = () => {
     let swipeDownScore = 0;
 
     if (isWon) {
-      setPopupStatus({ visible: true, message: 'congratulations' });
       return;
     }
 
@@ -256,10 +249,9 @@ export const Game = () => {
       if (isExist(b, 2048)) {
         setIsWon(true);
         setData(b);
-        setPopupStatus({ visible: true, message: 'congratulations' });
       } else addItem(b);
     } else if (!isExist(oldData) && isMove && checkGameOver()) {
-      setPopupStatus({ visible: true, message: 'Game Over' });
+      // No action
     }
 
     if (isMove) {
@@ -276,7 +268,6 @@ export const Game = () => {
     let swipeUpScore = 0;
 
     if (isWon) {
-      setPopupStatus({ visible: true, message: 'congratulations' });
       return;
     }
 
@@ -326,10 +317,9 @@ export const Game = () => {
       if (isExist(b, 2048)) {
         setIsWon(true);
         setData(b);
-        setPopupStatus({ visible: true, message: 'congratulations' });
       } else addItem(b);
     } else if (!isExist(oldData) && isMove && checkGameOver()) {
-      setPopupStatus({ visible: true, message: 'Game Over' });
+      // No action
     }
 
     if (isMove) {
@@ -465,7 +455,7 @@ export const Game = () => {
         <CongratulationView gameScore={score} shouldShowAlert="false" /> :
         <>
           <Header score={score} />
-          <div className='container'>
+          <div className='container' tabIndex = {props.tabIndex}>
             <Board
               data={data}
             />

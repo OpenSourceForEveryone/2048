@@ -1,4 +1,3 @@
-
 @import "./../../scss/common.scss";
 @import "./../../components/Creation/CustomSettings.scss";
 
@@ -49,11 +48,12 @@
     left: 0;
     top: 0;
     border-radius: 5;
-    background: rgba(238,228,218,.5);
+    background: rgba(238, 228, 218, .5);
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .gameScore {
     text-align: center;
     font-size: larger;
@@ -61,15 +61,15 @@
     font-weight: 900;
     margin: auto;
 }
-.body-container{
+
+.body-container {
     height: 90%;
     width: 90%;
     padding: 5%;
 }
 
 .gameColor {
-    
-    color:#645B52
+    color: #645B52
 }
 
 .checklist-checkbox {
@@ -83,11 +83,17 @@
 .instruction .ui-card {
     padding: 8px;
 }
+
+.instruction .ui-checkbox.ao.el.en {
+    padding-left: 0px;
+}
+
 .instruction .ui-card span {
     font-size: 16px;
     font-weight: bold;
     color: var(--app-input-color);
 }
+
 .instruction .ui-card span+span {
     font-size: 12px;
     font-weight: 400;
@@ -134,11 +140,11 @@
     @include resolve-dir(padding-right, 5px);
 }
 
-.checklist-checkbox .hg {
+.checklist-checkbox .ge {
     background-repeat: unset !important;
 }
+
 
 .checklist-input-completed-item {
     border-bottom-color: transparent !important;
 }
-

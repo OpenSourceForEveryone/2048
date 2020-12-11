@@ -1,6 +1,6 @@
 .tile {
-    height: 96px;
-    width: 96px;
+    height: 72px;
+    width: 72px;
     margin: 3px;
     display: flex;
     justify-content: center;
@@ -15,8 +15,8 @@
 
 @media screen and (max-width: 576px) {
     .tile {
-        height: 64px;
-        width: 64px;
+        height: 70px;
+        width: 70px;
         margin: 3px;
         display: flex;
         justify-content: center;

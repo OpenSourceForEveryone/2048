@@ -3,15 +3,11 @@
 
 import * as React from "react";
 import { Constants } from "./Constants";
-import * as NodeCache from 'node-cache';
 import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 import InstructionView from "../components/Game/InstructionView";
 
 export class UxUtils {
-    public static instructionCache: NodeCache;
-    static initialize() {
-        this.instructionCache = new NodeCache({ stdTTL: 60 * 60 * 24 * 7, checkperiod: 0.2 });
-    }
+    
     public static getTabKeyProps() {
         return {
             tabIndex: 0,
@@ -120,13 +116,9 @@ export class UxUtils {
         return backColor;
     }
 
+    // get key for local storage
     public static getKey() {
-        return "2048GameInstructionPageShow"
-    }
-
-    public static async getKeyValue() {
-        const userId = (await ActionSdkHelper.getCurrentUser()).userId;
-        return userId
+        return Constants.INSTRUCTION_PAGE_LOCALSTORAGE;
     }
 
     public static shouldShowInstructionPage() {

@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { toJS } from "mobx";
-import { Logger } from "./../utils/Logger";
-import { Constants } from "../utils/Constants";
 import { Localizer } from "../utils/Localizer";
 import {
     initialize,

@@ -6,7 +6,7 @@ import './Board.scss';
 export default function Board({ data }) {
   return (
     <>
-     <div className='board__body' tabIndex={0}>
+     <div className='board__body'>
      {data.map((row, rowIndex) => {
        return (
          <div key={rowIndex} className='board__row'>

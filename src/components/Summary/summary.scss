@@ -4,6 +4,8 @@
     font-weight: bold;
 }
 
+:focus { outline: none; }
+
 .list-container {
     display: block !important;
     height: calc(100vh - 150px);

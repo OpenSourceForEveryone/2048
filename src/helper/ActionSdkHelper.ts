@@ -263,7 +263,7 @@ export class ActionSdkHelper {
             Logger.logError(`fetchLocalization failed, Error: ${error.category}, ${error.code}, ${error.message}`);
         }
     }
-
+    
     /**
      * Method to hide loading indicater
      */
