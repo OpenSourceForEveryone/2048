@@ -127,7 +127,7 @@
   "_$manifest.msTeamsProps.name.short.comment": "{MaxLength=30}",
   "$manifest.msTeamsProps.name.full": "2048 Tournament",
   "_$manifest.msTeamsProps.name.full.comment": "{MaxLength=100}",
-  "$manifest.msTeamsProps.description.short": "Play the Game of a 2048",
+  "$manifest.msTeamsProps.description.short": "Host a tournament of 2048 game",
   "_$manifest.msTeamsProps.description.short.comment": "{MaxLength=80}",
   "$manifest.msTeamsProps.description.full": "'Host a tournament of 2048 in a chat or channel. Find the app in '…' under the message compose box. Provide title to your tournament and post it in your chat or channel. Have fun with your team!",
   "_$manifest.msTeamsProps.description.full.comment": "{MaxLength=4000}"
