@@ -121,7 +121,7 @@
   "_$manifest.name.comment": "{MaxLength=30}",
   "$manifest.views.LaunchView.header": "Create new tournament",
   "_$manifest.views.LaunchView.header.comment": "{MaxLength=32}",
-  "$manifest.description": "Play the Game of 2048",
+  "$manifest.description": "Host a tournament of 2048 game",
   "_$manifest.description.comment": "{MaxLength=80}",
   "$manifest.msTeamsProps.name.short": "2048 Tournament",
   "_$manifest.msTeamsProps.name.short.comment": "{MaxLength=30}",
