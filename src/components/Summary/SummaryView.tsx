@@ -78,7 +78,7 @@ export default class SummaryView extends React.Component<any, any> {
         if (title) {
             return title;
         } else {
-            return "2048 Tournament";
+            return Localizer.getString("GameDefaultString");
         }
     }
 
@@ -94,11 +94,11 @@ export default class SummaryView extends React.Component<any, any> {
         const local = getStore().local;
         if(!getStore().isGameExpired) {
             return (
-                <Text content={"The Game is active till " + UxUtils.formatDate(date, local, options)} size="medium" />
+                <Text content={Localizer.getString("GameActiveString") + UxUtils.formatDate(date, local, options)} size="medium" />
             );
         } else {
             return (
-                <Text content={"Game Expired..."} size="medium" style={{color:"#C4314B"}} />
+                <Text content={Localizer.getString("GameExpired")} size="medium" style={{color:"#C4314B"}} />
             );
         }
     }

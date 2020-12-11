@@ -33,7 +33,7 @@ export default class CongratulationView extends React.Component<any, any> {
                 <FlexItem push>
                     <Button
                         primary
-                        content="Submit Score"
+                        content= {Localizer.getString("SubmitScore")}
                         onClick={() => {
                             ActionSdkHelper.addScore(this.props.gameScore);
                             ActionSdkHelper.closeView();
