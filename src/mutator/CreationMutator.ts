@@ -56,4 +56,3 @@ mutator(setProgressState, (msg) => {
     const store = getStore();
     store.progressState = msg.state;
 });
-

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { Flex, FlexItem, Button, Text } from '@fluentui/react-northstar'
+import { Flex, FlexItem, Button, Text } from "@fluentui/react-northstar";
 import "./game.scss";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 import { Localizer } from "../../utils/Localizer";
@@ -24,7 +24,7 @@ export default class CongratulationView extends React.Component<any, any> {
                 </div>
                 {this.props.shouldShowAlert != "true" && this.renderFooterSection()}
             </>
-        )
+        );
     }
     renderFooterSection(isMobileView?: boolean) {
         let className = isMobileView ? "" : "footer-layout";
@@ -35,7 +35,7 @@ export default class CongratulationView extends React.Component<any, any> {
                         primary
                         content="Submit Score"
                         onClick={() => {
-                            ActionSdkHelper.addScore(this.props.gameScore)
+                            ActionSdkHelper.addScore(this.props.gameScore);
                             ActionSdkHelper.closeView();
                         }}>
                     </Button>

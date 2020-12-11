@@ -3,7 +3,6 @@
 
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { Logger } from "./../utils/Logger";
-import { toJS } from "mobx";
 export class ActionSdkHelper {
 
     /**
@@ -26,9 +25,8 @@ export class ActionSdkHelper {
         let request = new actionSDK.GetSubscriptionMembers.Request(actionContext.subscription, [actionContext.userId]);
         try {
             let response = await actionSDK.executeApi(request) as actionSDK.GetSubscriptionMembers.Response;
-            return { success: true, userId: response.members[0].id, userName: response.members[0].displayName }
-        }
-        catch (error) {
+            return { success: true, userId: response.members[0].id, userName: response.members[0].displayName };
+        } catch (error) {
             return { success: false, error: error };
         }
     }
@@ -183,14 +181,14 @@ export class ActionSdkHelper {
             0: Date.now().toString(),
             1: (await this.getCurrentUser()).userName,
             2: score,
-        }
+        };
         let actiondata: actionSDK.ActionDataRow = {
             dataTableName: "gameScore",
             actionId: actionContext.actionId,
             columnValues: data,
             createTime: Date.now()
-        }
-        await this.addDataRow(actiondata)
+        };
+        await this.addDataRow(actiondata);
     }
 
     public static async getScore() {
@@ -201,8 +199,7 @@ export class ActionSdkHelper {
             let response = await actionSDK.executeApi(request) as actionSDK.GetActionDataRows.Response;
             Logger.logInfo(`getScore success - Request: ${JSON.stringify(request)} Response: ${JSON.stringify(response)}`);
             return { success: true, status: response.success, dataRows: response.dataRows };
-        }
-        catch (error) {
+        } catch (error) {
             Logger.logError(`getScore failed, Error: ${error.category}, ${error.code}, ${error.message}`);
             return { success: false, error: error };
         }
@@ -263,7 +260,7 @@ export class ActionSdkHelper {
             Logger.logError(`fetchLocalization failed, Error: ${error.category}, ${error.code}, ${error.message}`);
         }
     }
-    
+
     /**
      * Method to hide loading indicater
      */

@@ -10,7 +10,6 @@ import {
 } from "../actions/UpdateAction";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
-
 /**
  * Update view mutators to modify store data on which update view relies
  */
@@ -22,7 +21,6 @@ mutator(setProgressState, (msg) => {
         ...msg.status,
     };
 });
-
 
 mutator(setContext, (msg) => {
     const store = getStore();
@@ -38,19 +36,15 @@ mutator(setActionInstance, (msg) => {
 mutator(fetchActionInstanceRowsForCurrentUser, (msg) => {
     const store = getStore();
     store.actionInstanceRowsForCurrentUser = msg.actionInstanceRow;
-    if(store.actionInstanceRowsForCurrentUser.length > 0){
+    if(store.actionInstanceRowsForCurrentUser.length > 0) {
         store.playerPrevScore = store.actionInstanceRowsForCurrentUser[0].columnValues["2"];
         const isMultiPlayAllowed = store.actionInstance.dataTables[0].canUserAddMultipleRows;
-        if(isMultiPlayAllowed)
-        {
+        if(isMultiPlayAllowed) {
             store.shouldPlayerPlay = true;
-        }else
-        {
+        } else {
             store.shouldPlayerPlay = false;
         }
-    }
-    else
-    {
+    } else {
         store.shouldPlayerPlay = true;
     }
 });
@@ -59,9 +53,3 @@ mutator(shouldValidateUI, (msg) => {
     const store = getStore();
     store.shouldValidate = msg.shouldValidate;
 });
-
-function delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-

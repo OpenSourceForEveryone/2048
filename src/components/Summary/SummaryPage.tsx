@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { observer } from "mobx-react";
-import getStore, { ViewType } from "./../../store/SummaryStore";
+import getStore from "./../../store/SummaryStore";
 import "./summary.scss";
 import SummaryView from "./SummaryView";
 import { Localizer } from "../../utils/Localizer";
@@ -22,14 +22,13 @@ export default class SummaryPage extends React.Component<any, any> {
 
         if (progressStatus.actionInstance == ProgressState.InProgress ||
             progressStatus.currentContext == ProgressState.InProgress ||
-            progressStatus.localizationInstance == ProgressState.InProgress || 
-            progressStatus.myScoreDataInstance == ProgressState.InProgress || 
+            progressStatus.localizationInstance == ProgressState.InProgress ||
+            progressStatus.myScoreDataInstance == ProgressState.InProgress ||
             progressStatus.leaderboardDatAInstance == ProgressState.InProgress ||
             progressStatus.settingInstance == ProgressState.InProgress) {
-            return  <div />
-        }
-        else if (progressStatus.actionInstance == ProgressState.Failed || progressStatus.currentContext == ProgressState.Failed ||
-            progressStatus.localizationInstance == ProgressState.Failed || progressStatus.myScoreDataInstance == ProgressState.Failed || 
+            return  <div />;
+        } else if (progressStatus.actionInstance == ProgressState.Failed || progressStatus.currentContext == ProgressState.Failed ||
+            progressStatus.localizationInstance == ProgressState.Failed || progressStatus.myScoreDataInstance == ProgressState.Failed ||
             progressStatus.leaderboardDatAInstance == ProgressState.Failed || progressStatus.settingInstance == ProgressState.Failed) {
             ActionSdkHelper.hideLoadingIndicator();
             return (
@@ -38,12 +37,10 @@ export default class SummaryPage extends React.Component<any, any> {
                     buttonTitle={Localizer.getString("Close")}
                 />
             );
-        }
-        else
-        {
+        } else {
             ActionSdkHelper.hideLoadingIndicator();
             return this.getView();
-        } 
+        }
     }
     /**
      * Method to return the view based on the user selection

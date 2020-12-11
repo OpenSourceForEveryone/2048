@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { action } from "satcheljs";
-import { SummaryProgressStatus, ViewType } from "../store/SummaryStore";
+import { SummaryProgressStatus } from "../store/SummaryStore";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
 export enum HttpStatusCode {
@@ -42,7 +42,7 @@ export let setGameStatus = action(GameSummaryAction.setGameStatus, (status: acti
 
 export let setLeaderboardVisibilityFlag = action(GameSummaryAction.setLeaderboardVisibilityFlag);
 
-export let fetchActionInstanceRows = action(GameSummaryAction.fetchActionInstanceRows)
+export let fetchActionInstanceRows = action(GameSummaryAction.fetchActionInstanceRows);
 
 export let fetchMyScore = action(GameSummaryAction.fetchMyScore,  (myScore: actionSDK.ActionDataRow[]) => ({
     myScore:myScore
@@ -77,5 +77,3 @@ export let showMoreOptions = action(GameSummaryAction.showMoreOptions, (showMore
 export let setActionInstance = action(GameSummaryAction.setActionInstance, (actionInstance: actionSDK.Action) => ({
     actionInstance: actionInstance
 }));
-
-

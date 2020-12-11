@@ -16,7 +16,6 @@ export interface ResponseProgressStatus {
     localizationInstance: ProgressState;
 }
 
-
 interface IGameUpdationStore {
     context: actionSDK.ActionSdkContext;
     actionInstance: actionSDK.Action;

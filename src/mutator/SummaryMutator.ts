@@ -6,7 +6,7 @@ import getStore, { LeaderBoard } from "./../store/SummaryStore";
 import {
     setProgressStatus, setContext, setDueDate, setGameTitle,
     showMoreOptions,
-    setActionInstance, fetchMyScore, fetchLeaderBoard, setGameStatus, 
+    setActionInstance, fetchMyScore, fetchLeaderBoard, setGameStatus,
     setLeaderboardVisibilityFlag
 } from "./../actions/SummaryActions";
 import * as actionSDK from "@microsoft/m365-action-sdk";
@@ -55,12 +55,9 @@ mutator(setLeaderboardVisibilityFlag, () => {
         const creatorId = store.actionInstance.creatorId;
         const currentUserId = store.context.userId;
         const datarowVisibility = store.actionInstance.dataTables[0].rowsVisibility;
-        if (creatorId === currentUserId || datarowVisibility === actionSDK.Visibility.All) 
-        {
+        if (creatorId === currentUserId || datarowVisibility === actionSDK.Visibility.All) {
             getStore().isLeaderBoardVisible = true;
-        } 
-        else 
-        {
+        } else {
             getStore().isLeaderBoardVisible = false;
         }
         console.log("isLeaderBoardVisible " + getStore().isLeaderBoardVisible);
@@ -68,9 +65,8 @@ mutator(setLeaderboardVisibilityFlag, () => {
 });
 
 mutator(fetchMyScore, (msg) => {
-    const store = getStore();
-    console.log("My score" + JSON.stringify(msg.myScore));
-    let rows: actionSDK.ActionDataRow[] = msg.myScore
+
+    let rows: actionSDK.ActionDataRow[] = msg.myScore;
     const options: Intl.DateTimeFormatOptions = {
         year: "numeric",
         month: "short",
@@ -83,42 +79,41 @@ mutator(fetchMyScore, (msg) => {
             getStore().scoreBoard.push(
                 {
                     score: element.columnValues["2"],
-                    timeStamp: UxUtils.formatDate(new Date(element.createTime), 
+                    timeStamp: UxUtils.formatDate(new Date(element.createTime),
                     getStore().actionInstance.customProperties[0].value,
                     options)
                 }
-            )
+            );
         });
     }
 });
 
 mutator(fetchLeaderBoard, (msg) => {
     let rows: actionSDK.ActionDataRow[] = msg.scores;
-    let newRows: LeaderBoard[] = []
+    let newRows: LeaderBoard[] = [];
     if (rows && rows.length > 0) {
         rows.forEach(element => {
             const player = newRows.find(p => p.playerId === element.creatorId);
             if (player) {
                 if (Number(element.columnValues["2"]) > Number(player.score)) {
-                    newRows.find(p => p.playerId === element.creatorId).score = element.columnValues["2"]
+                    newRows.find(p => p.playerId === element.creatorId).score = element.columnValues["2"];
                 }
-            }
-            else {
+            } else {
                 newRows.push(
                     {
                         playerId: element.creatorId,
                         playerName: element.columnValues["1"],
                         score: element.columnValues["2"],
                     }
-                )
+                );
             }
         });
-        
+
         getStore().leaderBoard = newRows.sort(function (a, b) {
             return Number(b.score) - Number(a.score);
         });
     }
-})
+});
 
 mutator(showMoreOptions, (msg) => {
     const store = getStore();

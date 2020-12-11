@@ -49,4 +49,3 @@ export let setProgressState = action(GameCreationAction.setProgressState, (state
 export let shouldValidateUI = action(GameCreationAction.shouldValidateUI, (shouldValidate: boolean) => ({
     shouldValidate: shouldValidate
 }));
-

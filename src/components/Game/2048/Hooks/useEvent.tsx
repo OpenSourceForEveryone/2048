@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 const useEvent = (event, handler, passive = false) => {
   useEffect(() => {

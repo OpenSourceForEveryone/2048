@@ -18,6 +18,32 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
         this.showMore = this.showMore.bind(this);
         this.showLess = this.showLess.bind(this);
     }
+    render() {
+        return (
+            <>
+                {this.scores && this.scores.length ?
+                    <>
+                        <List
+                            items={this.getListItems().slice(0, this.state.visible)}
+                            aria-label="Static headless table"
+                            className="table-container"
+                            styles={{ backgroundColor: "#FAF9F8" }} />
+                        {
+                            this.scores.length > 3 && this.scores.length > this.state.visible ?
+                            <span className="link leaderboard-link" onClick={this.showMore}>+ Load more...</span>
+                            :
+                            <div> </div>
+                        }
+                    </> :
+                    <div className="content">
+                        <label>
+                            {this.props.NoOneHasResponded}
+                        </label>
+                    </div>
+                }
+            </>
+        );
+    }
 
     private showMore() {
         this.setState((prev) => {
@@ -27,8 +53,8 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
 
     private showLess() {
         this.setState(() => {
-            return { visible: 3 }
-        })
+            return { visible: 3 };
+        });
     }
     private getListItems(): any[] {
         let items = [];
@@ -45,32 +71,4 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
 
         return items || [];
     }
-    render() {
-        return (
-            <>
-                {this.scores && this.scores.length ?
-                    <>
-                        <List
-                            items={this.getListItems().slice(0, this.state.visible)}
-                            aria-label="Static headless table"
-                            className="table-container"
-                            styles={{ backgroundColor: '#FAF9F8' }} />
-                        {
-                            this.scores.length > 3 && this.scores.length > this.state.visible ? 
-                            <span className="link leaderboard-link" onClick={this.showMore}>+ Load more...</span>
-                            :
-                            <div> </div>
-                        }
-                    </> :
-                    <div className="content">
-                        <label>
-                            {this.props.NoOneHasResponded}
-                        </label>
-                    </div>
-                }
-            </>
-        )
-    }
 }
-
-

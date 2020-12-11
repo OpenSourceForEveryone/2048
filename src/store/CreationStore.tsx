@@ -24,7 +24,7 @@ interface IGameCreationStore {
     showBlankTitleError: boolean;
     shouldValidate: boolean;
     sendingAction: boolean;
-    currentPage: Page
+    currentPage: Page;
 }
 
 const store: IGameCreationStore = {

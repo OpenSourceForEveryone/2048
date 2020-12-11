@@ -1,9 +1,9 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { Avatar, Card, Flex, Text, Checkbox, FlexItem, Button } from '@fluentui/react-northstar';
+import { Avatar, Card, Flex, Text, Checkbox, FlexItem, Button } from "@fluentui/react-northstar";
 import "./game.scss";
-import { UxUtils } from "../../utils/UxUtils"
-import Game from "./2048/Game";
+import { UxUtils } from "../../utils/UxUtils";
+import GAME from "./2048/Game";
 import { Constants } from "../../utils/Constants";
 
 @observer
@@ -19,7 +19,7 @@ export default class InstructionView extends React.Component<any, any> {
     startGame() {
         this.setState({
             startGame: true
-        })
+        });
     }
     setLocalStorageFlag() {
         this.setState(prev => {
@@ -30,18 +30,18 @@ export default class InstructionView extends React.Component<any, any> {
     render() {
         return (
             this.state.startGame ?
-                <Game tabIndex = {0}/> :
+                <GAME tabIndex = {0}/> :
                 <Flex className="body-container instruction" column gap="gap.medium">
                     {this.renderInstruction()}
                     {this.renderFooterSection()}
                 </Flex>
-        )
+        );
     }
 
     renderInstruction(isMobileView?: boolean): JSX.Element {
         return (
             <div>
-                <Card aria-roledescription="card avatar" fluid style={{ backgroundColor: 'rgb(250, 249, 248)' }}>
+                <Card aria-roledescription="card avatar" fluid style={{ backgroundColor: "rgb(250, 249, 248)" }}>
                     <Card.Header fitted>
                         <Flex gap="gap.small">
                             <Flex column>
@@ -76,7 +76,7 @@ export default class InstructionView extends React.Component<any, any> {
                         content={this.props.Play}
                         onClick={() => {
                             this.startGame();
-                            UxUtils.setLocaStorge(this.state.dontShowFlagSet)
+                            UxUtils.setLocaStorge(this.state.dontShowFlagSet);
                         }}>
                     </Button>
                 </FlexItem>

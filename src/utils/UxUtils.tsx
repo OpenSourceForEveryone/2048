@@ -3,11 +3,9 @@
 
 import * as React from "react";
 import { Constants } from "./Constants";
-import { ActionSdkHelper } from "../helper/ActionSdkHelper";
-import InstructionView from "../components/Game/InstructionView";
 
 export class UxUtils {
-    
+
     public static getTabKeyProps() {
         return {
             tabIndex: 0,
@@ -126,8 +124,7 @@ export class UxUtils {
         let localStorage = window.localStorage;
         if (localStorage.getItem(key) === key) {
             return false;
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -138,7 +135,7 @@ export class UxUtils {
             const key = this.getKey();
             localStorage.setItem(key, key);
         } else {
-            this.removeLocaStorge()
+            this.removeLocaStorge();
         }
     }
 

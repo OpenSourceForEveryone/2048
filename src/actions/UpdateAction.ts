@@ -1,6 +1,5 @@
 import { action } from "satcheljs";
 import * as actionSDK from "@microsoft/m365-action-sdk";
-import { ProgressState } from "../utils/SharedEnum";
 import { ResponseProgressStatus } from "../store/UpdationStore";
 
 export enum GameUpdationAction {
@@ -37,7 +36,6 @@ export let fetchActionInstanceRowsForCurrentUser = action(
     GameUpdationAction.fetchActionInstanceRowsForCurrentUser, (actionInstanceRow: actionSDK.ActionDataRow[]) => ({
         actionInstanceRow: actionInstanceRow
     }));
-
 
 export let shouldValidateUI = action(
     GameUpdationAction.shouldValidateUI,

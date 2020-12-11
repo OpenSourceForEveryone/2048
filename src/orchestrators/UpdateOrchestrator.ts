@@ -20,7 +20,7 @@ orchestrator(initialize, async () => {
 
         setProgressState({ actionInstance: ProgressState.InProgress });
         setProgressState({ localizationInstance: ProgressState.InProgress });
-        let actionInstance = await ActionSdkHelper.getAction(actionContext.context.actionId)
+        let actionInstance = await ActionSdkHelper.getAction(actionContext.context.actionId);
         let localizer = await Localizer.initialize();
         if (localizer && actionInstance.success) {
             setProgressState({ localizationInstance: ProgressState.Completed });
@@ -30,32 +30,20 @@ orchestrator(initialize, async () => {
 
             setProgressState({ currentUserDataInstance: ProgressState.InProgress });
             const dataRow = await ActionSdkHelper.getActionDataRows(actionContext.context.actionId, actionContext.context.userId);
-            if(dataRow.success)
-            {
-               
+            if(dataRow.success) {
+
                 fetchActionInstanceRowsForCurrentUser(dataRow.dataRows);
                 setProgressState({ currentUserDataInstance: ProgressState.Completed });
-                
-            }
-            else
-            {
+
+            } else {
                 setProgressState({ currentUserDataInstance: ProgressState.Failed });
             }
-        } 
-        else 
-        {
+        } else {
             setProgressState({ localizationInstance: ProgressState.Failed });
             setProgressState({ currentContext: ProgressState.Failed });
         }
-    } 
-    else 
-    {
+    } else {
         setProgressState({ currentContext: ProgressState.Failed });
     }
     setProgressState({ settingInstance: ProgressState.Completed });
 });
-
-
-
-
-

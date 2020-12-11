@@ -1,19 +1,19 @@
 import * as React from "react";
-import Board from './components/Board';
-import './App.scss';
+import Board from "./components/Board";
+import "./App.scss";
 import "./../game.scss";
-import cloneDeep from 'lodash.clonedeep';
-import useEvent from './Hooks/useEvent';
-import useLocalStorage from './Hooks/useLocalStorage';
-import getNewPosition from './utils/getNewPosition';
-import isExist from './utils/isExist';
+import cloneDeep from "lodash.clonedeep";
+import useEvent from "./Hooks/useEvent";
+import useLocalStorage from "./Hooks/useLocalStorage";
+import getNewPosition from "./utils/getNewPosition";
+import isExist from "./utils/isExist";
 import CongratulationView from "../CongrtulationView";
 import { Flex } from "@fluentui/react-northstar";
 import Header from "./components/Header";
 import { UxUtils } from "../../../utils/UxUtils";
 import { Constants } from "../../../utils/Constants";
 
-export const Game = (props) => {
+export const GAME = (props) => {
   const UP = 38;
   const DOWN = 40;
   const LEFT = 37;
@@ -29,20 +29,14 @@ export const Game = (props) => {
 
   const [gameOver, setGameOver] = React.useState(false);
   const [data, setData] = React.useState(INITIAL_DATA);
-  const [newGame, setNewGame] = useLocalStorage('newGame', true);
+  const [newGame, setNewGame] = useLocalStorage("newGame", true);
   const [score, setScore] = React.useState(0);
-  const [best, setBest] = useLocalStorage('best', 0);
-  const [scoreHistory, setScoreHistory] = useLocalStorage('scoreHistory', []);
-  const [isWon, setIsWon] = useLocalStorage('isWon', false);
-  const [moveHistory, setMoveHistory] = useLocalStorage('moveHistory', []);
-  const [undoMoves, setUndoMoves] = useLocalStorage('undoMoves', []);
-  const [replayStatus, setReplayStatus] = useLocalStorage(
-    'replayStatus',
-    false
-  );
+  const [isWon, setIsWon] = useLocalStorage("isWon", false);
+  const [moveHistory, setMoveHistory] = useLocalStorage("moveHistory", []);
+  const [undoMoves, setUndoMoves] = useLocalStorage("undoMoves", []);
 
   const initialize = () => {
-    UxUtils.setFocus(document.body, Constants.FOCUSABLE_ITEMS.All)
+    UxUtils.setFocus(document.body, Constants.FOCUSABLE_ITEMS.All);
     let newGrid = cloneDeep(INITIAL_DATA);
     addItem(newGrid);
     addItem(newGrid);
@@ -67,10 +61,9 @@ export const Game = (props) => {
     let newArray1 = cloneDeep(data);
     let swipeLeftScore = 0;
 
-    if (replayStatus) {
+    if (isWon) {
       return;
     }
-
     if (undoMoves.length) {
       setUndoMoves([]);
     }
@@ -113,8 +106,7 @@ export const Game = (props) => {
       if (isExist(newArray1, 2048)) {
         setIsWon(true);
         setData(newArray1);
-      }
-      else {
+      } else {
         addItem(newArray1);
       }
     } else if (!isExist(oldGrid) && isMove && checkGameOver()) {
@@ -123,7 +115,7 @@ export const Game = (props) => {
 
     if (isMove) {
       setData(newArray1);
-    } else return newArray1;
+    } else { return newArray1; }
 
     return swipeLeftScore;
   };
@@ -133,7 +125,7 @@ export const Game = (props) => {
     let newArray2 = cloneDeep(data);
     let swipeRightScore = 0;
 
-    if (replayStatus) {
+    if (isWon) {
       return;
     }
 
@@ -181,14 +173,14 @@ export const Game = (props) => {
         setIsWon(true);
         setData(newArray2);
         return;
-      } else addItem(newArray2);
+      } else { addItem(newArray2); }
     } else if (!isExist(oldGrid) && isMove && checkGameOver()) {
       // Game over
     }
 
     if (isMove) {
       setData(newArray2);
-    } else return newArray2;
+    } else { return newArray2; }
 
     return swipeRightScore;
   };
@@ -199,10 +191,6 @@ export const Game = (props) => {
     let swipeDownScore = 0;
 
     if (isWon) {
-      return;
-    }
-
-    if (replayStatus) {
       return;
     }
 
@@ -249,14 +237,14 @@ export const Game = (props) => {
       if (isExist(b, 2048)) {
         setIsWon(true);
         setData(b);
-      } else addItem(b);
+      } else { addItem(b); }
     } else if (!isExist(oldData) && isMove && checkGameOver()) {
       // No action
     }
 
     if (isMove) {
       setData(b);
-    } else return b;
+    } else { return b; }
 
     return swipeDownScore;
 
@@ -268,10 +256,6 @@ export const Game = (props) => {
     let swipeUpScore = 0;
 
     if (isWon) {
-      return;
-    }
-
-    if (replayStatus) {
       return;
     }
 
@@ -317,14 +301,14 @@ export const Game = (props) => {
       if (isExist(b, 2048)) {
         setIsWon(true);
         setData(b);
-      } else addItem(b);
+      } else { addItem(b); }
     } else if (!isExist(oldData) && isMove && checkGameOver()) {
       // No action
     }
 
     if (isMove) {
       setData(b);
-    } else return b;
+    } else { return b; }
 
     return swipeUpScore;
   };
@@ -338,20 +322,8 @@ export const Game = (props) => {
       return false;
     } else if (JSON.stringify(data) !== JSON.stringify(swipeDown(false))) {
       return false;
-    } else return true;
+    } else { return true; }
   };
-
-  // Reset, New Game
-  const onClickNewGame = () => {
-    setScoreHistory([...scoreHistory, score]);
-    setMoveHistory([]);
-    setUndoMoves([]);
-    setIsWon(false);
-    setNewGame(true);
-    setScore(0);
-    setData(INITIAL_DATA);
-  };
-
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     let myScore = 0;
@@ -379,13 +351,13 @@ export const Game = (props) => {
     }
   };
 
-  var initialX = null;
-  var initialY = null;
+  let initialX = null;
+  let initialY = null;
 
   const startTouch = (event: React.TouchEvent) => {
     initialX = event.touches[0].clientX;
     initialY = event.touches[0].clientY;
-  }
+  };
 
   const moveTouch = (event: React.TouchEvent) => {
     let myScore = 0;
@@ -396,10 +368,10 @@ export const Game = (props) => {
     if (initialY === null) {
       return;
     }
-    var currentX = event.touches[0].clientX;
-    var currentY = event.touches[0].clientY;
-    var diffX = initialX - currentX;
-    var diffY = initialY - currentY;
+    let currentX = event.touches[0].clientX;
+    let currentY = event.touches[0].clientY;
+    let diffX = initialX - currentX;
+    let diffY = initialY - currentY;
     if (Math.abs(diffX) > Math.abs(diffY)) {
       // sliding horizontally
       if (diffX > 0) {
@@ -430,19 +402,15 @@ export const Game = (props) => {
     initialX = null;
     initialY = null;
     event.preventDefault();
-  }
+  };
 
   React.useEffect(() => {
     initialize();
   }, [newGame]);
 
-  React.useEffect(() => {
-    setBest(Math.max(...scoreHistory, score));
-  }, [score]);
-
-  useEvent('keydown', handleKeyDown);
-  useEvent('touchstart', startTouch);
-  useEvent('touchmove', moveTouch);
+  useEvent("keydown", handleKeyDown);
+  useEvent("touchstart", startTouch);
+  useEvent("touchmove", moveTouch);
 
   return (
     <Flex
@@ -455,7 +423,7 @@ export const Game = (props) => {
         <CongratulationView gameScore={score} shouldShowAlert="false" /> :
         <>
           <Header score={score} />
-          <div className='container' tabIndex = {props.tabIndex}>
+          <div className="container" tabIndex = {props.tabIndex}>
             <Board
               data={data}
             />
@@ -464,5 +432,5 @@ export const Game = (props) => {
       }
     </Flex>
   );
-}
-export default Game;
+};
+export default GAME;

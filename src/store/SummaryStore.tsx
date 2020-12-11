@@ -8,20 +8,19 @@ import { Utils } from "../utils/Utils";
 import "./../orchestrators/SummaryOrchectrator";
 import "./../mutator/SummaryMutator";
 
-
 export enum ViewType {
     Main
 }
 
 export interface MyGameScore {
-    score: string,
-    timeStamp: string
+    score: string;
+    timeStamp: string;
 }
 
 export interface LeaderBoard {
-    playerId: string,
-    playerName: string,
-    score: string
+    playerId: string;
+    playerName: string;
+    score: string;
 }
 
 export interface SummaryProgressStatus {
@@ -39,9 +38,9 @@ interface IGameSummaryStore {
     actionSummary: actionSDK.ActionDataRowsSummary;
     dueDate: number;
     title: string;
-    scoreBoard: MyGameScore[],
-    leaderBoard: LeaderBoard[],
-    isGameExpired: boolean,
+    scoreBoard: MyGameScore[];
+    leaderBoard: LeaderBoard[];
+    isGameExpired: boolean;
     currentView: ViewType;
     continuationToken: string;
     actionInstanceRows: actionSDK.ActionDataRow[];
@@ -50,9 +49,6 @@ interface IGameSummaryStore {
     nonResponders: actionSDK.SubscriptionMember[];
     memberCount: number;
     showMoreOptionsList: boolean;
-    isPollCloseAlertOpen: boolean;
-    isChangeExpiryAlertOpen: boolean;
-    isDeletePollAlertOpen: boolean;
     progressStatus: SummaryProgressStatus;
     isActionDeleted: boolean;
     local: string;
@@ -74,9 +70,6 @@ const store: IGameSummaryStore = {
     continuationToken: null,
     showMoreOptionsList: false,
     isGameExpired: false,
-    isPollCloseAlertOpen: false,
-    isChangeExpiryAlertOpen: false,
-    isDeletePollAlertOpen: false,
     userProfile: {},
     nonResponders: null,
     memberCount: null,
@@ -86,7 +79,7 @@ const store: IGameSummaryStore = {
         settingInstance: ProgressState.NotStarted,
         leaderboardDatAInstance: ProgressState.NotStarted,
         myScoreDataInstance: ProgressState.NotStarted,
-        localizationInstance: ProgressState.NotStarted 
+        localizationInstance: ProgressState.NotStarted
     },
     isActionDeleted: false,
     local: "en-us",

@@ -27,6 +27,6 @@ const getColour = (num) => {
     default:
       return "rgb(250, 249, 248)";
     }
-}
+};
 
 export default getColour;

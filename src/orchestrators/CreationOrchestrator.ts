@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { setProgressState } from "./../actions/CreationActions";
-import { action, toJS } from "mobx";
+import { toJS } from "mobx";
 import { Localizer } from "../utils/Localizer";
 import { orchestrator } from "satcheljs";
 import { setContext, initialize, callActionInstanceCreationAPI, updateTitle, setSendingFlag, shouldValidateUI } from "../actions/CreationActions";
@@ -74,7 +74,7 @@ orchestrator(callActionInstanceCreationAPI, async () => {
         valueType: actionSDK.ActionDataColumnValueType.Text,
         displayName: "gamePlayer",
     };
-    
+
     actionInstance.dataTables[0].dataColumns.push(gameSetting);
     actionInstance.dataTables[0].dataColumns.push(gameScore);
     actionInstance.dataTables[0].dataColumns.push(gamePlayer);
@@ -85,7 +85,7 @@ orchestrator(callActionInstanceCreationAPI, async () => {
     actionInstance.dataTables[0].canUserAddMultipleRows = getStore().settings.isMultiResponseAllowed;
 
     if (validateActionInstance(actionInstance)) {
-        console.log("Validated")
+        console.log("Validated");
         setSendingFlag();
         prepareActionInstance(actionInstance, toJS(getStore().context));
         const res = await ActionSdkHelper.createActionInstance(actionInstance);

@@ -6,7 +6,7 @@ import { callActionInstanceCreationAPI, updateSettings } from "./../../actions/C
 import "./creation.scss";
 import "./CustomSettings.scss";
 import "./Settings.scss";
-import getStore, { Page } from "./../../store/CreationStore";
+import getStore from "./../../store/CreationStore";
 import { observer } from "mobx-react";
 import { Flex, FlexItem, Button, Loader } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
@@ -63,7 +63,7 @@ export default class CreationPage extends React.Component<any, any> {
             );
         }
     }
-    
+
     renderSettingsForGame() {
         let settingsProps: ISettingsComponentProps = {
             ...this.getCommonSettingsProps(),

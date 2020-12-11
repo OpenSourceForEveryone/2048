@@ -3,7 +3,7 @@ const isExist = (array, term=0) => {
 
   for (let i = 0; i < array.length; i++) {
     found = array[i].some((i) => i === term);
-    if (found) break;
+    if (found) { break; }
   }
   return found;
 };
