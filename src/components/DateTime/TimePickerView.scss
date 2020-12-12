@@ -45,10 +45,10 @@
 
 .list-item:focus {
     background-color: rgb(243, 242, 241) !important;
-    outline-color: rgb(0, 0, 0) !important;
+    outline-color: #6264a7 !important;
     outline-width: 1px !important;
     color: $black-color !important;
-    margin: 2px !important;
+    margin: 0px !important;
 }
 
 .time-picker-preview-container {
