@@ -97,6 +97,14 @@
     font-weight: var(--font-regular);
 }
 
+.create-view-alert-danger{
+    color: var(--danger-color);
+    font-size: var(--font-12);
+    font-weight: var(--font-regular);
+    margin-bottom: 4px;
+    text-align: right;
+}
+
 .summaryview .summary-header {
     margin-bottom: 16px !important;
     height: auto !important;

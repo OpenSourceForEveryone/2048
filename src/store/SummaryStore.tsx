@@ -27,9 +27,12 @@ export interface SummaryProgressStatus {
     actionInstance: ProgressState;
     currentContext: ProgressState;
     settingInstance: ProgressState;
-    leaderboardDatAInstance: ProgressState;
+    leaderboardDataAInstance: ProgressState;
     myScoreDataInstance: ProgressState;
     localizationInstance: ProgressState;
+    closeActionInstance: ProgressState;
+    deleteActionInstance: ProgressState;
+    updateActionInstance: ProgressState;
 }
 
 interface IGameSummaryStore {
@@ -53,6 +56,9 @@ interface IGameSummaryStore {
     isActionDeleted: boolean;
     local: string;
     isLeaderBoardVisible: boolean;
+    isGameCloseBoxOpen: boolean;
+    isChangeExpiryBoxOpen: boolean;
+    isDeleteSurveyBoxOpen: boolean;
 
 }
 
@@ -77,13 +83,19 @@ const store: IGameSummaryStore = {
         actionInstance: ProgressState.NotStarted,
         currentContext: ProgressState.NotStarted,
         settingInstance: ProgressState.NotStarted,
-        leaderboardDatAInstance: ProgressState.NotStarted,
+        leaderboardDataAInstance: ProgressState.NotStarted,
         myScoreDataInstance: ProgressState.NotStarted,
-        localizationInstance: ProgressState.NotStarted
+        localizationInstance: ProgressState.NotStarted,
+        closeActionInstance:ProgressState.NotStarted,
+        deleteActionInstance: ProgressState.NotStarted,
+        updateActionInstance: ProgressState.NotStarted,
     },
     isActionDeleted: false,
     local: "en-us",
-    isLeaderBoardVisible: false
+    isLeaderBoardVisible: false,
+    isGameCloseBoxOpen: false,
+    isChangeExpiryBoxOpen: false,
+    isDeleteSurveyBoxOpen: false
 };
 
 export default createStore<IGameSummaryStore>("summaryStore", store);

@@ -4,10 +4,22 @@
 import { mutator } from "satcheljs";
 import getStore, { LeaderBoard } from "./../store/SummaryStore";
 import {
-    setProgressStatus, setContext, setDueDate, setGameTitle,
+    setProgressStatus,
+    setContext,
+    setDueDate,
+    setGameTitle,
     showMoreOptions,
-    setActionInstance, fetchMyScore, fetchLeaderBoard, setGameStatus,
-    setLeaderboardVisibilityFlag
+    setActionInstance,
+    fetchMyScore,
+    fetchLeaderBoard,
+    setGameStatus,
+    setLeaderboardVisibilityFlag,
+    setIsActionDeleted,
+    gameCloseAlertOpen,
+    gameExpiryChangeAlertOpen,
+    gameDeleteAlertOpen,
+    updateActionInstance,
+
 } from "./../actions/SummaryActions";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { UxUtils } from "../utils/UxUtils";
@@ -118,4 +130,30 @@ mutator(fetchLeaderBoard, (msg) => {
 mutator(showMoreOptions, (msg) => {
     const store = getStore();
     store.showMoreOptionsList = msg.showMoreOptions;
+});
+
+mutator(updateActionInstance, (msg) => {
+    const store = getStore();
+    store.actionInstance = msg.actionInstance;
+    store.dueDate = msg.actionInstance.expiryTime;
+});
+
+mutator(gameCloseAlertOpen, (msg) => {
+    const store = getStore();
+    store.isGameCloseBoxOpen = msg.open;
+});
+
+mutator(gameExpiryChangeAlertOpen, (msg) => {
+    const store = getStore();
+    store.isChangeExpiryBoxOpen = msg.open;
+});
+
+mutator(gameDeleteAlertOpen, (msg) => {
+    const store = getStore();
+    store.isDeleteSurveyBoxOpen = msg.open;
+});
+
+mutator(setIsActionDeleted, (msg) => {
+    const store = getStore();
+    store.isActionDeleted = msg.isActionDeleted;
 });

@@ -24,12 +24,12 @@ export default class SummaryPage extends React.Component<any, any> {
             progressStatus.currentContext == ProgressState.InProgress ||
             progressStatus.localizationInstance == ProgressState.InProgress ||
             progressStatus.myScoreDataInstance == ProgressState.InProgress ||
-            progressStatus.leaderboardDatAInstance == ProgressState.InProgress ||
+            progressStatus.leaderboardDataAInstance == ProgressState.InProgress ||
             progressStatus.settingInstance == ProgressState.InProgress) {
             return  <div />;
         } else if (progressStatus.actionInstance == ProgressState.Failed || progressStatus.currentContext == ProgressState.Failed ||
             progressStatus.localizationInstance == ProgressState.Failed || progressStatus.myScoreDataInstance == ProgressState.Failed ||
-            progressStatus.leaderboardDatAInstance == ProgressState.Failed || progressStatus.settingInstance == ProgressState.Failed) {
+            progressStatus.leaderboardDataAInstance == ProgressState.Failed || progressStatus.settingInstance == ProgressState.Failed) {
             ActionSdkHelper.hideLoadingIndicator();
             return (
                 <ErrorView

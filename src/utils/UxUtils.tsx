@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { ButtonProps } from "@fluentui/react-northstar";
 import * as React from "react";
 import { Constants } from "./Constants";
+import { Localizer } from "./Localizer";
 
 export class UxUtils {
 
@@ -143,7 +145,19 @@ export class UxUtils {
         let localStorage = window.localStorage;
         const key = this.getKey();
         localStorage.removeItem(key);
-        console.log(localStorage.removeItem(key));
-        console.log("removing ");
     }
+
+    public static getDialogButtonProps(dialogDescription: string, buttonLabel: string): ButtonProps {
+        let buttonProps: ButtonProps = {
+            "content": buttonLabel
+        };
+
+        if (UxUtils.renderingForMobile()) {
+            Object.assign(buttonProps, {
+                "aria-label": Localizer.getString("DialogTalkback", dialogDescription, buttonLabel),
+            });
+        }
+        return buttonProps;
+    }
+
 }

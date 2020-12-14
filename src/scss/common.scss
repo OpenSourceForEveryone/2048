@@ -145,3 +145,10 @@ input {
 .no-flex-shrink {
     flex-shrink: 0;
 }
+
+
+.triple-dot-menu > li {
+    .theme-contrast & {
+        color: unset !important;
+    }
+}

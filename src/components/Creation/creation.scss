@@ -28,3 +28,7 @@
     cursor: pointer;
     display: flex;
 }
+
+.invalid-title {
+    border-bottom: 1px solid $error-red !important;
+}

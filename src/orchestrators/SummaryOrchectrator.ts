@@ -61,13 +61,13 @@ orchestrator(initialize, async () => {
                     setProgressStatus({ myScoreDataInstance: ProgressState.Failed });
                 }
 
-                setProgressStatus({ leaderboardDatAInstance: ProgressState.InProgress });
+                setProgressStatus({ leaderboardDataAInstance: ProgressState.InProgress });
                 let leaderBoardDataRows = await ActionSdkHelper.getActionDataRows(actionContext.context.actionId);
                 if(leaderBoardDataRows.success) {
                     fetchLeaderBoard(leaderBoardDataRows.dataRows);
-                    setProgressStatus({ leaderboardDatAInstance: ProgressState.Completed });
+                    setProgressStatus({ leaderboardDataAInstance: ProgressState.Completed });
                 } else {
-                    setProgressStatus({ leaderboardDatAInstance: ProgressState.Failed });
+                    setProgressStatus({ leaderboardDataAInstance: ProgressState.Failed });
                 }
                 setLeaderboardVisibilityFlag();
                 setProgressStatus({ currentContext: ProgressState.Completed });

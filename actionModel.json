@@ -1,6 +1,7 @@
 {
+    "schemaVersion": 1,
     "properties": {
-        "canAddMore": true,
+        "canAddMore": false,
         "values": [
             {
                 "name": "Locale",
@@ -13,20 +14,13 @@
         "canAddMore": false,
         "values": [
             {
-                "name": "Default",
-                "rowsEditable": true,
-                "canUserAddMultipleRows": false,
+                "name": "2048Tournament",
                 "dataColumns": {
-                    "canAddMore": false,
+                    "canAddMore": true,
                     "values": [
                         {
                             "name": "0",
-                            "valueType": "SingleOption",
-                            "allowNullValue": false,
-                            "options": {
-                                "canAddMore": true
-                            },
-                            "isOptional": false
+                            "valueType": "Text"
                         }
                     ]
                 }

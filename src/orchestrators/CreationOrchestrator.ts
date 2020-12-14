@@ -47,7 +47,7 @@ orchestrator(initialize, async () => {
 
 orchestrator(callActionInstanceCreationAPI, async () => {
     let actionInstance: actionSDK.Action = {
-        displayName: "2048 Game",
+        displayName: "2048 Tournament",
         expiryTime: getStore().settings.dueDate,
         dataTables: [
             {

@@ -7,7 +7,6 @@ import { Provider, teamsTheme, teamsDarkTheme, teamsHighContrastTheme, ThemePrep
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { Utils } from "./../../utils/Utils";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
-import MetaTags from "react-meta-tags";
 
 interface IActionRootViewState {
     hostContext: actionSDK.ActionSdkContext;
@@ -48,12 +47,6 @@ export class ActionRootView extends React.Component<any, IActionRootViewState> {
                 theme={this.getTheme()}
                 rtl={isRTL}
             >
-                <MetaTags>
-                    <title>Page 1</title>
-                    <meta name="description" content="Some description." />
-                    <meta property="og:title" content="MyApp" />
-                    <meta property="og:image" content="path/to/image.jpg" />
-                </MetaTags>
                 {this.props.children}
             </Provider>
         );

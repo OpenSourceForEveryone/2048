@@ -14,7 +14,7 @@ export interface IInputBoxProps extends InputProps {
 }
 
 const errorIcon: ShorthandValue<BoxProps> = {
-    content: <ExclamationCircleIcon className="settings-icon" outline={true} color="brand" />
+    content: <ExclamationCircleIcon className="settings-icon" outline={true} color="brand" style={{color:"#C4314B"}} />
 };
 
 enum RenderAs {
@@ -55,14 +55,15 @@ export class InputBox extends React.Component<IInputBoxProps> {
             this.renderAs = RenderAs.TextArea;
         }
         return (
-            <Flex >
+            <Flex column>
+                <Flex  role="group" aria-label="gameTitle" column gap="gap.smaller">
                 {(this.props.showError && !Utils.isEmpty(this.props.errorText)) &&
-                    <Text align="end" error>{this.props.errorText}</Text>}
+                    <Text error style={{marginBottom:"4px", textAlign:"right", fontSize:"12px", color:"#C4314B"}}>{this.props.errorText}</Text>}
+                </Flex>
                 {this.props.prefixJSX ? this.getInputItem() : this.getInput()}
             </Flex>
         );
     }
-
     public focus() {
         if (this.inputElement) {
             this.inputElement.focus();
@@ -113,8 +114,6 @@ export class InputBox extends React.Component<IInputBoxProps> {
 
     private getInputProps(): InputProps {
 
-        let icon = this.props.icon || (this.props.showError ? errorIcon : null);
-
         this.incomingInputRef = this.props.inputRef;
         let inputRef = (input) => {
             this.inputElement = input;
@@ -150,7 +149,6 @@ export class InputBox extends React.Component<IInputBoxProps> {
                 multiline: undefined
             },
             className: classNames.join(" "),
-            icon: icon,
             inputRef: inputRef,
             input: input
         };

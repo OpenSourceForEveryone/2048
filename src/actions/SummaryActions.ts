@@ -20,7 +20,6 @@ export enum GameSummaryAction {
     goBack = "goBack",
     fetchUserDetails = "fetchUserDetails",
     fetchActionInstanceRows = "fetchActionInstanceRows",
-    fetchActionInstance = "fetchActionInstance",
     fetchActionInstanceSummary = "fetchActionInstanceSummary",
     fetchLocalization = "fetchLocalization",
     setActionInstance = "setActionInstance",
@@ -28,6 +27,14 @@ export enum GameSummaryAction {
     fetchLeaderBoard = "fetchLeaderBoard",
     setGameStatus = "setGameStatus",
     setLeaderboardVisibilityFlag = "setLeaderboardVisibilityFlag",
+    setIsActionDeleted = "setIsActionDeleted",
+    gameCloseAlertOpen = "surveyCloseAlertOpen",
+    gameExpiryChangeAlertOpen = "surveyExpiryChangeAlertOpen",
+    gameDeleteAlertOpen = "surveyDeleteAlertOpen",
+    updateDueDate = "updateDueDate",
+    closeGame = "closeGame",
+    deleteGame = "deleteGame",
+    updateActionInstance = "updateActionInstance"
 }
 
 export let initialize = action(GameSummaryAction.initialize);
@@ -75,5 +82,33 @@ export let showMoreOptions = action(GameSummaryAction.showMoreOptions, (showMore
 }));
 
 export let setActionInstance = action(GameSummaryAction.setActionInstance, (actionInstance: actionSDK.Action) => ({
+    actionInstance: actionInstance
+}));
+
+export let gameCloseAlertOpen = action(GameSummaryAction.gameCloseAlertOpen, (open: boolean) => ({
+    open: open
+}));
+
+export let gameExpiryChangeAlertOpen = action(GameSummaryAction.gameExpiryChangeAlertOpen, (open: boolean) => ({
+    open: open
+}));
+
+export let gameDeleteAlertOpen = action(GameSummaryAction.gameDeleteAlertOpen, (open: boolean) => ({
+    open: open
+}));
+
+export let setIsActionDeleted = action(GameSummaryAction.setIsActionDeleted, (isActionDeleted: boolean) => ({
+    isActionDeleted: isActionDeleted
+}));
+
+export let updateDueDate = action(GameSummaryAction.updateDueDate, (dueDate: number) => ({
+    dueDate: dueDate
+}));
+
+export let closeSurvey = action(GameSummaryAction.closeGame);
+
+export let deleteSurvey = action(GameSummaryAction.deleteGame);
+
+export let updateActionInstance = action(GameSummaryAction.updateActionInstance, (actionInstance: actionSDK.Action) => ({
     actionInstance: actionInstance
 }));
