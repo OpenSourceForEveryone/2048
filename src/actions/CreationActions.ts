@@ -8,6 +8,7 @@ import { ISettingsComponentProps } from "./../components/Creation/Settings";
 import { ProgressState } from "./../utils/SharedEnum";
 
 export enum GameCreationAction {
+    
     initialize = "initialize",
     setContext = "setContext",
     updateTitle = "updateTitle",

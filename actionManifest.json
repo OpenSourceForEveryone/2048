@@ -22,9 +22,9 @@
             "sourceLocation": "CreateView.html",
             "header": "Create new tournament"
         },
-        "UpdateView": 
+        "ResponseView": 
         {
-            "sourceLocation": "UpdateView.html",
+            "sourceLocation": "ResponseView.html",
             "header": "Play 2048"
         },
         "SummaryView": {

@@ -23,12 +23,9 @@ import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
  */
 @observer
 export default class CreationPage extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showError: false
-        };
-    }
+    state = {
+        showError: false
+    };
 
     isValidGameTitle() {
         const title = getStore().title;
@@ -64,6 +61,7 @@ export default class CreationPage extends React.Component<any, any> {
         }
     }
 
+    // renderng seting page for the game
     renderSettingsForGame() {
         let settingsProps: ISettingsComponentProps = {
             ...this.getCommonSettingsProps(),

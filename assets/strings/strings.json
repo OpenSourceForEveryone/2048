@@ -53,7 +53,7 @@
    "_YourScoreOnCongratulationPage.comment" : "label to indicate the string identifier on Congratulation Page",
    "LeaderboardInSummaryView":"Leaderboard",
    "_LeaderboardInSummaryView.comment":"label indicates your leaderboard heading in summary view",
-   "LoadMore": "Load more score",
+   "LoadMore": "Load more...",
    "_LoadMore.comment": "label to indicate the string for load more record",
    "LoadLess": "Show less",
    "_LoadLess.comment": "label to indicate the string for show less record",

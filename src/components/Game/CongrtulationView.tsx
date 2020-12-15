@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import * as React from "react";
 import { observer } from "mobx-react";
 import { Flex, FlexItem, Button, Text } from "@fluentui/react-northstar";
@@ -5,6 +8,11 @@ import "./game.scss";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 import { Localizer } from "../../utils/Localizer";
 import { Constants } from "../../utils/Constants";
+
+/**
+ * <CongratulationView> component for congratulation view
+ * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
+ */
 
 @observer
 export default class CongratulationView extends React.Component<any, any> {
@@ -26,6 +34,7 @@ export default class CongratulationView extends React.Component<any, any> {
             </>
         );
     }
+    // render the footer section of the congratualtion view
     renderFooterSection(isMobileView?: boolean) {
         let className = isMobileView ? "" : "footer-layout";
         return (

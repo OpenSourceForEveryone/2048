@@ -5,7 +5,7 @@ import {
     setActionInstance,
     fetchActionInstanceRowsForCurrentUser,
     setProgressState,
-} from "../actions/UpdateAction";
+} from "../actions/ResponseAction";
 import { Localizer } from "../utils/Localizer";
 import { ProgressState } from "../utils/SharedEnum";
 import { ActionSdkHelper } from "../helper/ActionSdkHelper";

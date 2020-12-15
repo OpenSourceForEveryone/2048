@@ -5,11 +5,6 @@ import { action } from "satcheljs";
 import { SummaryProgressStatus } from "../store/SummaryStore";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
-export enum HttpStatusCode {
-    Unauthorized = 401,
-    NotFound = 404,
-}
-
 export enum GameSummaryAction {
     initialize = "initialize",
     setContext = "setContext",
@@ -105,9 +100,9 @@ export let updateDueDate = action(GameSummaryAction.updateDueDate, (dueDate: num
     dueDate: dueDate
 }));
 
-export let closeSurvey = action(GameSummaryAction.closeGame);
+export let closeGame = action(GameSummaryAction.closeGame);
 
-export let deleteSurvey = action(GameSummaryAction.deleteGame);
+export let deleteGame = action(GameSummaryAction.deleteGame);
 
 export let updateActionInstance = action(GameSummaryAction.updateActionInstance, (actionInstance: actionSDK.Action) => ({
     actionInstance: actionInstance

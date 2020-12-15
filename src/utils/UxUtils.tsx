@@ -130,8 +130,8 @@ export class UxUtils {
             return true;
         }
     }
-
-    public static setLocaStorge(shouldCreate: boolean) {
+    
+    public static setLocalStorge(shouldCreate: boolean) {
         if (shouldCreate) {
             let localStorage = window.localStorage;
             const key = this.getKey();

@@ -35,6 +35,10 @@ export interface SummaryProgressStatus {
     updateActionInstance: ProgressState;
 }
 
+/**
+ * Summary store containing all data required for summary view
+ */
+
 interface IGameSummaryStore {
     context: actionSDK.ActionSdkContext;
     actionInstance: actionSDK.Action;

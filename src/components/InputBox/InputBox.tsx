@@ -4,7 +4,7 @@
 import * as React from "react";
 import "./InputBox.scss";
 import { Input, InputProps, Text, Flex, ShorthandValue, BoxProps, ExclamationCircleIcon } from "@fluentui/react-northstar";
-import { Utils } from "../../utils/Utils";
+import { Utils } from "../../utils/Utils"; 
 
 export interface IInputBoxProps extends InputProps {
     multiline?: boolean;
@@ -52,9 +52,13 @@ export class InputBox extends React.Component<IInputBoxProps> {
         }
         return (
             <Flex column>
-                <Flex  role="group" aria-label="gameTitle" column gap="gap.smaller">
-                {(this.props.showError && !Utils.isEmpty(this.props.errorText)) &&
-                    <Text error style={{marginBottom:"4px", textAlign:"right", fontSize:"12px", color:"#C4314B"}}>{this.props.errorText}</Text>}
+                <Flex role="group"
+                    aria-label="gameTitle"
+                    column gap="gap.smaller">
+                    {(this.props.showError && !Utils.isEmpty(this.props.errorText)) &&
+                        <Text error className = "input-alert-setting">
+                            {this.props.errorText}
+                        </Text>}
                 </Flex>
                 {this.props.prefixJSX ? this.getInputItem() : this.getInput()}
             </Flex>

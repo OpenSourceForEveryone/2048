@@ -1,11 +1,11 @@
 import { createStore } from "satcheljs";
-import "../mutator/UpdateMutator";
-import "../orchestrators/UpdateOrchestrator";
+import "../mutator/ResponseMutator";
+import "../orchestrators/ResponseOrchestrator";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ProgressState } from "../utils/SharedEnum";
 
 /**
- * Updation store containing all data required when user play the game.
+ * Response store containing all data required when user play the game.
  */
 
 export interface ResponseProgressStatus {
@@ -16,7 +16,7 @@ export interface ResponseProgressStatus {
     localizationInstance: ProgressState;
 }
 
-interface IGameUpdationStore {
+interface IGameResponseStore {
     context: actionSDK.ActionSdkContext;
     actionInstance: actionSDK.Action;
     actionInstanceRowsForCurrentUser: actionSDK.ActionDataRow[];
@@ -28,7 +28,7 @@ interface IGameUpdationStore {
     PlayerCurrentScore: string;
 }
 
-const store: IGameUpdationStore = {
+const store: IGameResponseStore = {
     context: null,
     shouldValidate: false,
     actionInstance: null,
@@ -47,4 +47,4 @@ const store: IGameUpdationStore = {
 
 };
 
-export default createStore<IGameUpdationStore>("updationStore", store);
+export default createStore<IGameResponseStore>("ResponseStore", store);

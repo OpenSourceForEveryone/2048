@@ -15,20 +15,8 @@ import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 /**
  * Creation view orchestrators to do API calls, perform any action on data and dispatch further actions to modify stores in case of any change
  */
-
 function validateActionInstance(actionInstance: actionSDK.Action): boolean {
     if (actionInstance == null) { return false; }
-    // let dataColumns = actionInstance.dataTables[0].dataColumns;
-    // if (!dataColumns || dataColumns.length <= 0 || !dataColumns[0].displayName || dataColumns[0].displayName == "" ||
-    //     !dataColumns[0].options || dataColumns[0].options.length < 2) {
-    //     return false;
-    // }
-
-    // for (let option of dataColumns[0].options) {
-    //     if (!option.displayName || option.displayName == "") {
-    //         return false;
-    //     }
-    // }
     return true;
 }
 
@@ -51,7 +39,7 @@ orchestrator(callActionInstanceCreationAPI, async () => {
         expiryTime: getStore().settings.dueDate,
         dataTables: [
             {
-                name: "game",
+                name: "2048TournamentDataTable",
                 dataColumns: [],
                 attachments: [],
             },
@@ -85,11 +73,9 @@ orchestrator(callActionInstanceCreationAPI, async () => {
     actionInstance.dataTables[0].canUserAddMultipleRows = getStore().settings.isMultiResponseAllowed;
 
     if (validateActionInstance(actionInstance)) {
-        console.log("Validated");
         setSendingFlag();
         prepareActionInstance(actionInstance, toJS(getStore().context));
         const res = await ActionSdkHelper.createActionInstance(actionInstance);
-        console.log(res);
     } else {
         shouldValidateUI(true);
     }

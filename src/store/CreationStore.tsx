@@ -15,7 +15,9 @@ export enum Page {
     Preview,
     UpdateQuestion
 }
-
+/**
+ * Creation store containing all data required for creation view
+ */
 interface IGameCreationStore {
     context: actionSDK.ActionSdkContext;
     progressState: ProgressState;

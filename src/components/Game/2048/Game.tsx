@@ -1,26 +1,30 @@
+
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import * as React from "react";
 import Board from "./components/Board";
 import "./App.scss";
 import "./../game.scss";
 import cloneDeep from "lodash.clonedeep";
-import useEvent from "./Hooks/useEvent";
-import useLocalStorage from "./Hooks/useLocalStorage";
-import getNewPosition from "./utils/getNewPosition";
-import isExist from "./utils/isExist";
+import {GameUtils} from "./utils/gameUtils"
 import CongratulationView from "../CongrtulationView";
 import { Flex } from "@fluentui/react-northstar";
 import Header from "./components/Header";
 import { UxUtils } from "../../../utils/UxUtils";
 import { Constants } from "../../../utils/Constants";
+import gameEventListner from "./utils/gameEventListner";
+
+// Key Map for keyboard
+const KeyMap = {
+  UP: 38,
+  DOWN: 40,
+  LEFT: 37,
+  RIGHT: 39,
+}
 
 export const GAME = (props) => {
-  const UP = 38;
-  const DOWN = 40;
-  const LEFT = 37;
-  const RIGHT = 39;
-  // const STOP = 27;
-
-  const INITIAL_DATA = [
+  const gameDate = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -28,45 +32,33 @@ export const GAME = (props) => {
   ];
 
   const [gameOver, setGameOver] = React.useState(false);
-  const [data, setData] = React.useState(INITIAL_DATA);
-  const [newGame, setNewGame] = useLocalStorage("newGame", true);
+  const [data, setData] = React.useState(gameDate);
   const [score, setScore] = React.useState(0);
-  const [isWon, setIsWon] = useLocalStorage("isWon", false);
-  const [moveHistory, setMoveHistory] = useLocalStorage("moveHistory", []);
-  const [undoMoves, setUndoMoves] = useLocalStorage("undoMoves", []);
 
+  // helper method to initialize the game board
   const initialize = () => {
     UxUtils.setFocus(document.body, Constants.FOCUSABLE_ITEMS.All);
-    let newGrid = cloneDeep(INITIAL_DATA);
+    let newGrid = cloneDeep(gameDate);
     addItem(newGrid);
     addItem(newGrid);
     setData(newGrid);
     setScore(0);
-    setNewGame(false);
   };
 
-  // Add item
+  // Add item to the game grid
   const addItem = (newGrid) => {
-    let [rand1, rand2] = getNewPosition();
+    let [rand1, rand2] = GameUtils.getNewPositionOfTile();
     while (newGrid[rand1][rand2] !== 0) {
-      [rand1, rand2] = getNewPosition();
+      [rand1, rand2] = GameUtils.getNewPositionOfTile();
     }
     newGrid[rand1][rand2] = Math.random() > 0.5 ? 2 : 4;
   };
 
-  // Swipe action
-
+  // update the board on swip left or key left
   const swipeLeft = (isMove = true) => {
     let oldGrid = data;
     let newArray1 = cloneDeep(data);
     let swipeLeftScore = 0;
-
-    if (isWon) {
-      return;
-    }
-    if (undoMoves.length) {
-      setUndoMoves([]);
-    }
 
     for (let i = 0; i < 4; i++) {
       let b = newArray1[i];
@@ -102,36 +94,22 @@ export const GAME = (props) => {
       }
     }
     if (JSON.stringify(oldGrid) !== JSON.stringify(newArray1)) {
-      setMoveHistory([...moveHistory, oldGrid]);
-      if (isExist(newArray1, 2048)) {
-        setIsWon(true);
-        setData(newArray1);
-      } else {
-        addItem(newArray1);
-      }
-    } else if (!isExist(oldGrid) && isMove && checkGameOver()) {
-      // Game over
+      addItem(newArray1);
     }
-
     if (isMove) {
       setData(newArray1);
-    } else { return newArray1; }
+    } else {
+      return newArray1;
+    }
 
     return swipeLeftScore;
   };
 
+  // update the board on swip right or key right
   const swipeRight = (isMove = true) => {
     let oldGrid = data;
     let newArray2 = cloneDeep(data);
     let swipeRightScore = 0;
-
-    if (isWon) {
-      return;
-    }
-
-    if (undoMoves.length) {
-      setUndoMoves([]);
-    }
 
     for (let i = 3; i >= 0; i--) {
       let b = newArray2[i];
@@ -168,14 +146,7 @@ export const GAME = (props) => {
     }
 
     if (JSON.stringify(oldGrid) !== JSON.stringify(newArray2)) {
-      setMoveHistory([...moveHistory, oldGrid]);
-      if (isExist(newArray2, 2048)) {
-        setIsWon(true);
-        setData(newArray2);
-        return;
-      } else { addItem(newArray2); }
-    } else if (!isExist(oldGrid) && isMove && checkGameOver()) {
-      // Game over
+      addItem(newArray2)
     }
 
     if (isMove) {
@@ -185,18 +156,11 @@ export const GAME = (props) => {
     return swipeRightScore;
   };
 
+  // update the board on swip down or key down
   const swipeDown = (isMove = true) => {
     let b = [...data];
     let oldData = JSON.parse(JSON.stringify(data));
     let swipeDownScore = 0;
-
-    if (isWon) {
-      return;
-    }
-
-    if (undoMoves.length) {
-      setUndoMoves([]);
-    }
 
     for (let i = 3; i >= 0; i--) {
       let slow = b.length - 1;
@@ -233,13 +197,7 @@ export const GAME = (props) => {
     }
 
     if (JSON.stringify(oldData) !== JSON.stringify(b)) {
-      setMoveHistory([...moveHistory, oldData]);
-      if (isExist(b, 2048)) {
-        setIsWon(true);
-        setData(b);
-      } else { addItem(b); }
-    } else if (!isExist(oldData) && isMove && checkGameOver()) {
-      // No action
+      addItem(b)
     }
 
     if (isMove) {
@@ -247,21 +205,13 @@ export const GAME = (props) => {
     } else { return b; }
 
     return swipeDownScore;
-
   };
-
+  
+  // update the board on swip up or key up
   const swipeUp = (isMove = true) => {
     let b = [...data];
     let oldData = JSON.parse(JSON.stringify(data));
     let swipeUpScore = 0;
-
-    if (isWon) {
-      return;
-    }
-
-    if (undoMoves.length) {
-      setUndoMoves([]);
-    }
 
     for (let i = 0; i < 4; i++) {
       let slow = 0;
@@ -297,13 +247,7 @@ export const GAME = (props) => {
     }
 
     if (JSON.stringify(oldData) !== JSON.stringify(b)) {
-      setMoveHistory([...moveHistory, oldData]);
-      if (isExist(b, 2048)) {
-        setIsWon(true);
-        setData(b);
-      } else { addItem(b); }
-    } else if (!isExist(oldData) && isMove && checkGameOver()) {
-      // No action
+      addItem(b); 
     }
 
     if (isMove) {
@@ -313,6 +257,7 @@ export const GAME = (props) => {
     return swipeUpScore;
   };
 
+  // Function to check if the game is over
   const checkGameOver = () => {
     if (JSON.stringify(data) !== JSON.stringify(swipeLeft(false))) {
       return false;
@@ -325,19 +270,20 @@ export const GAME = (props) => {
     } else { return true; }
   };
 
+  // Event handler for keyboard button press
   const handleKeyDown = (event: React.KeyboardEvent) => {
     let myScore = 0;
     switch (event.keyCode) {
-      case UP:
+      case KeyMap.UP:
         myScore = Number(swipeUp());
         break;
-      case DOWN:
+      case KeyMap.DOWN:
         myScore = Number(swipeDown());
         break;
-      case LEFT:
+      case KeyMap.LEFT:
         myScore = swipeLeft();
         break;
-      case RIGHT:
+      case KeyMap.RIGHT:
         myScore = swipeRight();
         break;
     }
@@ -354,11 +300,13 @@ export const GAME = (props) => {
   let initialX = null;
   let initialY = null;
 
+  // Event handle for start touch 
   const startTouch = (event: React.TouchEvent) => {
     initialX = event.touches[0].clientX;
     initialY = event.touches[0].clientY;
   };
 
+  // Event handler for touch events like swipes(left, right, top and down)
   const moveTouch = (event: React.TouchEvent) => {
     let myScore = 0;
 
@@ -403,14 +351,15 @@ export const GAME = (props) => {
     initialY = null;
     event.preventDefault();
   };
-
+  
+  // initialize the game 
   React.useEffect(() => {
     initialize();
-  }, [newGame]);
+  }, []);
 
-  useEvent("keydown", handleKeyDown);
-  useEvent("touchstart", startTouch);
-  useEvent("touchmove", moveTouch);
+  gameEventListner("keydown", handleKeyDown);
+  gameEventListner("touchstart", startTouch);
+  gameEventListner("touchmove", moveTouch);
 
   return (
     <Flex
@@ -423,7 +372,7 @@ export const GAME = (props) => {
         <CongratulationView gameScore={score} shouldShowAlert="false" /> :
         <>
           <Header score={score} />
-          <div className="container" tabIndex = {props.tabIndex}>
+          <div className="container" tabIndex={props.tabIndex}>
             <Board
               data={data}
             />

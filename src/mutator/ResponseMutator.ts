@@ -1,5 +1,5 @@
 import { mutator } from "satcheljs";
-import getStore from "../store/UpdationStore";
+import getStore from "../store/ResponseStore";
 import {
     setContext,
     shouldValidateUI,
@@ -7,7 +7,7 @@ import {
     setActionInstance,
     fetchActionInstanceRowsForCurrentUser,
 
-} from "../actions/UpdateAction";
+} from "../actions/ResponseAction";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
 /**

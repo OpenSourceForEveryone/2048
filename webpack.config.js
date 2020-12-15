@@ -7,7 +7,7 @@ module.exports = (env) => {
     var config = {
         entry: {
             "CreateView": "./src/CreateView.tsx",
-            "UpdateView": "./src/UpdateView.tsx",
+            "ResponseView": "./src/ResponseView.tsx",
             "SummaryView": "./src/SummaryView.tsx"
         },
         output: {

@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { observer } from "mobx-react";
-import getStore from "./../../store/UpdationStore";
+import getStore from "../../store/ResponseStore";
 import "./game.scss";
 import { Localizer } from "../../utils/Localizer";
 import { ErrorView } from "../ErrorView";
@@ -16,7 +16,7 @@ import GAME from "./2048/Game";
 import CongratulationView from "./CongrtulationView";
 
 /**
- *
+ * <GamePage> component for game app
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
 @observer
@@ -57,6 +57,7 @@ export default class GamePage extends React.Component<any, any> {
         }
     }
 
+    // get instruction content based on the device 
     getInstructionContent(): string {
         if (UxUtils.renderingForMobile()) {
             return Localizer.getString("HowToPlayForMobile");
@@ -66,12 +67,13 @@ export default class GamePage extends React.Component<any, any> {
     }
 
     /**
-     * Method to return the view based on the game settings
+     * Method to return game app component
     **/
-
     private getGamePage(): JSX.Element {
         return <GAME  tabIndex = {0}/>;
     }
+
+    // Method to render game instruction 
     private getInstructionPage(): JSX.Element {
         return (<InstructionView
             DontShowTheGameInstruction={Localizer.getString("DontShowTheGameInstruction")}
@@ -81,6 +83,7 @@ export default class GamePage extends React.Component<any, any> {
         />);
     }
 
+    // Method to render congratualtion view
     private getCongratulationPage(): JSX.Element {
         return (
             <Flex

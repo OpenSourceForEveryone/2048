@@ -1,7 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import * as React from "react";
 import Tile from "../Tile";
 import "./Board.scss";
 
+ /**
+  * <Board> functional componenet for Game board
+  */
 export default function Board({ data }) {
   return (
     <>

@@ -56,27 +56,27 @@
 }
 
 .input-lg::-webkit-input-placeholder {
-    color: var(--app-gray-sub-text);
+    color: var(--app-gray-sub-text) !important;
 }
 
 .input-lg:-ms-input-placeholder {
-    color: var(--app-gray-sub-text);
+    color: var(--app-gray-sub-text) !important;
 }
 
 .input-lg::placeholder {
-    color: var(--app-gray-sub-text);
+    color: var(--app-gray-sub-text) !important;
 }
 
 .in-t::-webkit-input-placeholder {
-    color: #6e6e6e;
+    color: var(--app-gray-sub-text) !important;
 }
 
 .in-t:-ms-input-placeholder {
-    color: #6e6e6e;
+      color: var(--app-gray-sub-text) !important;
 }
 
 .in-t::placeholder {
-    color: #6e6e6e;
+      color: var(--app-gray-sub-text) !important;
 }
 
 .setting-header {

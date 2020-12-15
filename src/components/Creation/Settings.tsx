@@ -10,11 +10,16 @@ import { InputBox } from "../InputBox";
 import getStore from "./../../store/CreationStore";
 import { Constants } from "../../utils/Constants";
 import {
-    updateTitle, shouldValidateUI, updateSettings
+    updateTitle,
+    shouldValidateUI,
+    updateSettings
 } from "./../../actions/CreationActions";
 import "./Settings.scss";
 import "./CustomSettings.scss";
 
+/**
+ * Setting Props
+*/
 export interface ISettingsComponentProps {
     dueDate: number;
     locale?: string;
@@ -37,6 +42,7 @@ export interface ISettingsComponentStrings {
     datePickerPlaceholder?: string;
     timePickerPlaceholder?: string;
 }
+
 /**
  * <Settings> Settings component of creation view of game
  */
@@ -47,11 +53,6 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
     private inputTitleRef: HTMLElement;
     constructor(props: ISettingsComponentProps) {
         super(props);
-        this.state = {
-            allowMultipleTimes: true,
-            shouldScoreVisibleToMe: true,
-            showError: false
-        };
     }
     componentDidMount() {
         if (this.props.onMount) {
@@ -75,7 +76,8 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         };
 
         return (
-            <Flex className="body-container" column gap="gap.medium">
+            <Flex className="body-container" column
+                gap="gap.medium">
                 {this.renderSettings()}
             </Flex>
         );
@@ -94,16 +96,25 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         );
     }
 
+    /**
+     * Rendering Enter Game Title section in cretion view
+    **/
     private renderGameTitleSection() {
         return (
-            <Flex className="settings-item-margin" role="group" aria-label="additionlsettings" column gap="gap.smaller">
+            <Flex className="settings-item-margin"
+                role="group"
+                aria-label="gameTitleSection"
+                column gap="gap.smaller">
                 <InputBox
                     fluid
                     maxLength={Constants.GAME_TITLE_MAX_LENGTH}
                     input={{
-                        className: this.settingProps.shouldShowGametitleAlert ? "item-content title-box in-t invalid-title invalid-error" : "item-content title-box in-t"
+                        className: this.settingProps.shouldShowGametitleAlert ?
+                            "item-content title-box in-t invalid-title invalid-error" :
+                            "item-content title-box in-t"
                     }}
-                    showError={this.settingProps.shouldShowGametitleAlert} errorText={Localizer.getString("GameTitleErrorAlert")}
+                    showError={this.settingProps.shouldShowGametitleAlert}
+                    errorText={Localizer.getString("GameTitleErrorAlert")}
                     placeholder={Localizer.getString("TitlePlaceHoler")}
                     aria-placeholder={Localizer.getString("TitlePlaceHoler")}
                     value={getStore().title}
@@ -116,10 +127,10 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         );
     }
     /**
-     * Rendering due date section for settings view
+     * Rendering due date section in creation view
      **/
     private renderDueBySection() {
-        // handling mobile view differently
+
         return (
             <Flex role="group" aria-label={this.getString("dueBy")} column gap="gap.smaller">
                 <label className="settings-item-title">{Localizer.getString("EndDate")}</label>
@@ -138,12 +149,15 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         );
     }
     /**
-     * Rendering result visiblity
+     * Rendering setting components with checkbox
      */
     private renderAdditionalSettingsSection() {
 
         return (
-            <Flex role="group" aria-label="additionlsettings" column gap="gap.smaller" style={{ padding: "16px 0px 0px 0px" }}>
+            <Flex role="group"
+                aria-label="additionlsettings"
+                column gap="gap.smaller"
+                className="additinal-setting-container-padding" >
                 {this.renderLeaderBoardVisibilitySettingSection()}
                 {this.renderAllowMultiplePlaySettingSection()}
             </Flex>
@@ -157,21 +171,25 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         return key;
     }
 
+    /**
+    * helper method to render the multiple play setting checkbox in creation view
+    */
+   
     private renderAllowMultiplePlaySettingSection() {
         return (
-            <Flex styles={{ padding: "8px 16px 0px 0px" }} className="adjust-checkbox checkbox-gap">
-                <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
-                 className="checklist-checkbox"
-                 aria-describedby = {Localizer.getString("AllowMultipleTimePlay")}
-                 checked={getStore().settings.isMultiResponseAllowed}
-                 onClick={
+            <Flex className="adjust-checkbox checkbox-gap additional-setting-paddig">
+                <Checkbox labelPosition="start"
+                    className="checklist-checkbox setting-check-box-padding"
+                    aria-describedby={Localizer.getString("AllowMultipleTimePlay")}
+                    checked={getStore().settings.isMultiResponseAllowed}
+                    onClick={
                         () => {
                             this.settingProps.isMultiResponseAllowed = !this.settingProps.isMultiResponseAllowed;
-                                //this.props.onChange(this.settingProps);
+                            //this.props.onChange(this.settingProps);
                             updateSettings(this.settingProps);
                         }
                     }
-                     />
+                />
                 <Flex column>
                     <Text content={Localizer.getString("AllowMultipleTimePlay")} className="setting-header" />
                     <Text content={Localizer.getString("AllowMultipleTimePlaySubstring")} className="setting-sub-text" />
@@ -180,17 +198,21 @@ export class Settings extends React.PureComponent<ISettingsComponentProps> {
         );
     }
 
+    /**
+    * helper method to render the leaderboard visibility setting checkbox in creation view
+    */
+
     private renderLeaderBoardVisibilitySettingSection() {
         return (
-            <Flex styles={{ padding: "8px 16px 0px 0px" }} className="adjust-checkbox checkbox-gap">
-                <Checkbox labelPosition="start" styles={{ padding: "2px 12px 0px 0px" }}
-                    className="checklist-checkbox"
-                    aria-describedby = {Localizer.getString("LeaderBoardSetting")}
+            <Flex
+                className="adjust-checkbox checkbox-gap additional-setting-paddig">
+                <Checkbox labelPosition="start"
+                    className="checklist-checkbox setting-check-box-padding "
+                    aria-describedby={Localizer.getString("LeaderBoardSetting")}
                     checked={getStore().settings.resultVisibility}
                     onClick={
                         () => {
                             this.settingProps.resultVisibility = !this.settingProps.resultVisibility;
-                            //this.props.onChange(this.settingProps);
                             updateSettings(this.settingProps);
                         }
                     }

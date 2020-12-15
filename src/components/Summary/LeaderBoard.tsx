@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { observer } from "mobx-react";
 import * as React from "react";
 import getStore, { LeaderBoard } from "../../store/SummaryStore";
@@ -5,7 +8,12 @@ import "./summary.scss";
 import {
     List
 } from "@fluentui/react-northstar";
+import { Localizer } from "../../utils/Localizer";
 
+/**
+ * <LeaderBoardView> component for Leaderboard on summary page
+ * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
+ */
 @observer
 export class LeaderBoardView extends React.PureComponent<any, any> {
     private scores: LeaderBoard[];
@@ -16,28 +24,28 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
             visible: 3
         };
         this.showMore = this.showMore.bind(this);
-        this.showLess = this.showLess.bind(this);
     }
     render() {
+
+        // preparing the leader baord 
         return (
             <>
                 {this.scores && this.scores.length ?
                     <>
                         <List
                             items={this.getListItems().slice(0, this.state.visible)}
-                            aria-label="Static headless table"
-                            className="table-container"
-                            styles={{ backgroundColor: "#FAF9F8" }} />
+                            aria-label="staticHeadlessTable"
+                            className="table-container" />
                         {
                             this.scores.length > 3 && this.scores.length > this.state.visible ?
-                            <span className="link leaderboard-link" onClick={this.showMore}>+ Load more...</span>
+                            <span className="link leaderboard-link" onClick={this.showMore}>+ {Localizer.getString("LoadMore")}</span>
                             :
                             <div> </div>
                         }
                     </> :
                     <div className="content">
                         <label>
-                            {this.props.NoOneHasResponded}
+                            {this.props.noOneHasResponded}
                         </label>
                     </div>
                 }
@@ -45,21 +53,17 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
         );
     }
 
+    // helper method to increase the row visibility count
     private showMore() {
         this.setState((prev) => {
             return { visible: prev.visible + 3 };
         });
     }
-
-    private showLess() {
-        this.setState(() => {
-            return { visible: 3 };
-        });
-    }
+    
+    // Helper method to get the list items
     private getListItems(): any[] {
         let items = [];
         if (this.scores && this.scores.length > 0) {
-
             this.scores.forEach(element => {
                 items.push({
                     key: element.playerId,
@@ -68,7 +72,6 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
                 });
             });
         }
-
         return items || [];
     }
 }

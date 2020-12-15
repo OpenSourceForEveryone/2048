@@ -353,3 +353,26 @@
 .ui-list li:not(:last-child) {
     border-bottom: 1px solid #Ede9eb;
 }
+
+.expired-game-text-color {
+    color: #C4314B;
+}
+
+.leader-board-padding {
+    padding-top: 16px;
+    display: block;
+    padding-bottom: 0px !important;  
+}
+
+.myscore-board-padding {
+    padding-top: 16px;
+    display: block;
+}
+
+.title-container-background-color {
+   background-color:"#FAF9F8";
+}
+
+.card-container-background-color {
+    background-color: rgb(250, 249, 248);
+}

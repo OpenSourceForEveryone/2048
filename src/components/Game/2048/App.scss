@@ -1,4 +1,7 @@
 @import "./../game.scss";
+
+:focus { outline: none; }
+
 .container {
     transform: translate3d(-50%, -50%, 0);
     width: calc(314px);
@@ -28,15 +31,3 @@
         left: 50%;
     }
 }
-
-:focus { outline: none; }
-
-// @media screen and (max-width: 374px) {
-//     .container {
-//         transform: translate3d(-50%, -50%, 0);
-//         width: calc(342px);
-//         height: calc(342px);
-//         top: 50%;
-//         left: 50%;
-//     }
-// }
