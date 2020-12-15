@@ -13,10 +13,6 @@ export interface IInputBoxProps extends InputProps {
     errorText?: string;
 }
 
-const errorIcon: ShorthandValue<BoxProps> = {
-    content: <ExclamationCircleIcon className="settings-icon" outline={true} color="brand" style={{color:"#C4314B"}} />
-};
-
 enum RenderAs {
     Input,
     TextArea
