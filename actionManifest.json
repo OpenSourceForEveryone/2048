@@ -1,0 +1,56 @@
+{
+    "schemaVersion": 1,
+    "tag": "2048-teams-app",
+    "id": "<packageId>",
+    "name": "2048 Tournament",
+    "description": "Host a tournament of 2048 game",
+    "showLoadingIndicator": true,
+    "developer": {
+        "name": "<name>",
+        "websiteUrl": "<websiteUrl>",
+        "privacyUrl": "<privacyUrl>",
+        "termsOfUseUrl": "<termsOfUseUrl>"
+    },
+    "icon": "images/appIcon.png",
+    "actionModel": "actionModel.json",
+    "version": "1.0.0",
+    "views": {
+        "CardView": {
+            "sourceLocation": "cardView.json"
+        },
+        "LaunchView": {
+            "sourceLocation": "CreateView.html",
+            "header": "Create new tournament"
+        },
+        "ResponseView": 
+        {
+            "sourceLocation": "ResponseView.html",
+            "header": "Play 2048"
+        },
+        "SummaryView": {
+			"sourceLocation": "SummaryView.html",
+			"header": "Summary View"
+		}
+    },
+    "localizationInfo": {
+        "defaultLocale": "en-us",
+        "localeFiles": {
+            "en-us": "strings/strings.json"
+        }
+    },
+    "msTeamsProps": {
+        "name": {
+            "short": "2048 Tournament",
+            "full": "2048 Tournament"
+        },
+        "description": {
+            "short": "Host a tournament of 2048 game",
+            "full": "Host a tournament of 2048 in a chat or channel. Find the app in '…' under the message compose box. Provide title to your tournament and post it in your chat or channel. Have fun with your team!"
+        },
+        "icons": {
+            "color": "images/appIcon.png",
+            "outline": "images/outline.png"
+        },
+        "accentColor": "#4464ee"
+    }
+}
