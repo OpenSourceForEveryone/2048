@@ -53,7 +53,7 @@
    "_YourScoreOnCongratulationPage.comment" : "label to indicate the string identifier on Congratulation Page",
    "LeaderboardInSummaryView":"Leaderboard",
    "_LeaderboardInSummaryView.comment":"label indicates your leaderboard heading in summary view",
-   "LoadMore": "Load more...",
+   "LoadMore": "Load more score",
    "_LoadMore.comment": "label to indicate the string for load more record",
    "LoadLess": "Show less",
    "_LoadLess.comment": "label to indicate the string for show less record",
@@ -139,6 +139,6 @@
   "_$manifest.msTeamsProps.name.full.comment": "{MaxLength=100}",
   "$manifest.msTeamsProps.description.short": "Host a tournament of 2048 game",
   "_$manifest.msTeamsProps.description.short.comment": "{MaxLength=80}",
-  "$manifest.msTeamsProps.description.full": "Host a tournament of 2048 in a chat or channel. Find the app in '…' under the message compose box. Provide title to your tournament and post it in your chat or channel. Have fun with your team!",
+  "$manifest.msTeamsProps.description.full": "'Host a tournament of 2048 in a chat or channel. Find the app in '…' under the message compose box. Provide title to your tournament and post it in your chat or channel. Have fun with your team!",
   "_$manifest.msTeamsProps.description.full.comment": "{MaxLength=4000}"
 }
