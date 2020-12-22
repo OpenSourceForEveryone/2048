@@ -13,7 +13,6 @@ import { Constants } from "../../utils/Constants";
  * <CongratulationView> component for congratulation view
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
-
 @observer
 export default class CongratulationView extends React.Component<any, any> {
     constructor(props) {
