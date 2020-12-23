@@ -1,19 +1,19 @@
 {
     "schemaVersion": 1,
     "tag": "2048-teams-app",
-    "id": "com.microsoft.preprod.2048.app.abhinandan",
+    "id": "<packageId>",
     "name": "2048 Tournament",
     "description": "Host a tournament of 2048 game",
     "showLoadingIndicator": true,
     "developer": {
-        "name": "Microsoft",
-        "websiteUrl": "https://www.microsoft.com/",
-        "privacyUrl": "https://www.microsoft.com/privacy",
-        "termsOfUseUrl": "https://www.microsoft.com/app-tos"
+        "name": "<name>",
+        "websiteUrl": "<websiteUrl>",
+        "privacyUrl": "<privacyUrl>",
+        "termsOfUseUrl": "<termsOfUseUrl>"
     },
     "icon": "images/appIcon.png",
     "actionModel": "actionModel.json",
-    "version": "1.0.2",
+    "version": "1.0.0",
     "views": {
         "CardView": {
             "sourceLocation": "cardView.json"
