@@ -5,7 +5,14 @@ import { setProgressState } from "./../actions/CreationActions";
 import { toJS } from "mobx";
 import { Localizer } from "../utils/Localizer";
 import { orchestrator } from "satcheljs";
-import { setContext, initialize, callActionInstanceCreationAPI, updateTitle, setSendingFlag, shouldValidateUI } from "../actions/CreationActions";
+import {
+    setContext,
+    initialize,
+    callActionInstanceCreationAPI,
+    updateTitle,
+    setSendingFlag,
+    shouldValidateUI
+} from "../actions/CreationActions";
 import { ProgressState } from "../utils/SharedEnum";
 import getStore from "../store/CreationStore";
 import { Utils } from "../utils/Utils";
@@ -15,20 +22,8 @@ import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 /**
  * Creation view orchestrators to do API calls, perform any action on data and dispatch further actions to modify stores in case of any change
  */
-
 function validateActionInstance(actionInstance: actionSDK.Action): boolean {
     if (actionInstance == null) { return false; }
-    // let dataColumns = actionInstance.dataTables[0].dataColumns;
-    // if (!dataColumns || dataColumns.length <= 0 || !dataColumns[0].displayName || dataColumns[0].displayName == "" ||
-    //     !dataColumns[0].options || dataColumns[0].options.length < 2) {
-    //     return false;
-    // }
-
-    // for (let option of dataColumns[0].options) {
-    //     if (!option.displayName || option.displayName == "") {
-    //         return false;
-    //     }
-    // }
     return true;
 }
 
@@ -51,7 +46,7 @@ orchestrator(callActionInstanceCreationAPI, async () => {
         expiryTime: getStore().settings.dueDate,
         dataTables: [
             {
-                name: "game",
+                name: "2048TournamentDataTable",
                 dataColumns: [],
                 attachments: [],
             },
@@ -80,16 +75,14 @@ orchestrator(callActionInstanceCreationAPI, async () => {
     actionInstance.dataTables[0].dataColumns.push(gamePlayer);
     // Set responses visibility
     actionInstance.dataTables[0].rowsVisibility = getStore().settings.resultVisibility ?
-    actionSDK.Visibility.Sender : actionSDK.Visibility.All;
+        actionSDK.Visibility.Sender : actionSDK.Visibility.All;
 
     actionInstance.dataTables[0].canUserAddMultipleRows = getStore().settings.isMultiResponseAllowed;
 
     if (validateActionInstance(actionInstance)) {
-        console.log("Validated");
         setSendingFlag();
         prepareActionInstance(actionInstance, toJS(getStore().context));
-        const res = await ActionSdkHelper.createActionInstance(actionInstance);
-        console.log(res);
+        await ActionSdkHelper.createActionInstance(actionInstance);
     } else {
         shouldValidateUI(true);
     }

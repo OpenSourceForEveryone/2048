@@ -131,7 +131,8 @@ export class UxUtils {
         }
     }
 
-    public static setLocaStorge(shouldCreate: boolean) {
+    // Helper method to set the local storage for instruction page
+    public static setLocalStorge(shouldCreate: boolean) {
         if (shouldCreate) {
             let localStorage = window.localStorage;
             const key = this.getKey();
@@ -140,7 +141,8 @@ export class UxUtils {
             this.removeLocaStorge();
         }
     }
-
+    
+    // Helper method to remove the local storage
     public static removeLocaStorge() {
         let localStorage = window.localStorage;
         const key = this.getKey();

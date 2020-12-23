@@ -35,6 +35,10 @@ export interface SummaryProgressStatus {
     updateActionInstance: ProgressState;
 }
 
+/**
+ * Summary store containing all data required for summary view
+ */
+
 interface IGameSummaryStore {
     context: actionSDK.ActionSdkContext;
     actionInstance: actionSDK.Action;
@@ -58,7 +62,7 @@ interface IGameSummaryStore {
     isLeaderBoardVisible: boolean;
     isGameCloseBoxOpen: boolean;
     isChangeExpiryBoxOpen: boolean;
-    isDeleteSurveyBoxOpen: boolean;
+    isDeleteGameBoxOpen: boolean;
 
 }
 
@@ -95,7 +99,7 @@ const store: IGameSummaryStore = {
     isLeaderBoardVisible: false,
     isGameCloseBoxOpen: false,
     isChangeExpiryBoxOpen: false,
-    isDeleteSurveyBoxOpen: false
+    isDeleteGameBoxOpen: false
 };
 
 export default createStore<IGameSummaryStore>("summaryStore", store);

@@ -14,9 +14,28 @@ export class Constants {
     public static readonly ACTION_RESULT_FILE_NAME_MAX_LENGTH: number = 50;
     public static readonly GAME_TITLE_MAX_LENGTH: number = 240;
 
-    public static readonly GAME_LOGO_PATH: String = "images/appIcon.png";
-    public static readonly GAME_CONGRATULATION_IMAGE_PATH = "images/trophy.png";
+    // Game Constants
+    public static readonly GRID: any[] = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+    ];
+
+    public static readonly KEY_MAP = {
+        UP: 38,
+        DOWN: 40,
+        LEFT: 37,
+        RIGHT: 39,
+    };
+
+    public static readonly DEFAULT_BOARD_COLOR = "#645B52";
+    public static readonly IMAGE_WIDTH = "180";
+    public static readonly LOGO_PATH: String = "images/appIcon.png";
+    public static readonly CONGRATULATION_IMAGE_PATH = "images/trophy.png";
     public static readonly INSTRUCTION_PAGE_LOCALSTORAGE = "2048GameInstructionPageShow";
+    public static readonly DEFAULT_NUMBER_OF_RECORD = 3;
+    public static readonly RECORD_INCREMENT_FACTOR = 3;
 
     public static readonly FOCUSABLE_ITEMS = {
         All: ["a[href]", "area[href]", "input:not([disabled])", "select:not([disabled])", "textarea:not([disabled])", "button:not([disabled])", '[tabindex="0"]'],
@@ -139,5 +158,4 @@ export class Constants {
         darkBackgroundColor: "#252423",
         contrastBackgroundColor: "black"
     };
-
 }

@@ -19,7 +19,9 @@ export class ActionSdkHelper {
             return { success: false, error: error };
         }
     }
-
+    /**
+     * API to fetch the current user details
+     */
     public static async getCurrentUser() {
         const actionContext = (await this.getActionContext()).context;
         let request = new actionSDK.GetSubscriptionMembers.Request(actionContext.subscription, [actionContext.userId]);
@@ -162,7 +164,10 @@ export class ActionSdkHelper {
             return { success: false, error: error };
         }
     }
-
+    /**
+     * API to add Data row to the current action instance
+     * @param dataRow ActionData row
+     */
     public static async addDataRow(dataRow: actionSDK.ActionDataRow) {
         let request = new actionSDK.AddActionDataRow.Request(dataRow);
         try {
@@ -175,6 +180,10 @@ export class ActionSdkHelper {
         }
     }
 
+    /**
+     * API to add game score to the current action instance
+     * @param score game score
+     */
     public static async addScore(score: string) {
         const actionContext = (await this.getActionContext()).context;
         let data = {
@@ -190,7 +199,9 @@ export class ActionSdkHelper {
         };
         await this.addDataRow(actiondata);
     }
-
+    /**
+     * API to fetch the score
+    */
     public static async getScore() {
         const actionContext = (await this.getActionContext()).context;
         let dataTableName: string = "gameScore";
@@ -204,12 +215,12 @@ export class ActionSdkHelper {
             return { success: false, error: error };
         }
     }
+
     /**
      * API to close current view
      */
     public static async closeView() {
 
-        console.log(await this.getScore());
         let closeViewRequest = new actionSDK.CloseView.Request();
         await actionSDK.executeApi(closeViewRequest);
     }
@@ -254,7 +265,6 @@ export class ActionSdkHelper {
         let request = new actionSDK.GetLocalizedStrings.Request();
         try {
             let response = await actionSDK.executeApi(request) as actionSDK.GetLocalizedStrings.Response;
-            console.log("getLocalizedStrings");
             return { success: true, strings: response.strings };
         } catch (error) {
             Logger.logError(`fetchLocalization failed, Error: ${error.category}, ${error.code}, ${error.message}`);

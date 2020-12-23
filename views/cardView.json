@@ -19,7 +19,7 @@
                 "id": "expiry",
                 "type": "TextBlock",
                 "text": "${if(equals(action.status, 'Active'), formatString(strings.dueByDate, ('' + dateString(action.expiryTime, 'SHORT') + ' ' + timeString(action.expiryTime))),strings.GameExpired)}",
-                "_text.comment": "due date if survey is active, else show survey expired string",
+                "_text.comment": "due date if game is active, else show game expired string",
                 "wrap": true,
                 "color": "${if(equals(action.status, 'Active'), 'default','attention')}",
                 "height": "stretch",
@@ -122,7 +122,7 @@
                 "title": "${strings.Play}",
                 "command": "LaunchActionPackageView",
                 "parameters": {
-                    "viewName": "UpdateView"
+                    "viewName": "ResponseView"
                 }
             },
             {

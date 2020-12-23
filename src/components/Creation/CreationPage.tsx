@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 import * as React from "react";
-import { callActionInstanceCreationAPI, updateSettings } from "./../../actions/CreationActions";
-import "./creation.scss";
+import {
+    callActionInstanceCreationAPI,
+    updateSettings
+} from "./../../actions/CreationActions";
+import "./Creation.scss";
 import "./CustomSettings.scss";
 import "./Settings.scss";
 import getStore from "./../../store/CreationStore";
@@ -23,12 +26,9 @@ import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
  */
 @observer
 export default class CreationPage extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showError: false
-        };
-    }
+    state = {
+        showError: false
+    };
 
     isValidGameTitle() {
         const title = getStore().title;
@@ -64,6 +64,7 @@ export default class CreationPage extends React.Component<any, any> {
         }
     }
 
+    // renderng seting page for the game
     renderSettingsForGame() {
         let settingsProps: ISettingsComponentProps = {
             ...this.getCommonSettingsProps(),

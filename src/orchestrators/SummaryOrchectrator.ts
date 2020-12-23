@@ -24,7 +24,6 @@ import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 /**
  * Summary view orchestrators to fetch data for current action, perform any action on that data and dispatch further actions to modify stores
  */
-
 orchestrator(initialize, async () => {
     let currentContext = getStore().progressStatus.currentContext;
     if (currentContext == ProgressState.NotStarted || currentContext == ProgressState.Failed) {
