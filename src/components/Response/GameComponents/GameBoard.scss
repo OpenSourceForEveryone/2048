@@ -1,0 +1,101 @@
+.tile {
+    height: 72px;
+    width: 72px;
+    margin: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    font-weight: 480;
+    color: rgb(247, 244, 239);
+    border-radius: 10px;
+    box-shadow: lightgrey 2px 3px;
+    background: rgb(250, 249, 248);
+}
+
+@media screen and (max-width: 576px) {
+    .tile {
+        height: 70px;
+        width: 70px;
+        margin: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 26px;
+        font-weight: 480;
+        color: rgb(247, 244, 239);
+        border-radius: 10px;
+        box-shadow: lightgrey 2px 3px;
+        background: rgb(250, 249, 248);
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+  
+    &__group {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    &__title {
+      color: #787267;
+      font-weight: bold;
+      font-size: 70px;
+      margin: 0;
+    }
+  
+    &__score {
+      &-container {
+        display: flex;
+        //   align-items: flex-start;
+        justify-content: center;
+        flex-flow: row wrap;
+        flex: 1 100%;
+        width: min-content;
+      }
+      &-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #baaea0;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        padding: 5px 15px;
+        border-radius: 3px;
+        margin-left: 10px;
+  
+        &--title {
+          color: #eee4da;
+        }
+      }
+    }
+  
+    &__button {
+      background: #8f7a66;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      height: 40px;
+      margin: 10px 10px 0 10px;
+      cursor: pointer;
+    }
+  }
+
+  .board {
+    background: white;
+    padding: 20px;
+    &__body {
+        width: max-content;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    &__row {
+        display: flex;
+    }
+  }
+  
