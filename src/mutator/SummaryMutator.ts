@@ -38,6 +38,7 @@ mutator(setProgressStatus, (msg) => {
 mutator(setContext, (msg) => {
     const store = getStore();
     store.context = msg.context;
+    store.local = msg.context.locale;
 });
 
 mutator(setActionInstance, (msg) => {
