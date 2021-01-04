@@ -14,6 +14,7 @@ export interface ResponseProgressStatus {
     settingInstance: ProgressState;
     currentUserDataInstance: ProgressState;
     localizationInstance: ProgressState;
+    addScoreInstance : ProgressState;
 }
 
 interface IGameResponseStore {
@@ -39,6 +40,7 @@ const store: IGameResponseStore = {
         settingInstance: ProgressState.NotStarted,
         currentUserDataInstance: ProgressState.NotStarted,
         localizationInstance: ProgressState.NotStarted,
+        addScoreInstance: ProgressState.NotStarted
     },
     isActionDeleted: false,
     shouldPlayerPlay: true,

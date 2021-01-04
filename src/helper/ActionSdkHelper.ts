@@ -197,7 +197,16 @@ export class ActionSdkHelper {
             columnValues: data,
             createTime: Date.now()
         };
-        await this.addDataRow(actiondata);
+
+        try {
+            let response = await this.addDataRow(actiondata);
+            Logger.logInfo(`addScore success - Request: ${JSON.stringify(actiondata)} Response: ${JSON.stringify(response)}`);
+            return { success: true, response: response.success };
+        } catch (error) {
+            Logger.logInfo(`addScore failed - Request: ${error.category}, ${error.code}, ${error.message}`);
+            return { success: true, error: error };
+        }
+
     }
     /**
      * API to fetch the score
@@ -220,7 +229,6 @@ export class ActionSdkHelper {
      * API to close current view
      */
     public static async closeView() {
-
         let closeViewRequest = new actionSDK.CloseView.Request();
         await actionSDK.executeApi(closeViewRequest);
     }

@@ -5,9 +5,9 @@ import * as React from "react";
 import { observer } from "mobx-react";
 import { Flex, FlexItem, Button, Text } from "@fluentui/react-northstar";
 import "./GamePage.scss";
-import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 import { Localizer } from "../../utils/Localizer";
 import { Constants } from "../../utils/Constants";
+import { addScore } from "../../actions/ResponseAction";
 
 /**
  * <GameEndView> component for Game end view
@@ -43,8 +43,7 @@ export default class GameEndView extends React.Component<any, any> {
                         primary
                         content= {Localizer.getString("SubmitScore")}
                         onClick={() => {
-                            ActionSdkHelper.addScore(this.props.gameScore);
-                            ActionSdkHelper.closeView();
+                            addScore(this.props.gameScore);
                         }}>
                     </Button>
                 </FlexItem>

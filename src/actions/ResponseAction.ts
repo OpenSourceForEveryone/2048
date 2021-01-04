@@ -52,3 +52,7 @@ export let setProgressState = action(GameResponseAction.setProgressState, (statu
 export let setIsActionDeleted = action(GameResponseAction.setIsActionDeleted, (value: boolean) => ({
      value: value
 }));
+
+export let addScore = action(GameResponseAction.addScore, (score: string) => ({
+    score: score
+}));

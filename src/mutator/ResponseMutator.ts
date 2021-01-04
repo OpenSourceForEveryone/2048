@@ -5,7 +5,8 @@ import {
     shouldValidateUI,
     setProgressState,
     setActionInstance,
-    fetchActionInstanceRowsForCurrentUser
+    fetchActionInstanceRowsForCurrentUser,
+    addScore
 } from "../actions/ResponseAction";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
@@ -51,3 +52,8 @@ mutator(shouldValidateUI, (msg) => {
     const store = getStore();
     store.shouldValidate = msg.shouldValidate;
 });
+
+mutator(addScore, (msg) => {
+    const store = getStore();
+    store.PlayerCurrentScore = msg.score;
+})
