@@ -14,13 +14,13 @@
         "canAddMore": false,
         "values": [
             {
-                "name": "2048Tournament",
+                "name": "2048TournamentDataTable",
                 "dataColumns": {
                     "canAddMore": true,
                     "values": [
                         {
                             "name": "0",
-                            "valueType": "Text"
+                            "valueType": "DateTime"
                         }
                     ]
                 }

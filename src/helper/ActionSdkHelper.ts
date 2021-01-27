@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import * as actionSDK from "@microsoft/m365-action-sdk";
+import { Constants } from "../utils/Constants";
 import { Logger } from "./../utils/Logger";
 export class ActionSdkHelper {
 
@@ -19,8 +20,9 @@ export class ActionSdkHelper {
             return { success: false, error: error };
         }
     }
+
     /**
-     * API to fetch the current user details
+     * API to fetch current user details
      */
     public static async getCurrentUser() {
         const actionContext = (await this.getActionContext()).context;
@@ -62,22 +64,6 @@ export class ActionSdkHelper {
             return { success: true, dataRows: response.dataRows, continuationToken: response.continuationToken };
         } catch (error) {
             Logger.logError(`getActionDataRows failed, Error: ${error.category}, ${error.code}, ${error.message}`);
-            return { success: false, error: error };
-        }
-    }
-
-    /*
-    *   @desc Service API Request for getting the membercount
-    *   @param subscription - action subscription: actionSDK.ActionSdkContext.subscription
-    */
-    public static async getSubscriptionMemberCount(subscription: actionSDK.Subscription) {
-        let request = new actionSDK.GetSubscriptionMemberCount.Request(subscription);
-        try {
-            let response = await actionSDK.executeApi(request) as actionSDK.GetSubscriptionMemberCount.Response;
-            Logger.logInfo(`getSubscriptionMemberCount success - Request: ${JSON.stringify(request)} Response: ${JSON.stringify(response)}`);
-            return { success: true, memberCount: response.memberCount };
-        } catch (error) {
-            Logger.logError(`getSubscriptionMemberCount failed, Error: ${error.category}, ${error.code}, ${error.message}`);
             return { success: false, error: error };
         }
     }
@@ -133,23 +119,6 @@ export class ActionSdkHelper {
     }
 
     /**
-     * @desc Service API Request for getting the nonResponders details
-     * @param actionId actionId
-     * @param subscriptionId subscriptionId
-     */
-    public static async getNonResponders(actionId: string, subscriptionId: string) {
-        let request = new actionSDK.GetActionSubscriptionNonParticipants.Request(actionId, subscriptionId);
-        try {
-            let response = await actionSDK.executeApi(request) as actionSDK.GetActionSubscriptionNonParticipants.Response;
-            Logger.logInfo(`getNonResponders success - Request: ${JSON.stringify(request)} Response: ${JSON.stringify(response)}`);
-            return { success: true, nonParticipants: response.nonParticipants };
-        } catch (error) {
-            Logger.logError(`getNonResponders failed, Error: ${error.category}, ${error.code}, ${error.message}`);
-            return { sucess: false, error: error };
-        }
-    }
-
-    /**
      * Method to update action instance data
      * @param data object of data we want modify
      */
@@ -164,10 +133,11 @@ export class ActionSdkHelper {
             return { success: false, error: error };
         }
     }
+
     /**
-     * API to add Data row to the current action instance
-     * @param dataRow ActionData row
-     */
+      * Method to update the data row
+      * @param dataRow action data row
+      */
     public static async addDataRow(dataRow: actionSDK.ActionDataRow) {
         let request = new actionSDK.AddActionDataRow.Request(dataRow);
         try {
@@ -181,18 +151,18 @@ export class ActionSdkHelper {
     }
 
     /**
-     * API to add game score to the current action instance
+     * Method to add the score
      * @param score game score
      */
     public static async addScore(score: string) {
         const actionContext = (await this.getActionContext()).context;
         let data = {
             0: Date.now().toString(),
-            1: (await this.getCurrentUser()).userName,
-            2: score,
+            1: score,
+            2: (await this.getCurrentUser()).userName,
         };
         let actiondata: actionSDK.ActionDataRow = {
-            dataTableName: "gameScore",
+            dataTableName: Constants.GAME_DATA_TABLE_NAME,
             actionId: actionContext.actionId,
             columnValues: data,
             createTime: Date.now()
@@ -202,19 +172,18 @@ export class ActionSdkHelper {
             let response = await this.addDataRow(actiondata);
             Logger.logInfo(`addScore success - Request: ${JSON.stringify(actiondata)} Response: ${JSON.stringify(response)}`);
             return { success: true, response: response.success };
+
         } catch (error) {
             Logger.logInfo(`addScore failed - Request: ${error.category}, ${error.code}, ${error.message}`);
             return { success: true, error: error };
         }
 
     }
-    /**
-     * API to fetch the score
-    */
+
+    // Helper method to fetch the scores for the current context
     public static async getScore() {
         const actionContext = (await this.getActionContext()).context;
-        let dataTableName: string = "gameScore";
-        let request = new actionSDK.GetActionDataRows.Request(actionContext.actionId, null, null, 100, dataTableName);
+        let request = new actionSDK.GetActionDataRows.Request(actionContext.actionId, null, null, 100, Constants.GAME_DATA_TABLE_NAME);
         try {
             let response = await actionSDK.executeApi(request) as actionSDK.GetActionDataRows.Response;
             Logger.logInfo(`getScore success - Request: ${JSON.stringify(request)} Response: ${JSON.stringify(response)}`);
@@ -224,7 +193,6 @@ export class ActionSdkHelper {
             return { success: false, error: error };
         }
     }
-
     /**
      * API to close current view
      */
@@ -245,23 +213,6 @@ export class ActionSdkHelper {
             return { success: true, deleteSuccess: response.success };
         } catch (error) {
             Logger.logError(`deleteActionInstance failed, Error: ${error.category}, ${error.code}, ${error.message}`);
-            return { success: false, error: error };
-        }
-    }
-
-    /**
-     * API to download CSV for the current action instance summary
-     * @param actionId actionID
-     * @param fileName filename of csv
-     */
-    public static async downloadCSV(actionId, fileName) {
-        let request = new actionSDK.DownloadActionDataRowsResult.Request(actionId, fileName);
-        try {
-            let response = actionSDK.executeApi(request);
-            Logger.logInfo(`downloadCSV success - Request: ${JSON.stringify(request)} Response: ${JSON.stringify(response)}`);
-            return { success: true };
-        } catch (error) {
-            Logger.logError(`downloadCSV failed, Error: ${error.category}, ${error.code}, ${error.message}`);
             return { success: false, error: error };
         }
     }

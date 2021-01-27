@@ -13,7 +13,13 @@ import {
     setGameStatus,
     setLeaderboardVisibilityFlag,
     setDueDate,
-    setActionInstance
+    setActionInstance,
+    updateDueDate,
+    gameExpiryChangeAlertOpen,
+    closeGame,
+    gameCloseAlertOpen,
+    deleteGame,
+    gameDeleteAlertOpen
 } from "../actions/SummaryActions";
 import { orchestrator } from "satcheljs";
 import { ProgressState } from "../utils/SharedEnum";
@@ -22,8 +28,8 @@ import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 
 /**
- * Summary view orchestrators to fetch data for current action, perform any action on that data and dispatch further actions to modify stores
- */
+* initialize(): instance instance to prepare the summary view
+*/
 orchestrator(initialize, async () => {
     let currentContext = getStore().progressStatus.currentContext;
     if (currentContext == ProgressState.NotStarted || currentContext == ProgressState.Failed) {
@@ -45,7 +51,7 @@ orchestrator(initialize, async () => {
                 setProgressStatus({ actionInstance: ProgressState.Completed });
 
                 setProgressStatus({ settingInstance: ProgressState.InProgress });
-                setGameTitle(actionInstance.action.dataTables[0].dataColumns[0].displayName);
+                setGameTitle(actionInstance.action.displayName);
                 setDueDate(actionInstance.action.expiryTime);
                 setGameStatus(actionInstance.action.status);
                 fetchUserDetails([context.userId]);
@@ -76,6 +82,89 @@ orchestrator(initialize, async () => {
             }
         } else {
             setProgressStatus({ currentContext: ProgressState.Failed });
+        }
+    }
+});
+
+/**
+* updateDueDate(): Change the due date of game
+*/
+
+orchestrator(updateDueDate, async (actionMessage) => {
+    if (getStore().progressStatus.updateActionInstance != ProgressState.InProgress) {
+        let callback = (success: boolean) => {
+            setProgressStatus({ updateActionInstance: success ? ProgressState.Completed : ProgressState.Failed });
+        };
+        setProgressStatus({ updateActionInstance: ProgressState.InProgress });
+        let actionInstanceUpdateInfo: actionSDK.ActionUpdateInfo = {
+            id: getStore().context.actionId,
+            version: getStore().actionInstance.version,
+            expiryTime: actionMessage.dueDate
+        };
+        try {
+            let updateActionInstance = await ActionSdkHelper.updateActionInstance(actionInstanceUpdateInfo);
+            if (updateActionInstance.success) {
+                callback(true);
+                gameExpiryChangeAlertOpen(false);
+            } else {
+                callback(false);
+            }
+        } catch (error) {
+            callback(false);
+        }
+    }
+});
+
+/**
+* closeGamey(): Close the game. Sbuscribers will no longer able to respond.
+* This is available only for the creator of game
+*/
+orchestrator(closeGame, async () => {
+    if (getStore().progressStatus.closeActionInstance != ProgressState.InProgress) {
+        let failedCallback = () => {
+            setProgressStatus({ closeActionInstance: ProgressState.Failed });
+        };
+
+        setProgressStatus({ closeActionInstance: ProgressState.InProgress });
+        let actionInstanceUpdateInfo: actionSDK.ActionUpdateInfo = {
+            id: getStore().context.actionId,
+            version: getStore().actionInstance.version,
+            status: actionSDK.ActionStatus.Closed
+        };
+        try {
+            let updateActionInstance = await ActionSdkHelper.updateActionInstance(actionInstanceUpdateInfo);
+            if (updateActionInstance.success) {
+                gameCloseAlertOpen(false);
+                await ActionSdkHelper.closeView();
+            } else {
+                failedCallback();
+            }
+        } catch (error) {
+            failedCallback();
+        }
+    }
+});
+
+/**
+* deleteGame(): Delete the game. This is available only for the creator of game
+*/
+orchestrator(deleteGame, async () => {
+    if (getStore().progressStatus.deleteActionInstance != ProgressState.InProgress) {
+        let failedCallback = () => {
+            setProgressStatus({ deleteActionInstance: ProgressState.Failed });
+        };
+
+        setProgressStatus({ deleteActionInstance: ProgressState.InProgress });
+        try {
+            let deleteInstance = await ActionSdkHelper.deleteActionInstance(getStore().context.actionId);
+            if (deleteInstance.success) {
+                gameDeleteAlertOpen(false);
+                await ActionSdkHelper.closeView();
+            } else {
+                failedCallback();
+            }
+        } catch (error) {
+            failedCallback();
         }
     }
 });

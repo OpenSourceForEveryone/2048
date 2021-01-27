@@ -1,44 +1,25 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
 import * as React from "react";
 import { observer } from "mobx-react";
 import { Avatar, Card, Flex, Text, Checkbox, FlexItem, Button } from "@fluentui/react-northstar";
 import "./GamePage.scss";
 import { UxUtils } from "../../utils/UxUtils";
-import GamePlayView from "./GamePlayView";
 import { Constants } from "../../utils/Constants";
-
+import getStore from "../../store/ResponseStore";
+import { Localizer } from "../../utils/Localizer";
+import { GameStatus } from "../../store/GamePlayStore";
+import { setGameStatus, updatedInstructionPageView } from "../../actions/ResponseAction";
+import GamePlayView from "./GamePlayView";
 /**
  * <InstructionView> component for game instruction view
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
+
 @observer
-export default class InstructionView extends React.Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            startGame: false,
-            dontShowFlag: false
-        };
-        this.startGame = this.startGame.bind(this);
-    }
-
-    startGame() {
-        this.setState({
-            startGame: true
-        });
-    }
-
-    setLocalStorageFlag() {
-        this.setState(prev => {
-            return { dontShowFlag: !prev.dontShowFlag };
-        });
-    }
-
+export default class InstructionView extends React.Component {
+    private store = getStore();
     render() {
         return (
-            this.state.startGame ?
+            this.store.gameStatus === GameStatus.InProgress ?
                 <GamePlayView tabIndex = {0}/> :
                 <Flex className="body-container instruction" column gap="gap.medium">
                     {this.renderInstruction()}
@@ -46,34 +27,30 @@ export default class InstructionView extends React.Component<any, any> {
                 </Flex>
         );
     }
-
     // Helper method to render the Instriuction view
     renderInstruction(): JSX.Element {
         return (
             <div>
-                <Card aria-roledescription="InstructionCard" fluid className="instruction-card-background-color">
+                <Card aria-roledescription="gameInstruction" fluid className="instruction-card-background-color">
                     <Card.Header fitted>
                         <Flex gap="gap.small">
                             <Flex column>
-                                <Avatar
-                                image={Constants.LOGO_PATH}
-                                label="2048"
-                                name="2048Tournament"
-                                size="larger" />
+                                <Avatar image={Constants.LOGO_PATH} label="2048" name="2048" size="larger" />
                             </Flex>
                             <Flex column>
-                                <Text content={this.props.HowToPlay} weight="bold" size="large" />
-                                <Text content={this.props.InstructionContent} className="instruction-content-padding" />
+                                <Text content={Localizer.getString("HowToPlay")} weight="bold" size="large" />
+                                <Text content={UxUtils.formateStringWithLineBreak(this.getInstructionContent())}
+                                    className="instruction-content-padding" />
                             </Flex>
                         </Flex>
                     </Card.Header>
                 </Card>
-                <Checkbox className="checklist-checkbox checkbox-top-padding"
-                    label={this.props.DontShowTheGameInstruction}
-                    checked={this.state.dontShowFlag}
+                <Checkbox className="checklist-checkbox  checkbox-top-padding"
+                    label={Localizer.getString("DontShowTheGameInstruction")}
+                    checked={this.store.isGameInstructionPageVisible}
                     onChange={
                         () => {
-                            this.setLocalStorageFlag();
+                            updatedInstructionPageView();
                         }
                     } />
             </div>
@@ -88,14 +65,23 @@ export default class InstructionView extends React.Component<any, any> {
                 <FlexItem push>
                     <Button
                         primary
-                        content={this.props.Play}
+                        content={Localizer.getString("PlayButton")}
                         onClick={() => {
-                            this.startGame();
-                            UxUtils.setLocalStorge(this.state.dontShowFlagSet);
+                            setGameStatus(GameStatus.InProgress);
+                            UxUtils.setLocalStorge(this.store.isGameInstructionPageVisible);
                         }}>
                     </Button>
                 </FlexItem>
             </Flex>
         );
+    }
+
+    // Helper method to fetch the instruction content based on the device
+    getInstructionContent(): string {
+        if (UxUtils.renderingForMobile()) {
+            return Localizer.getString("HowToPlayForMobile");
+        } else {
+            return Localizer.getString("HowToPlayForDesktop");
+        }
     }
 }

@@ -6,7 +6,8 @@ import {
     setProgressState,
     setActionInstance,
     fetchActionInstanceRowsForCurrentUser,
-    addScore
+    setGameStatus,
+    updatedInstructionPageView
 } from "../actions/ResponseAction";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
@@ -36,7 +37,7 @@ mutator(fetchActionInstanceRowsForCurrentUser, (msg) => {
     const store = getStore();
     store.actionInstanceRowsForCurrentUser = msg.actionInstanceRow;
     if(store.actionInstanceRowsForCurrentUser.length > 0) {
-        store.playerPrevScore = store.actionInstanceRowsForCurrentUser[0].columnValues["2"];
+        store.playerPrevScore = store.actionInstanceRowsForCurrentUser[0].columnValues["1"];
         const isMultiPlayAllowed = store.actionInstance.dataTables[0].canUserAddMultipleRows;
         if(isMultiPlayAllowed) {
             store.shouldPlayerPlay = true;
@@ -53,7 +54,13 @@ mutator(shouldValidateUI, (msg) => {
     store.shouldValidate = msg.shouldValidate;
 });
 
-mutator(addScore, (msg) => {
+mutator(setGameStatus, (msg) => {
     const store = getStore();
-    store.PlayerCurrentScore = msg.score;
-})
+    store.gameStatus = msg.status;
+});
+
+mutator(updatedInstructionPageView, () => {
+    const store = getStore();
+    store.isGameInstructionPageVisible = !store.isGameInstructionPageVisible
+});
+

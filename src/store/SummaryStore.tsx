@@ -47,6 +47,8 @@ interface IGameSummaryStore {
     title: string;
     scoreBoard: MyGameScore[];
     leaderBoard: LeaderBoard[];
+    scoreBoardRowCount: number;
+    leaderBoardRowCount: number;
     isGameExpired: boolean;
     currentView: ViewType;
     continuationToken: string;
@@ -75,6 +77,8 @@ const store: IGameSummaryStore = {
     title: null,
     leaderBoard: [],
     scoreBoard: [],
+    scoreBoardRowCount: 3,
+    leaderBoardRowCount: 3,
     currentView: ViewType.Main,
     actionInstanceRows: [],
     continuationToken: null,

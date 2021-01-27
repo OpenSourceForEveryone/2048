@@ -4,6 +4,7 @@
 import { action } from "satcheljs";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ResponseProgressStatus } from "../store/ResponseStore";
+import { GameStatus } from "../store/GamePlayStore";
 
 export enum GameResponseAction {
     initialize = "initialize",
@@ -17,7 +18,9 @@ export enum GameResponseAction {
     setIsActionDeleted = "setIsActionDeleted",
     setPreviousScore = "setPreviousScore",
     addScore = "addScore",
-    setShouldPlayerPlay = "setShouldPlayerPlay"
+    setShouldPlayerPlay = "setShouldPlayerPlay",
+    setGameStatus = "setGameStatus",
+    updatedInstructionPageView = "updatedInstructionPageView"
 }
 
 export let initialize = action(GameResponseAction.initialize);
@@ -27,22 +30,22 @@ export let setContext = action(GameResponseAction.setContext, (context: actionSD
 }));
 
 export let setActionInstance = action(GameResponseAction.setActionInstance, (actionInstance: actionSDK.Action) => ({
-        actionInstance: actionInstance
+    actionInstance: actionInstance
 }));
 
 export let setShouldPlayerPlay = action(GameResponseAction.setShouldPlayerPlay);
-
 export let setPreviousScore = action(GameResponseAction.setPreviousScore);
 
 export let fetchActionInstanceRowsForCurrentUser = action(GameResponseAction.fetchActionInstanceRowsForCurrentUser, (actionInstanceRow: actionSDK.ActionDataRow[]) => ({
-        actionInstanceRow: actionInstanceRow
+    actionInstanceRow: actionInstanceRow
 }));
 
 export let shouldValidateUI = action(GameResponseAction.shouldValidateUI, (shouldValidate: boolean) => ({
-    shouldValidate: shouldValidate }));
+    shouldValidate: shouldValidate
+}));
 
 export let setSendingFlag = action(GameResponseAction.setSendingFlag, (value: boolean) => ({
-     value: value
+    value: value
 }));
 
 export let setProgressState = action(GameResponseAction.setProgressState, (status: Partial<ResponseProgressStatus>) => ({
@@ -50,9 +53,15 @@ export let setProgressState = action(GameResponseAction.setProgressState, (statu
 }));
 
 export let setIsActionDeleted = action(GameResponseAction.setIsActionDeleted, (value: boolean) => ({
-     value: value
+    value: value
 }));
 
 export let addScore = action(GameResponseAction.addScore, (score: string) => ({
     score: score
 }));
+
+export let setGameStatus = action(GameResponseAction.setGameStatus, (status: Partial<GameStatus>) => ({
+    status: status
+}));
+
+export let updatedInstructionPageView = action(GameResponseAction.updatedInstructionPageView);

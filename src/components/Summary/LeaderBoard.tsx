@@ -4,40 +4,39 @@
 import { observer } from "mobx-react";
 import * as React from "react";
 import getStore, { LeaderBoard } from "../../store/SummaryStore";
-import "./Summary.scss";
+import "./SummaryPage.scss";
 import { List } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
 import { Constants } from "../../utils/Constants";
+import { updateLeaderBoardRowCount } from "../../actions/SummaryActions";
 
 /**
  * <LeaderBoardView> component for Leaderboard on summary page
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
 @observer
-export class LeaderBoardView extends React.PureComponent<any, any> {
+export class LeaderBoardView extends React.Component<any> {
     private scores: LeaderBoard[];
+    private store = getStore();
     constructor(props) {
         super(props);
-        this.scores = getStore().leaderBoard;
-        this.state = {
-            visible: Constants.DEFAULT_NUMBER_OF_RECORD
-        };
-        this.showMore = this.showMore.bind(this);
+        this.scores = this.store.leaderBoard; 
     }
     render() {
-
         // preparing the leader baord
         return (
             <>
                 {this.scores && this.scores.length ?
                     <>
                         <List
-                            items={this.getListItems().slice(0, this.state.visible)}
+                            items={this.getListItems().slice(0, this.store.leaderBoardRowCount)}
                             aria-label="staticHeadlessTable"
                             className="table-container" />
                         {
-                            this.scores.length > Constants.DEFAULT_NUMBER_OF_RECORD && this.scores.length > this.state.visible ?
-                                <span className="link leaderboard-link" onClick={this.showMore}>+ {Localizer.getString("LoadMore")}</span>
+                            this.scores.length > Constants.DEFAULT_NUMBER_OF_RECORD && this.scores.length > this.store.leaderBoardRowCount ?
+                                <span className="link leaderboard-link" onClick={() => {
+                                    updateLeaderBoardRowCount(this.store.leaderBoardRowCount + Constants.DEFAULT_NUMBER_OF_RECORD );
+                                }}> + {Localizer.getString("LoadMore")}</span>
                                 :
                                 <div> </div>
                         }
@@ -52,13 +51,6 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
         );
     }
 
-    // Helper method to increase the row visibility count
-    private showMore() {
-        this.setState((prev) => {
-            return { visible: prev.visible + Constants.RECORD_INCREMENT_FACTOR };
-        });
-    }
-
     // Helper method to get the list items
     private getListItems(): any[] {
         let items = [];
@@ -66,7 +58,7 @@ export class LeaderBoardView extends React.PureComponent<any, any> {
             this.scores.forEach(element => {
                 items.push({
                     key: element.playerId,
-                    header: element.playerName,
+                    header: element.playerName === null ? "Unknown" : element.playerName,
                     headerMedia: <strong>{element.score}</strong>
                 });
             });

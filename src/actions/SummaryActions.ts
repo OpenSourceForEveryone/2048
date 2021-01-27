@@ -29,7 +29,9 @@ export enum GameSummaryAction {
     updateDueDate = "updateDueDate",
     closeGame = "closeGame",
     deleteGame = "deleteGame",
-    updateActionInstance = "updateActionInstance"
+    updateActionInstance = "updateActionInstance",
+    updateScoreBoardRowCount = "updateScoreBoardRowCount",
+    updateLeaderBoardRowCount = "updateLeaderBoardRowCount"
 }
 
 export let initialize = action(GameSummaryAction.initialize);
@@ -39,19 +41,19 @@ export let fetchUserDetails = action(GameSummaryAction.fetchUserDetails, (userId
 }));
 
 export let setGameStatus = action(GameSummaryAction.setGameStatus, (status: actionSDK.ActionStatus) => ({
-    status:status
+    status: status
 }));
 
 export let setLeaderboardVisibilityFlag = action(GameSummaryAction.setLeaderboardVisibilityFlag);
 
 export let fetchActionInstanceRows = action(GameSummaryAction.fetchActionInstanceRows);
 
-export let fetchMyScore = action(GameSummaryAction.fetchMyScore,  (myScore: actionSDK.ActionDataRow[]) => ({
-    myScore:myScore
+export let fetchMyScore = action(GameSummaryAction.fetchMyScore, (myScore: actionSDK.ActionDataRow[]) => ({
+    myScore: myScore
 }));
 
 export let fetchLeaderBoard = action(GameSummaryAction.fetchLeaderBoard, (scores: actionSDK.ActionDataRow[]) => ({
-    scores:scores
+    scores: scores
 }));
 
 export let fetchLocalization = action(GameSummaryAction.fetchLocalization);
@@ -107,3 +109,12 @@ export let deleteGame = action(GameSummaryAction.deleteGame);
 export let updateActionInstance = action(GameSummaryAction.updateActionInstance, (actionInstance: actionSDK.Action) => ({
     actionInstance: actionInstance
 }));
+
+export let updateScoreBoardRowCount = action(GameSummaryAction.updateScoreBoardRowCount, (count: number) => ({
+    count: count
+}));
+
+export let updateLeaderBoardRowCount = action(GameSummaryAction.updateLeaderBoardRowCount, (count: number) => ({
+    count: count
+}));
+

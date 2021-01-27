@@ -7,34 +7,32 @@ import { DateTimePickerView } from "../DateTime";
 import { Flex, Text, Checkbox } from "@fluentui/react-northstar";
 import { Localizer } from "../../utils/Localizer";
 import { InputBox } from "../InputBox";
-import getStore from "./../../store/CreationStore";
+import getStore from "../../store/CreationStore";
 import { Constants } from "../../utils/Constants";
 import {
     updateTitle,
     shouldValidateUI,
     updateSettings
-} from "./../../actions/CreationActions";
-import "./Settings.scss";
-import "./CustomSettings.scss";
+} from "../../actions/CreationActions";
 
 /**
  * Setting Props
 */
-export interface ISettingsComponentProps {
+export interface IGameCreationComponentProps {
     dueDate: number;
     locale?: string;
     resultVisibility: boolean;
     renderForMobile?: boolean;
     isMultiResponseAllowed: boolean;
-    strings: ISettingsComponentStrings;
+    strings: IGameCreationComponentStrings;
     shouldShowGametitleAlert?: boolean;
     renderDueBySection?: () => React.ReactElement<any>;
     renderResultVisibilitySection?: () => React.ReactElement<any>;
-    onChange?: (props: ISettingsComponentProps) => void;
+    onChange?: (props: IGameCreationComponentProps) => void;
     onMount?: () => void;
 }
 
-export interface ISettingsComponentStrings {
+export interface IGameCreationComponentStrings {
     dueBy?: string;
     resultsVisibleTo?: string;
     resultsVisibleToAll?: string;
@@ -44,14 +42,14 @@ export interface ISettingsComponentStrings {
 }
 
 /**
- * <Settings> Settings component of creation view of game
+ * <GameCreationView> GameCreationView component of creation view of game
  */
 
 @observer
-export class Settings extends React.PureComponent<ISettingsComponentProps> {
-    private settingProps: ISettingsComponentProps;
+export class GameCreationView extends React.Component<IGameCreationComponentProps> {
+    private settingProps: IGameCreationComponentProps;
     private inputTitleRef: HTMLElement;
-    constructor(props: ISettingsComponentProps) {
+    constructor(props: IGameCreationComponentProps) {
         super(props);
     }
     componentDidMount() {

@@ -8,7 +8,7 @@
             {
                 "id": "Title",
                 "type": "TextBlock",
-                "text": "${action.dataTables[0].dataColumns[0].displayName}",
+                "text": "${action.displayName}",
                 "size": "Large",
                 "maxLines": 3,
                 "wrap": true,

@@ -3,25 +3,23 @@
 
 import { observer } from "mobx-react";
 import * as React from "react";
+import { updateScoreBoardRowCount } from "../../actions/SummaryActions";
 import getStore, { MyGameScore } from "../../store/SummaryStore";
 import { Constants } from "../../utils/Constants";
 import { Localizer } from "../../utils/Localizer";
-import "./Summary.scss";
+import "./SummaryPage.scss";
 
 /**
  * <MyScoreBoard> component for score board on summary page
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
 @observer
-export class MyScoreBoard extends React.PureComponent<any, any> {
+export class MyScoreBoard extends React.Component<any> {
     private scores: MyGameScore[];
+    private store = getStore();
     constructor(props) {
         super(props);
-        this.scores = getStore().scoreBoard;
-        this.state = {
-            visible: Constants.DEFAULT_NUMBER_OF_RECORD
-        };
-        this.showMore = this.showMore.bind(this);
+        this.scores = this.store.scoreBoard;
     }
 
     render() {
@@ -31,23 +29,25 @@ export class MyScoreBoard extends React.PureComponent<any, any> {
                 <>
                     <div className="timeline">
                         {
-                            this.scores.slice(0, this.state.visible).map((score, index) => (
+                            this.scores.slice(0, this.store.scoreBoardRowCount).map((score, index) => (
                                 this.renderTimelineElement(score.score, score.timeStamp, index)
                             ))
                         }
                     </div>
                     {
-                        this.scores.length > Constants.DEFAULT_NUMBER_OF_RECORD && this.scores.length > this.state.visible ?
-                        <span className="link my-score-link" onClick={this.showMore}>+ {Localizer.getString("LoadMore")}</span>
-                        :
-                        <div></div>
+                        this.scores.length > Constants.DEFAULT_NUMBER_OF_RECORD && this.scores.length > this.store.scoreBoardRowCount ?
+                            <span className="link my-score-link" onClick={() => {
+                                updateScoreBoardRowCount(this.store.leaderBoardRowCount + Constants.DEFAULT_NUMBER_OF_RECORD)
+                            }}>+ {Localizer.getString("LoadMore")}</span>
+                            :
+                            <div></div>
                     }
                 </>
                 :
                 <div className="content">
                     <label>
-                    {this.props.youHaveNotResponded}
-                </label>
+                        {this.props.youHaveNotResponded}
+                    </label>
                 </div>
         );
     }
@@ -67,12 +67,5 @@ export class MyScoreBoard extends React.PureComponent<any, any> {
                 </div>
             </div>
         );
-    }
-
-    // helper method to increase the row visibility count
-    private showMore() {
-        this.setState((prev) => {
-            return { visible: prev.visible + Constants.RECORD_INCREMENT_FACTOR };
-        });
     }
 }

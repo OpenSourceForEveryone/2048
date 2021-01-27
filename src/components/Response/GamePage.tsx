@@ -75,12 +75,7 @@ export default class GamePage extends React.Component<any, any> {
 
     // Method to render game instruction
     private getInstructionPage(): JSX.Element {
-        return (<InstructionView
-            DontShowTheGameInstruction={Localizer.getString("DontShowTheGameInstruction")}
-            InstructionContent={this.getInstructionContent()}
-            HowToPlay={Localizer.getString("HowToPlay")}
-            Play={Localizer.getString("PlayButton")}
-        />);
+        return (<InstructionView />);
     }
 
     // Method to render congratualtion view
@@ -91,7 +86,7 @@ export default class GamePage extends React.Component<any, any> {
                 className="body-container"
                 id="bodyContainer"
             >
-                <GameEndView gameScore={getStore().playerPrevScore} shouldShowAlert="true" />
+                <GameEndView score={Number(getStore().playerPrevScore)} onlyOneAttempt={true} />
             </Flex>
         );
     }

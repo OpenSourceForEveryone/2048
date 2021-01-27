@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ButtonProps } from "@fluentui/react-northstar";
 import * as React from "react";
 import { Constants } from "./Constants";
-import { Localizer } from "./Localizer";
 
 export class UxUtils {
 
@@ -121,6 +119,7 @@ export class UxUtils {
         return Constants.INSTRUCTION_PAGE_LOCALSTORAGE;
     }
 
+    // Helper method to check, if we have show the instruction page or not
     public static shouldShowInstructionPage() {
         const key = this.getKey();
         let localStorage = window.localStorage;
@@ -141,7 +140,7 @@ export class UxUtils {
             this.removeLocaStorge();
         }
     }
-    
+
     // Helper method to remove the local storage
     public static removeLocaStorge() {
         let localStorage = window.localStorage;
@@ -149,17 +148,21 @@ export class UxUtils {
         localStorage.removeItem(key);
     }
 
-    public static getDialogButtonProps(dialogDescription: string, buttonLabel: string): ButtonProps {
-        let buttonProps: ButtonProps = {
-            "content": buttonLabel
-        };
-
-        if (UxUtils.renderingForMobile()) {
-            Object.assign(buttonProps, {
-                "aria-label": Localizer.getString("DialogTalkback", dialogDescription, buttonLabel),
-            });
+    // Helper Method to break the text into multiline at .
+    public static formateStringWithLineBreak(text: string) {
+        const str = text.split(".");
+        let length = 0;
+        let data: any[] = [];
+        for (let item of str) {
+            if (str) {
+                if (length != str.length - 1) {
+                    data.push(<><label> {item}. </label> <br /></>);
+                } else {
+                    data.push(<label> {item}. </label>);
+                }
+                length++;
+            }
         }
-        return buttonProps;
+        return data;
     }
-
 }

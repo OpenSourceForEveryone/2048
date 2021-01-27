@@ -77,22 +77,6 @@ export namespace Utils {
     }
 
     /**
-     * Method to download content
-     * @param fileName
-     * @param data
-     */
-    export function downloadContent(fileName: string, data: string) {
-        if (data && fileName) {
-            let a = document.createElement("a");
-            a.href = data;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-    }
-
-    /**
      * Method to check whether the text direction is right-to-left or not
      * @param locale
      */
@@ -130,11 +114,4 @@ export namespace Utils {
         }
     }
 
-    export function sortObjectByScore(obj: any) {
-        let byScore = obj.slice(0);
-        byScore.sort(function (a, b) {
-            return a.responderScore - b.responderScore;
-        });
-        return byScore.reverse();
-    }
 }

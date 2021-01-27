@@ -18,7 +18,9 @@ import {
     gameCloseAlertOpen,
     gameExpiryChangeAlertOpen,
     gameDeleteAlertOpen,
-    updateActionInstance
+    updateActionInstance,
+    updateLeaderBoardRowCount,
+    updateScoreBoardRowCount
 } from "./../actions/SummaryActions";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { UxUtils } from "../utils/UxUtils";
@@ -89,10 +91,8 @@ mutator(fetchMyScore, (msg) => {
         rows.forEach(element => {
             getStore().scoreBoard.push(
                 {
-                    score: element.columnValues["2"],
-                    timeStamp: UxUtils.formatDate(new Date(element.createTime),
-                    getStore().actionInstance.customProperties[0].value,
-                    options)
+                    score: element.columnValues["1"],
+                    timeStamp: UxUtils.formatDate(new Date(element.createTime), getStore().actionInstance.customProperties[0].value, options)
                 }
             );
         });
@@ -106,15 +106,15 @@ mutator(fetchLeaderBoard, (msg) => {
         rows.forEach(element => {
             const player = newRows.find(p => p.playerId === element.creatorId);
             if (player) {
-                if (Number(element.columnValues["2"]) > Number(player.score)) {
-                    newRows.find(p => p.playerId === element.creatorId).score = element.columnValues["2"];
+                if (Number(element.columnValues["1"]) > Number(player.score)) {
+                    newRows.find(p => p.playerId === element.creatorId).score = element.columnValues["1"];
                 }
             } else {
                 newRows.push(
                     {
                         playerId: element.creatorId,
-                        playerName: element.columnValues["1"],
-                        score: element.columnValues["2"],
+                        playerName: element.columnValues["2"],
+                        score: element.columnValues["1"],
                     }
                 );
             }
@@ -155,4 +155,14 @@ mutator(gameDeleteAlertOpen, (msg) => {
 mutator(setIsActionDeleted, (msg) => {
     const store = getStore();
     store.isActionDeleted = msg.isActionDeleted;
+});
+
+mutator(updateScoreBoardRowCount, (msg) => {
+    const store = getStore();
+    store.scoreBoardRowCount = msg.count;
+});
+
+mutator(updateLeaderBoardRowCount, (msg) => {
+    const store = getStore();
+    store.leaderBoardRowCount = msg.count;
 });

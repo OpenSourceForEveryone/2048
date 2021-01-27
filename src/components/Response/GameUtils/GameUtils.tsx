@@ -10,6 +10,12 @@ export namespace GameUtils {
     return [rowPosition, colPosition];
   }
 
+  // Helper method to check if the board is full or not
+  export function IsGameBoardGridFull(grid: any)
+  {
+    return !grid.some(row => row.includes(0));
+  }
+
   /**
   * Helper function to get the tile color code
   * @param num number on tile

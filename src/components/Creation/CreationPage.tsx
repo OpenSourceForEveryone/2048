@@ -4,11 +4,11 @@
 import * as React from "react";
 import {
     callActionInstanceCreationAPI,
-    updateSettings
+    updateSettings,
+    validateGameTitle
 } from "./../../actions/CreationActions";
-import "./Creation.scss";
-import "./CustomSettings.scss";
-import "./Settings.scss";
+import "./CreationPage.scss";
+import "./GameCreationView.scss";
 import getStore from "./../../store/CreationStore";
 import { observer } from "mobx-react";
 import { Flex, FlexItem, Button, Loader } from "@fluentui/react-northstar";
@@ -16,7 +16,11 @@ import { Localizer } from "../../utils/Localizer";
 import { ProgressState } from "./../../utils/SharedEnum";
 import { ErrorView } from "../ErrorView";
 import { UxUtils } from "./../../utils/UxUtils";
-import { Settings, ISettingsComponentProps, ISettingsComponentStrings } from "./Settings";
+import {
+    GameCreationView,
+    IGameCreationComponentProps,
+    IGameCreationComponentStrings
+} from "./GameCreationView";
 import { Constants } from "./../../utils/Constants";
 import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
 
@@ -25,19 +29,8 @@ import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
  * @observer decorator on the component this is what tells MobX to rerender the component whenever the data it relies on changes.
  */
 @observer
-export default class CreationPage extends React.Component<any, any> {
-    state = {
-        showError: false
-    };
-
-    isValidGameTitle() {
-        const title = getStore().title;
-        if (title.length < 1) {
-            return false;
-        }
-        return true;
-    }
-
+export default class CreationPage extends React.Component<any> {
+   
     render() {
         let progressState = getStore().progressState;
         if (progressState === ProgressState.NotStarted || progressState === ProgressState.InProgress) {
@@ -56,7 +49,7 @@ export default class CreationPage extends React.Component<any, any> {
             return (
                 <>
                     <Flex gap="gap.medium" column>
-                        {this.renderSettingsForGame()}
+                        {this.renderGameCreationView()}
                     </Flex>
                     {this.renderFooterSection()}
                 </>
@@ -65,11 +58,11 @@ export default class CreationPage extends React.Component<any, any> {
     }
 
     // renderng seting page for the game
-    renderSettingsForGame() {
-        let settingsProps: ISettingsComponentProps = {
-            ...this.getCommonSettingsProps(),
+    renderGameCreationView() {
+        let settingsProps: IGameCreationComponentProps = {
+            ...this.getCommonGameCreationComponentProps(),
         };
-        return <Settings {...settingsProps} />;
+        return <GameCreationView {...settingsProps} />;
     }
 
     /**
@@ -87,15 +80,9 @@ export default class CreationPage extends React.Component<any, any> {
                         disabled={getStore().sendingAction}
                         content={Localizer.getString("SendGameRequest")}
                         onClick={() => {
-                            if (this.isValidGameTitle()) {
-                                this.setState({
-                                    showError: false
-                                });
+                            validateGameTitle(getStore().title);
+                            if(getStore().isValidGameTitle){
                                 callActionInstanceCreationAPI();
-                            } else {
-                                this.setState({
-                                    showError: true
-                                });
                             }
                         }}>
                     </Button>
@@ -107,8 +94,8 @@ export default class CreationPage extends React.Component<any, any> {
     /**
      * Helper method to provide strings for settings view
      */
-    getStringsForSettings(): ISettingsComponentStrings {
-        let settingsComponentStrings: ISettingsComponentStrings = {
+    getStringsForGameCreation(): IGameCreationComponentStrings {
+        let settingsComponentStrings: IGameCreationComponentStrings = {
             dueBy: Localizer.getString("dueBy"),
             resultsVisibleTo: Localizer.getString("resultsVisibleTo"),
             resultsVisibleToAll: Localizer.getString("resultsVisibleToAll"),
@@ -122,16 +109,16 @@ export default class CreationPage extends React.Component<any, any> {
     /**
      * Helper method to provide common settings props for both mobile and web view
      */
-    getCommonSettingsProps() {
+    getCommonGameCreationComponentProps() {
         return {
             resultVisibility: getStore().settings.resultVisibility,
             dueDate: getStore().settings.dueDate,
             locale: getStore().context.locale,
             renderForMobile: UxUtils.renderingForMobile(),
-            strings: this.getStringsForSettings(),
+            strings: this.getStringsForGameCreation(),
             isMultiResponseAllowed: getStore().settings.isMultiResponseAllowed,
-            shouldShowGametitleAlert: this.state.showError,
-            onChange: (props: ISettingsComponentProps) => {
+            shouldShowGametitleAlert: !getStore().isValidGameTitle,
+            onChange: (props: IGameCreationComponentProps) => {
                 updateSettings(props);
             },
             onMount: () => {

@@ -4,7 +4,7 @@
 import { action } from "satcheljs";
 import { Page } from "../store/CreationStore";
 import * as actionSDK from "@microsoft/m365-action-sdk";
-import { ISettingsComponentProps } from "./../components/Creation/Settings";
+import { IGameCreationComponentProps } from "../components/Creation/GameCreationView";
 import { ProgressState } from "./../utils/SharedEnum";
 
 export enum GameCreationAction {
@@ -18,7 +18,7 @@ export enum GameCreationAction {
     setProgressState = "setProgressState",
     goToPage = "goToPage",
     callActionInstanceCreationAPI = "callActionInstanceCreationAPI",
-    showBlankTitleError = "showBlankTitleError",
+    validateGameTitle = "validateGameTitle",
 }
 
 export let initialize = action(GameCreationAction.initialize);
@@ -39,7 +39,7 @@ export let updateTitle = action(GameCreationAction.updateTitle, (title: string) 
     title: title
 }));
 
-export let updateSettings = action(GameCreationAction.updateSettings, (settingProps: ISettingsComponentProps) => ({
+export let updateSettings = action(GameCreationAction.updateSettings, (settingProps: IGameCreationComponentProps) => ({
     settingProps: settingProps
 }));
 
@@ -50,3 +50,8 @@ export let setProgressState = action(GameCreationAction.setProgressState, (state
 export let shouldValidateUI = action(GameCreationAction.shouldValidateUI, (shouldValidate: boolean) => ({
     shouldValidate: shouldValidate
 }));
+
+export let validateGameTitle = action(GameCreationAction.validateGameTitle, (title: string) => ({
+    title: title
+}));
+

@@ -5,16 +5,15 @@ import {
     setActionInstance,
     fetchActionInstanceRowsForCurrentUser,
     setProgressState,
-    addScore,
+    addScore
 } from "../actions/ResponseAction";
 import { Localizer } from "../utils/Localizer";
 import { ProgressState } from "../utils/SharedEnum";
 import { ActionSdkHelper } from "../helper/ActionSdkHelper";
 
-
 /**
- * Initialization of response view fetching action context, localization and game setting details
- */
+ * initialize(): instance of response view fetching action context, localization and setting details
+*/
 orchestrator(initialize, async () => {
     setProgressState({ currentContext: ProgressState.InProgress });
     setProgressState({ settingInstance: ProgressState.InProgress });
@@ -35,7 +34,7 @@ orchestrator(initialize, async () => {
 
             setProgressState({ currentUserDataInstance: ProgressState.InProgress });
             const dataRow = await ActionSdkHelper.getActionDataRows(actionContext.context.actionId, actionContext.context.userId);
-            if (dataRow.success) {
+            if(dataRow.success) {
 
                 fetchActionInstanceRowsForCurrentUser(dataRow.dataRows);
                 setProgressState({ currentUserDataInstance: ProgressState.Completed });
@@ -53,8 +52,6 @@ orchestrator(initialize, async () => {
     setProgressState({ settingInstance: ProgressState.Completed });
 });
 
-
-
 /**
  * addScore(): add score and close the view
  */
@@ -64,8 +61,7 @@ orchestrator(addScore, async (msg) => {
     if (response.success) {
         setProgressState({ addScoreInstance: ProgressState.Completed });
         await ActionSdkHelper.closeView();
-    }
-    else {
+    } else {
         setProgressState({ addScoreInstance: ProgressState.Failed });
     }
-})
+});
