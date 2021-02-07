@@ -37,7 +37,7 @@ export class MyScoreBoard extends React.Component<any> {
                     {
                         this.scores.length > Constants.DEFAULT_NUMBER_OF_RECORD && this.scores.length > this.store.scoreBoardRowCount ?
                             <span className="link my-score-link" onClick={() => {
-                                updateScoreBoardRowCount(this.store.leaderBoardRowCount + Constants.DEFAULT_NUMBER_OF_RECORD)
+                                updateScoreBoardRowCount(this.store.leaderBoardRowCount + Constants.DEFAULT_NUMBER_OF_RECORD);
                             }}>+ {Localizer.getString("LoadMore")}</span>
                             :
                             <div></div>

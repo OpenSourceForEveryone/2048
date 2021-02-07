@@ -14,9 +14,9 @@ export class Constants {
     public static readonly ACTION_RESULT_FILE_NAME_MAX_LENGTH: number = 50;
     public static readonly GAME_TITLE_MAX_LENGTH: number = 240;
 
-    // Game setting constants
+   // Game setting constants
    // Game Constants
-   public static readonly GRID: any[] = [
+   public static readonly GRID: number[][] = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
@@ -32,7 +32,7 @@ public static readonly KEY_MAP = {
 public static readonly GAME_DATA_TABLE_NAME = "2048TournamentDataTable";
 public static readonly DEFAULT_BOARD_COLOR = "#645B52";
 public static readonly IMAGE_WIDTH = "180";
-public static readonly LOGO_PATH: String = "images/appIcon.png";
+public static readonly LOGO_PATH: string = "images/appIcon.png";
 public static readonly CONGRATULATION_IMAGE_PATH = "images/trophy.png";
 public static readonly INSTRUCTION_PAGE_LOCALSTORAGE = "2048GameInstructionPageShow";
 public static readonly DEFAULT_NUMBER_OF_RECORD = 3;

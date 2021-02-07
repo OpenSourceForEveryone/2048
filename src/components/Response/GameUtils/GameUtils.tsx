@@ -11,8 +11,7 @@ export namespace GameUtils {
   }
 
   // Helper method to check if the board is full or not
-  export function IsGameBoardGridFull(grid: any)
-  {
+  export function IsGameBoardGridFull(grid: any) {
     return !grid.some(row => row.includes(0));
   }
 

@@ -12,8 +12,8 @@ import getStore, { GameStatus } from "../../store/GamePlayStore";
 import { setGameStatus } from "../../actions/GamePlayAction";
 
 interface IGameEndProps {
-    onlyOneAttempt:boolean
-    score: number
+    onlyOneAttempt:boolean;
+    score: number;
 }
 
 /**
@@ -22,11 +22,11 @@ interface IGameEndProps {
  */
 @observer
 export default class GameEndView extends React.Component<IGameEndProps> {
+    state = { isImageLoaded: false };
 
     constructor(props) {
         super(props);
     }
-    state = { isImageLoaded: false };
     render() {
         return (
             <>
@@ -68,7 +68,7 @@ export default class GameEndView extends React.Component<IGameEndProps> {
                         content={Localizer.getString("SubmitScore")}
                         onClick={() => {
                             addScore(getStore().gameScore.toString());
-                            setGameStatus(GameStatus.End)
+                            setGameStatus(GameStatus.End);
                         }}>
                     </Button>
                 </FlexItem>

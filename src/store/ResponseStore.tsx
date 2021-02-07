@@ -3,7 +3,6 @@ import "../mutator/ResponseMutator";
 import "../orchestrators/ResponseOrchestrator";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ProgressState } from "../utils/SharedEnum";
-import { GameStatus } from "./GamePlayStore";
 
 /**
  * Response store containing all data required when user play the game.
@@ -31,7 +30,6 @@ interface IGameResponseStore {
     isTrophyImageLoaded: boolean;
     isGameLogoLoaded: boolean;
     isGameInstructionPageVisible: boolean;
-    gameStatus: GameStatus;
 }
 
 const store: IGameResponseStore = {
@@ -54,7 +52,6 @@ const store: IGameResponseStore = {
     isTrophyImageLoaded : false,
     isGameLogoLoaded : false,
     isGameInstructionPageVisible: false,
-    gameStatus: GameStatus.NotStarted
 };
 
 export default createStore<IGameResponseStore>("ResponseStore", store);

@@ -54,4 +54,3 @@ export let shouldValidateUI = action(GameCreationAction.shouldValidateUI, (shoul
 export let validateGameTitle = action(GameCreationAction.validateGameTitle, (title: string) => ({
     title: title
 }));
-

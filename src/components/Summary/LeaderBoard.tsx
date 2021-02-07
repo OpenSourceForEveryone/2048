@@ -20,7 +20,7 @@ export class LeaderBoardView extends React.Component<any> {
     private store = getStore();
     constructor(props) {
         super(props);
-        this.scores = this.store.leaderBoard; 
+        this.scores = this.store.leaderBoard;
     }
     render() {
         // preparing the leader baord

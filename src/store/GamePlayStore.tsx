@@ -5,6 +5,7 @@ import { createStore } from "satcheljs";
 import "../mutator/GamePlayMutator";
 import { Constants } from "../utils/Constants";
 
+// This represents the various stages of Tetris game in response view
 export enum GameStatus {
     NotStarted,
     InProgress,
@@ -16,7 +17,7 @@ export enum GameStatus {
 interface IGameStore {
    gameStatus: GameStatus;
    gameScore: number;
-   gameGridData: any[];
+   gameGridData: number[][];
 }
 
 const store: IGameStore = {

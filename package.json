@@ -16,7 +16,6 @@
         "@fluentui/react-northstar": "0.51.0",
         "@microsoft/m365-action-sdk": "https://static.actions.office365.com/sdk/v1.0.8/microsoft-m365-action-sdk.tgz",
         "css-loader": "2.1.1",
-        "lodash.clonedeep": "^4.5.0",
         "mobx": "5.9.4",
         "mobx-react": "5.1.2",
         "office-ui-fabric-react": "7.22.0",

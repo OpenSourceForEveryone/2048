@@ -30,7 +30,7 @@ import { ActionSdkHelper } from "../../helper/ActionSdkHelper";
  */
 @observer
 export default class CreationPage extends React.Component<any> {
-   
+
     render() {
         let progressState = getStore().progressState;
         if (progressState === ProgressState.NotStarted || progressState === ProgressState.InProgress) {
@@ -81,7 +81,7 @@ export default class CreationPage extends React.Component<any> {
                         content={Localizer.getString("SendGameRequest")}
                         onClick={() => {
                             validateGameTitle(getStore().title);
-                            if(getStore().isValidGameTitle){
+                            if(getStore().isValidGameTitle) {
                                 callActionInstanceCreationAPI();
                             }
                         }}>

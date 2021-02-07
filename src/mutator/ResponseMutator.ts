@@ -61,6 +61,5 @@ mutator(setGameStatus, (msg) => {
 
 mutator(updatedInstructionPageView, () => {
     const store = getStore();
-    store.isGameInstructionPageVisible = !store.isGameInstructionPageVisible
+    store.isGameInstructionPageVisible = !store.isGameInstructionPageVisible;
 });
-

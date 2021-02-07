@@ -117,4 +117,3 @@ export let updateScoreBoardRowCount = action(GameSummaryAction.updateScoreBoardR
 export let updateLeaderBoardRowCount = action(GameSummaryAction.updateLeaderBoardRowCount, (count: number) => ({
     count: count
 }));
-

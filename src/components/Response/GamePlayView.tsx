@@ -3,7 +3,6 @@
 
 import * as React from "react";
 import { observer } from "mobx-react";
-import cloneDeep from "lodash.clonedeep";
 import { GameUtils } from "./GameUtils/GameUtils";
 import GameEndView from "./GameEndView";
 import { Flex } from "@fluentui/react-northstar";
@@ -16,6 +15,7 @@ import {
   addItemToGameBoard,
   updateGameScore
 } from "../../actions/GamePlayAction";
+import { Utils } from "../../utils/Utils";
 
 /**
  * <GamePlayView> component for 2048 game logic
@@ -70,7 +70,7 @@ class GamePlayView extends React.Component<any> {
         break;
     }
     if (currentScore != 0) {
-      updateGameScore(this.store.gameScore + currentScore)
+      updateGameScore(this.store.gameScore + currentScore);
     }
     let gameOverr = this.IsGameOver();
     if (gameOverr) {
@@ -82,7 +82,7 @@ class GamePlayView extends React.Component<any> {
   handleTouchStart = (event) => {
     this.initialXposition = event.touches[0].clientX;
     this.initialYposition = event.touches[0].clientY;
-  };
+  }
 
   // Event Hander for touch move for Mobile Device
   handleTouchMove = (event) => {
@@ -117,28 +117,44 @@ class GamePlayView extends React.Component<any> {
       }
     }
     if (currentScore != 0) {
-      updateGameScore(this.store.gameScore + currentScore)
+      updateGameScore(this.store.gameScore + currentScore);
     }
-    let gameOverr = this.IsGameOver()
+    let gameOverr = this.IsGameOver();
     if (gameOverr) {
       setGameStatus(GameStatus.End);
     }
     this.initialXposition = null;
-    this.initialYposition = null
+    this.initialYposition = null;
     event.preventDefault();
   }
 
   // Event Hander for touch end for Mobile Device
   handleTouchEnd = (event) => {
     this.initialXposition = null;
-    this.initialYposition = null
+    this.initialYposition = null;
+  }
+
+  render() {
+    return (
+      <Flex
+        column
+        className="body-container"
+        id="bodyContainer"
+        gap="gap.medium"
+      >
+        { this.store.gameStatus === GameStatus.End ?
+          <GameEndView score={this.store.gameScore} onlyOneAttempt={false} /> :
+          <GameBoard boardData={this.store.gameGridData} gameScore={this.store.gameScore} tabIndex={0} />
+        }
+      </Flex>
+    );
   }
 
   // Handle game board update for left move or swipe
   private gameBoardUpdateForLeftMove(isMove: boolean = true) {
 
     let oldGrid = this.store.gameGridData;
-    let copyGrid = cloneDeep(this.store.gameGridData);
+    let copyGrid = Utils.cloneDeep(this.store.gameGridData);
     let swipeLeftScore = 0;
     for (let rowLevel = 0; rowLevel < this.blockSize; rowLevel++) {
       let row = copyGrid[rowLevel];
@@ -189,7 +205,7 @@ class GamePlayView extends React.Component<any> {
   private gameBoardUpdateForRightMove(isMove: boolean = true) {
 
     let oldGrid = this.store.gameGridData;
-    let copyGrid = cloneDeep(this.store.gameGridData);
+    let copyGrid = Utils.cloneDeep(this.store.gameGridData);
     let swipeRightScore = 0;
 
     for (let rowLevel = this.blockSize-1; rowLevel >= 0; rowLevel--) {
@@ -240,7 +256,7 @@ class GamePlayView extends React.Component<any> {
 
    // Handle game board update for down move or swipe
   private gameBoardUpdateForDownMove(isMove: boolean = true) {
-    let copyGrid = cloneDeep(this.store.gameGridData);
+    let copyGrid = Utils.cloneDeep(this.store.gameGridData);
     let oldGrid = JSON.parse(JSON.stringify(this.store.gameGridData));
     let swipeDownScore = 0;
 
@@ -295,7 +311,7 @@ class GamePlayView extends React.Component<any> {
 
   // Handle game board update for up move or swipe
   private gameBoardUpdateForUpMove(isMove: boolean = true) {
-    let copyGrid = cloneDeep(this.store.gameGridData)
+    let copyGrid = Utils.cloneDeep(this.store.gameGridData);
     let oldData = JSON.parse(JSON.stringify(this.store.gameGridData));
     let swipeUpScore = 0;
 
@@ -373,22 +389,6 @@ class GamePlayView extends React.Component<any> {
     } else if (JSON.stringify(this.store.gameGridData) !== JSON.stringify(this.gameBoardUpdateForDownMove(false))) {
       return false;
     } else { return true; }
-  }
-
-  render() {
-    return (
-      <Flex
-        column
-        className="body-container"
-        id="bodyContainer"
-        gap="gap.medium"
-      >
-        { this.store.gameStatus === GameStatus.End ?
-          <GameEndView score={this.store.gameScore} onlyOneAttempt={false} /> :
-          <GameBoard boardData={this.store.gameGridData} gameScore={this.store.gameScore} tabIndex={0} />
-        }
-      </Flex>
-    );
   }
 }
 

@@ -4,7 +4,6 @@
 import { action } from "satcheljs";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ResponseProgressStatus } from "../store/ResponseStore";
-import { GameStatus } from "../store/GamePlayStore";
 
 export enum GameResponseAction {
     initialize = "initialize",
@@ -19,7 +18,6 @@ export enum GameResponseAction {
     setPreviousScore = "setPreviousScore",
     addScore = "addScore",
     setShouldPlayerPlay = "setShouldPlayerPlay",
-    setGameStatus = "setGameStatus",
     updatedInstructionPageView = "updatedInstructionPageView"
 }
 
@@ -58,10 +56,6 @@ export let setIsActionDeleted = action(GameResponseAction.setIsActionDeleted, (v
 
 export let addScore = action(GameResponseAction.addScore, (score: string) => ({
     score: score
-}));
-
-export let setGameStatus = action(GameResponseAction.setGameStatus, (status: Partial<GameStatus>) => ({
-    status: status
 }));
 
 export let updatedInstructionPageView = action(GameResponseAction.updatedInstructionPageView);

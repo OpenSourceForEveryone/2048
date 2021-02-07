@@ -28,8 +28,3 @@ mutator(addItemToGameBoard, (msg) => {
     grid[msg.row][msg.column] = msg.value;
     store.gameGridData = grid;
 });
-
-
-
-
-

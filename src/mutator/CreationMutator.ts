@@ -5,7 +5,6 @@ import { mutator } from "satcheljs";
 import {
     setContext,
     setSendingFlag,
-    goToPage,
     updateTitle,
     updateSettings,
     shouldValidateUI,
@@ -62,10 +61,9 @@ mutator(setProgressState, (msg) => {
 
 mutator(validateGameTitle, (msg) => {
     const store = getStore();
-    if(msg.title.length > 0){
+    if(msg.title.length > 0) {
         store.isValidGameTitle = true;
-    }else{
+    } else {
         store.isValidGameTitle = false;
     }
 });
-
