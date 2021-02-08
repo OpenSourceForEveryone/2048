@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { observer } from "mobx-react";
-import getStore from "../../store/ResponseStore";
+import getStore, { GameStatus } from "../../store/ResponseStore";
 import "./GamePage.scss";
 import { Localizer } from "../../utils/Localizer";
 import { ErrorView } from "../ErrorView";
@@ -46,7 +46,7 @@ export default class GamePage extends React.Component<any, any> {
         } else {
             ActionSdkHelper.hideLoadingIndicator();
             if (getStore().shouldPlayerPlay) {
-                if (UxUtils.shouldShowInstructionPage()) {
+                if (UxUtils.shouldShowInstructionPage() && getStore().gameStatus == GameStatus.NotStarted) {
                     return this.getInstructionPage();
                 } else {
                     return this.getGamePage();

@@ -4,10 +4,9 @@ import { Avatar, Card, Flex, Text, Checkbox, FlexItem, Button } from "@fluentui/
 import "./GamePage.scss";
 import { UxUtils } from "../../utils/UxUtils";
 import { Constants } from "../../utils/Constants";
-import getStore from "../../store/ResponseStore";
+import getStore, { GameStatus }  from "../../store/ResponseStore";
 import { Localizer } from "../../utils/Localizer";
-import { GameStatus } from "../../store/GamePlayStore";
-import { setGameStatus, updatedInstructionPageView } from "../../actions/ResponseAction";
+import { updateInstructionPageView, setGameStatus } from "../../actions/ResponseAction";
 import GamePlayView from "./GamePlayView";
 /**
  * <InstructionView> component for game instruction view
@@ -27,6 +26,7 @@ export default class InstructionView extends React.Component {
                 </Flex>
         );
     }
+
     // Helper method to render the Instriuction view
     renderInstruction(): JSX.Element {
         return (
@@ -50,7 +50,7 @@ export default class InstructionView extends React.Component {
                     checked={this.store.isGameInstructionPageVisible}
                     onChange={
                         () => {
-                            updatedInstructionPageView();
+                            updateInstructionPageView();
                         }
                     } />
             </div>

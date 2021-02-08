@@ -3,7 +3,7 @@
 
 import { action } from "satcheljs";
 import * as actionSDK from "@microsoft/m365-action-sdk";
-import { ResponseProgressStatus } from "../store/ResponseStore";
+import { GameStatus, ResponseProgressStatus } from "../store/ResponseStore";
 
 export enum GameResponseAction {
     initialize = "initialize",
@@ -17,8 +17,13 @@ export enum GameResponseAction {
     setIsActionDeleted = "setIsActionDeleted",
     setPreviousScore = "setPreviousScore",
     addScore = "addScore",
+    addScoreForSinglePlay = "addScoreForSinglePlay",
     setShouldPlayerPlay = "setShouldPlayerPlay",
-    updatedInstructionPageView = "updatedInstructionPageView"
+    updateGameScore = "updateGameScore",
+    updateGameBoard = "updateGameBoard",
+    setGameStatus = "setGameStatus",
+    addItemToGameBoard = "addItemToGameBoard",
+    updateInstructionPageView = "updateInstructionPageView",
 }
 
 export let initialize = action(GameResponseAction.initialize);
@@ -58,4 +63,26 @@ export let addScore = action(GameResponseAction.addScore, (score: string) => ({
     score: score
 }));
 
-export let updatedInstructionPageView = action(GameResponseAction.updatedInstructionPageView);
+export let addScoreForSinglePlay = action(GameResponseAction.addScoreForSinglePlay, (score: string) => ({
+    score: score
+}));
+
+export let setGameStatus = action(GameResponseAction.setGameStatus, (status: Partial<GameStatus>) => ({
+    status: status
+}));
+
+export let updateGameBoard = action(GameResponseAction.updateGameBoard, (board: any[]) => ({
+    board: board
+}));
+
+export let updateGameScore = action(GameResponseAction.updateGameScore, (score: number) => ({
+    score: score
+}));
+
+export let addItemToGameBoard = action(GameResponseAction.addItemToGameBoard, (row: number, column: number, value: number) => ({
+    row: row,
+    column: column,
+    value: value
+}));
+
+export let updateInstructionPageView = action(GameResponseAction.updateInstructionPageView);

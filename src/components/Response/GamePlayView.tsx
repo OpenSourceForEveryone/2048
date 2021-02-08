@@ -8,13 +8,13 @@ import GameEndView from "./GameEndView";
 import { Flex } from "@fluentui/react-northstar";
 import { Constants } from "../../utils/Constants";
 import GameBoard from "./GameComponents/GameBoard";
-import getStore, { GameStatus } from "../../store/GamePlayStore";
+import getStore, { GameStatus } from "../../store/ResponseStore";
 import {
   updateGameBoard,
   setGameStatus,
   addItemToGameBoard,
   updateGameScore
-} from "../../actions/GamePlayAction";
+} from "../../actions/ResponseAction";
 import { Utils } from "../../utils/Utils";
 
 /**

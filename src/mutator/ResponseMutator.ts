@@ -7,7 +7,10 @@ import {
     setActionInstance,
     fetchActionInstanceRowsForCurrentUser,
     setGameStatus,
-    updatedInstructionPageView
+    updateGameBoard,
+    updateGameScore,
+    addItemToGameBoard,
+    updateInstructionPageView
 } from "../actions/ResponseAction";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 
@@ -59,7 +62,24 @@ mutator(setGameStatus, (msg) => {
     store.gameStatus = msg.status;
 });
 
-mutator(updatedInstructionPageView, () => {
+mutator(updateGameBoard, (msg) => {
+    const store = getStore();
+    store.gameGridData = msg.board;
+});
+
+mutator(updateGameScore, (msg) => {
+    const store = getStore();
+    store.gameScore = msg.score;
+});
+
+mutator(addItemToGameBoard, (msg) => {
+    const store = getStore();
+    const grid = store.gameGridData;
+    grid[msg.row][msg.column] = msg.value;
+    store.gameGridData = grid;
+});
+
+mutator(updateInstructionPageView, () => {
     const store = getStore();
     store.isGameInstructionPageVisible = !store.isGameInstructionPageVisible;
 });

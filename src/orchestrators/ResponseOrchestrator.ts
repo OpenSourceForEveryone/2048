@@ -5,7 +5,8 @@ import {
     setActionInstance,
     fetchActionInstanceRowsForCurrentUser,
     setProgressState,
-    addScore
+    addScore,
+    addScoreForSinglePlay
 } from "../actions/ResponseAction";
 import { Localizer } from "../utils/Localizer";
 import { ProgressState } from "../utils/SharedEnum";
@@ -61,6 +62,19 @@ orchestrator(addScore, async (msg) => {
     if (response.success) {
         setProgressState({ addScoreInstance: ProgressState.Completed });
         await ActionSdkHelper.closeView();
+    } else {
+        setProgressState({ addScoreInstance: ProgressState.Failed });
+    }
+});
+
+/**
+ * addScoreForSinglePlay(): add score to data table for single response card
+ */
+orchestrator(addScoreForSinglePlay, async (msg) => {
+    setProgressState({ addScoreInstance: ProgressState.InProgress });
+    let response = await ActionSdkHelper.addScore(msg.score);
+    if (response.success) {
+        setProgressState({ addScoreInstance: ProgressState.Completed });
     } else {
         setProgressState({ addScoreInstance: ProgressState.Failed });
     }

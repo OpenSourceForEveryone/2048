@@ -13,7 +13,7 @@
     },
     "icon": "images/appIcon.png",
     "actionModel": "actionModel.json",
-    "version": "1.0.0",
+    "version": "1.0.11",
     "views": {
         "CardView": {
             "sourceLocation": "cardView.json"
@@ -22,16 +22,14 @@
             "sourceLocation": "CreateView.html",
             "header": "Create new tournament"
         },
-        "ResponseView": 
-        {
+        "ResponseView": {
             "sourceLocation": "ResponseView.html",
             "header": "Play 2048"
         },
-        "SummaryView": 
-	 {
-	     "sourceLocation": "SummaryView.html",
-	     "header": "Summary View"
-         }
+        "SummaryView": {
+            "sourceLocation": "SummaryView.html",
+            "header": "Summary View"
+        }
     },
     "localizationInfo": {
         "defaultLocale": "en-us",

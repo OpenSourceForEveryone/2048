@@ -3,10 +3,20 @@ import "../mutator/ResponseMutator";
 import "../orchestrators/ResponseOrchestrator";
 import * as actionSDK from "@microsoft/m365-action-sdk";
 import { ProgressState } from "../utils/SharedEnum";
+import { Constants } from "../utils/Constants";
 
 /**
  * Response store containing all data required when user play the game.
  */
+
+ // This represents the various stages of Tetris game in response view
+export enum GameStatus {
+    NotStarted,
+    InProgress,
+    End,
+    Paused,
+    Expired
+}
 
 export interface ResponseProgressStatus {
     actionInstance: ProgressState;
@@ -30,6 +40,10 @@ interface IGameResponseStore {
     isTrophyImageLoaded: boolean;
     isGameLogoLoaded: boolean;
     isGameInstructionPageVisible: boolean;
+    gameStatus: GameStatus;
+    gameScore: number;
+    gameGridData: number[][];
+
 }
 
 const store: IGameResponseStore = {
@@ -52,6 +66,9 @@ const store: IGameResponseStore = {
     isTrophyImageLoaded : false,
     isGameLogoLoaded : false,
     isGameInstructionPageVisible: false,
+    gameStatus: GameStatus.NotStarted,
+    gameScore: 0,
+    gameGridData: Constants.GRID,
 };
 
 export default createStore<IGameResponseStore>("ResponseStore", store);
