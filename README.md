@@ -1,6 +1,6 @@
 # 2048 Template
 
-| [Documentation](https://github.com/WebCraft-Teams/2048/wiki/Home) | [Deployment guide](https://github.com/WebCraft-Teams/2048/wiki/Continuous-deployment) | [Architecture](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview) | [Costing](https://github.com/WebCraft-Teams/2048/wiki/Costing.md) |
+| [Documentation](https://github.com/WebCraft-Teams/2048/wiki/Home) | [Deployment guide](https://github.com/WebCraft-Teams/2048/wiki/Continuous-deployment) | [Architecture](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview) | [Costing](https://github.com/WebCraft-Teams/2048/wiki/Costing) |
 | ----- | ---- | ---- | ---- |
 
 
