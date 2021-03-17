@@ -39,7 +39,7 @@ fun playing the classic 2048 game!
 
 ## Get started
 
-Begin with the [Solution overview ](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview.md)to read about what the
+Begin with the [Solution overview ](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview)to read about what the
 app does and how it works.
 
 When you're ready to try out 2048 Tournament, or to use it in your own
