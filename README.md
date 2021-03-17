@@ -1,6 +1,6 @@
 # 2048 Template
 
-| [Documentation](./wiki/Home.md) | [Deployment guide](https://github.com/WebCraft-Teams/2048/wiki/Continuous-deployment) | [Architecture](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview) | [Costing](./wiki/Costing.md) |
+| [Documentation](https://github.com/WebCraft-Teams/2048/wiki/Home) | [Deployment guide](https://github.com/WebCraft-Teams/2048/wiki/Continuous-deployment) | [Architecture](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview) | [Costing](https://github.com/WebCraft-Teams/2048/wiki/Costing.md) |
 | ----- | ---- | ---- | ---- |
 
 
@@ -12,7 +12,7 @@ a ranked tournament. 2048 Tournament app is supported across all platforms –
 Teams desktop, browser, iOS, and Android clients. It is ready for deployment as
 part of your existing Microsoft 365 subscription.
 
-![](./wiki/images/2048Compose.gif)
+![](https://github.com/WebCraft-Teams/2048/wiki/images/2048Compose.gif)
 
 ### Key features
 
@@ -21,15 +21,15 @@ part of your existing Microsoft 365 subscription.
     Tournament app. Name your tournament, choose right settings for it and when
     you are done, click **Send** to publish your 2048 Tournament.
 
-![](./wiki/images/2048TemplateCreation.png)
+![](https://github.com/WebCraft-Teams/2048/wiki/images/2048TemplateCreation.png)
 
 * **2048 Tournament participation:** To participate in 2048 Tournament, click
 **Play** on the card. Read instruction on how to play and start your game. Have
 fun playing the classic 2048 game!
 
-![](./wiki/images/2048TemplateResponse1.png)
+![](https://github.com/WebCraft-Teams/2048/wiki/images/2048TemplateResponse1.png)
 
-![](./wiki/images/2048TemplateResponse2.png)
+![](https://github.com/WebCraft-Teams/2048/wiki/images/2048TemplateResponse2.png)
 
 * **2048 Tournament Leaderboard:** To see your scores and Leaderboard of 2048
     Tournament, click **Leaderboard** on the card. You can view scores of all
@@ -39,11 +39,11 @@ fun playing the classic 2048 game!
 
 ## Get started
 
-Begin with the [Solution overview ](/wiki/Solution-overview.md)to read about what the
+Begin with the [Solution overview ](https://github.com/WebCraft-Teams/2048/wiki/Solution-overview.md)to read about what the
 app does and how it works.
 
 When you're ready to try out 2048 Tournament, or to use it in your own
-organization, follow the steps in the [Deployment guide](#_Deployment_Guide).
+organization, follow the steps in the [Deployment guide](https://github.com/WebCraft-Teams/2048/wiki/Deployment-guide).
 
 ## Feedback 
 
