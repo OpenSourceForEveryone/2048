@@ -35,7 +35,7 @@ fun playing the classic 2048 game!
     Tournament, click **Leaderboard** on the card. You can view scores of all
     your attempts as well as leaderboard of scores of all participating members.
 
-![](./wiki/images/2048TemplateSummary.png)
+![](https://github.com/WebCraft-Teams/2048/wiki/images/2048TemplateSummary.png)
 
 ## Get started
 
